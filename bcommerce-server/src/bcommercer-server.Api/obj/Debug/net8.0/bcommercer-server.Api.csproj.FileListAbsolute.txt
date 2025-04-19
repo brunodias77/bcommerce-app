@@ -30,3 +30,17 @@
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/bcommercer-server.Api.pdb
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/bcommercer-server.Api.genruntimeconfig.cache
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/ref/bcommercer-server.Api.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/bcommercer-server.Api.sourcelink.json
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Dapper.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Npgsql.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/OneOf.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/bcommerce-server.Application.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/bcommerce-server.Domain.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/bcommerce-server.Infra.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/bcommerce-server.Application.pdb
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/bcommerce-server.Infra.pdb
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/bcommerce-server.Domain.pdb
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Bogus.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Bogus.xml

@@ -1,3 +1,5 @@
 namespace bcommerce_server.Domain.Validations;
 
-public record Error();
+public record Error(string Message);
+
+

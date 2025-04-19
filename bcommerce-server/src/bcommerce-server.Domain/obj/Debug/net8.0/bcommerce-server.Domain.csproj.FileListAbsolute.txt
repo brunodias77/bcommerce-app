@@ -9,3 +9,4 @@
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/refint/bcommerce-server.Domain.dll
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.pdb
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/ref/bcommerce-server.Domain.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.sourcelink.json

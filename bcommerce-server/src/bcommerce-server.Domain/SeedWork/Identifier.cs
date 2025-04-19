@@ -1,6 +1,9 @@
 namespace bcommerce_server.Domain.SeedWork;
 
-public class Identifier
+/// <summary>
+/// Representa um identificador único para entidades no domínio.
+/// </summary>
+public abstract class Identifier : ValueObject
 {
-    
+    public abstract string Value { get; }
 }

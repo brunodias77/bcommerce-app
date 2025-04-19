@@ -1,6 +1,42 @@
+using bcommerce_server.Domain.SeedWork;
+using bcommerce_server.Domain.Utils;
+
 namespace bcommerce_server.Domain.Addresses.Identifiers;
 
-public class AddressID
+public sealed class AddressID : Identifier
 {
-    
+    private readonly string _value;
+
+    private AddressID(string value)
+    {
+        _value = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    /// <summary>
+    /// Gera um novo AddressID com UUID único.
+    /// </summary>
+    public static AddressID Generate() => new(IdUtils.Uuid());
+
+    /// <summary>
+    /// Cria um AddressID a partir de um valor existente.
+    /// </summary>
+    public static AddressID From(string id) => new(id);
+
+    /// <summary>
+    /// Retorna o valor interno do identificador.
+    /// </summary>
+    public override string Value => _value;
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return _value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not AddressID other) return false;
+        return Value == other.Value;
+    }
+
+    public override int GetHashCode() => Value.GetHashCode();
 }

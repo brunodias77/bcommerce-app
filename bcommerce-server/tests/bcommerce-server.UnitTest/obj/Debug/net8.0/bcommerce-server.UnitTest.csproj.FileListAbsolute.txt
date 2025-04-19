@@ -96,3 +96,11 @@
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/obj/Debug/net8.0/bcommerce-server.UnitTest.pdb
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/obj/Debug/net8.0/bcommerce-server.UnitTest.genruntimeconfig.cache
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/obj/Debug/net8.0/ref/bcommerce-server.UnitTest.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/Bogus.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/Castle.Core.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/FluentAssertions.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/Moq.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/System.Diagnostics.EventLog.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce/bcommerce-server/tests/bcommerce-server.UnitTest/obj/Debug/net8.0/bcommerce-server.UnitTest.sourcelink.json

@@ -7,4 +7,20 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.66" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+      <PackageReference Include="Npgsql" Version="9.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\bcommerce-server.Domain\bcommerce-server.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Bogus">
+        <HintPath>..\..\..\..\..\..\..\.nuget\packages\bogus\35.6.3\lib\net6.0\Bogus.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

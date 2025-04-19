@@ -7,4 +7,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="OneOf" Version="3.0.271" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\bcommerce-server.Domain\bcommerce-server.Domain.csproj" />
+      <ProjectReference Include="..\bcommerce-server.Infra\bcommerce-server.Infra.csproj" />
+    </ItemGroup>
+
 </Project>

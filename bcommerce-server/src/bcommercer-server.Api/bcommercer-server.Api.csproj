@@ -11,4 +11,15 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\bcommerce-server.Application\bcommerce-server.Application.csproj" />
+      <ProjectReference Include="..\bcommerce-server.Infra\bcommerce-server.Infra.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Bogus">
+        <HintPath>..\..\..\..\..\..\..\.nuget\packages\bogus\35.6.3\lib\net6.0\Bogus.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
