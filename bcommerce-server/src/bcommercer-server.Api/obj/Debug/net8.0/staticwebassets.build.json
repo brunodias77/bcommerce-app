@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "a3J9rqN0V+BdgfTg/a8NssmaTdijgqk6UMIZhgpC6TY=",
+  "Source": "bcommercer-server.Api",
+  "BasePath": "_content/bcommercer-server.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

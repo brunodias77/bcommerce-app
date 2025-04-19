@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bcommerce-server.Domain", "src\bcommerce-server.Domain\bcommerce-server.Domain.csproj", "{3C8DFC5E-8A82-4BD4-96E4-3E9D60F1CB49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{10BACC8E-C432-402D-9BAD-37DA431AADF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6AEDCA8C-1DA4-471C-965F-91135B45B136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bcommerce-server.UnitTest", "tests\bcommerce-server.UnitTest\bcommerce-server.UnitTest.csproj", "{84ACE68C-71B4-4868-BF96-DA0C2A88DDCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bcommerce-server.Application", "src\bcommerce-server.Application\bcommerce-server.Application.csproj", "{D826E939-B733-49B9-8437-710CA6CE0F70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bcommerce-server.Infra", "src\bcommerce-server.Infra\bcommerce-server.Infra.csproj", "{DADF3FEA-DDDC-4ABD-ACEC-863BD64500F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bcommercer-server.Api", "src\bcommercer-server.Api\bcommercer-server.Api.csproj", "{146B5CFE-8AEF-4B65-94F0-5B35EF402DC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bcommerce-server.IntegrationTest", "tests\bcommerce-server.IntegrationTest\bcommerce-server.IntegrationTest.csproj", "{23414F41-02CF-49D4-AC15-A4F20314C109}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C8DFC5E-8A82-4BD4-96E4-3E9D60F1CB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8DFC5E-8A82-4BD4-96E4-3E9D60F1CB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8DFC5E-8A82-4BD4-96E4-3E9D60F1CB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8DFC5E-8A82-4BD4-96E4-3E9D60F1CB49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84ACE68C-71B4-4868-BF96-DA0C2A88DDCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84ACE68C-71B4-4868-BF96-DA0C2A88DDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84ACE68C-71B4-4868-BF96-DA0C2A88DDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84ACE68C-71B4-4868-BF96-DA0C2A88DDCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D826E939-B733-49B9-8437-710CA6CE0F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D826E939-B733-49B9-8437-710CA6CE0F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D826E939-B733-49B9-8437-710CA6CE0F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D826E939-B733-49B9-8437-710CA6CE0F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADF3FEA-DDDC-4ABD-ACEC-863BD64500F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADF3FEA-DDDC-4ABD-ACEC-863BD64500F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADF3FEA-DDDC-4ABD-ACEC-863BD64500F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADF3FEA-DDDC-4ABD-ACEC-863BD64500F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{146B5CFE-8AEF-4B65-94F0-5B35EF402DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{146B5CFE-8AEF-4B65-94F0-5B35EF402DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{146B5CFE-8AEF-4B65-94F0-5B35EF402DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{146B5CFE-8AEF-4B65-94F0-5B35EF402DC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23414F41-02CF-49D4-AC15-A4F20314C109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23414F41-02CF-49D4-AC15-A4F20314C109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23414F41-02CF-49D4-AC15-A4F20314C109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23414F41-02CF-49D4-AC15-A4F20314C109}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C8DFC5E-8A82-4BD4-96E4-3E9D60F1CB49} = {6AEDCA8C-1DA4-471C-965F-91135B45B136}
+		{84ACE68C-71B4-4868-BF96-DA0C2A88DDCE} = {10BACC8E-C432-402D-9BAD-37DA431AADF2}
+		{D826E939-B733-49B9-8437-710CA6CE0F70} = {6AEDCA8C-1DA4-471C-965F-91135B45B136}
+		{DADF3FEA-DDDC-4ABD-ACEC-863BD64500F9} = {6AEDCA8C-1DA4-471C-965F-91135B45B136}
+		{146B5CFE-8AEF-4B65-94F0-5B35EF402DC2} = {6AEDCA8C-1DA4-471C-965F-91135B45B136}
+		{23414F41-02CF-49D4-AC15-A4F20314C109} = {10BACC8E-C432-402D-9BAD-37DA431AADF2}
+	EndGlobalSection
+EndGlobal
