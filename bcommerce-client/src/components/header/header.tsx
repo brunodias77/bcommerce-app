@@ -1,0 +1,88 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import logo from "../../../public/assets/logo/logo-bcommerce.png";
+import Navbar from "../ui/navbar";
+import MenuOpenIcon from "@/icons/menu-open-icon";
+import MenuIcon from "@/icons/menu-icon";
+import CartIcon from "@/icons/cart-icon";
+import UserIcon from "@/icons/user-icon";
+import HeartIcon from "@/icons/heart-icon";
+import { FaBars, FaBarsStaggered } from "react-icons/fa6";
+import { IoCartOutline, IoPersonOutline, IoHeartOutline } from "react-icons/io5";
+import { useState } from "react";
+
+
+const Header = () => {
+    const [menuOpened, setMenuOpened] = useState(false);
+    const toggleMenu = () => setMenuOpened((prev) => !prev);
+    // const shopContext = useContext(ShopContext);
+
+    // if (!shopContext) {
+    //     throw new Error("ShopContext deve ser usado dentro de um ShopContextProvider");
+    // }
+
+    // const { getCartCount } = shopContext;
+
+    return (
+
+        <header className="w-full sticky top-0 z-50 bg-white/70 backdrop-blur-md">
+            <div className="container flex items-center justify-between">
+                <Link href="/" className="flex flex-1">
+                    <Image
+                        src={logo}
+                        alt="logo da empresa"
+                        width={60}
+                        height={60}
+                        priority
+                    />
+                </Link>
+
+                <div className="flex-1">
+                    <Navbar
+                        containerStyles={`${menuOpened
+                            ? "flex items-start flex-col gap-x-8 fixed top-16 right-6 py-5 px-5 bg-white rounded-xl shadow-md w-52 ring-1 ring-slate-900/5 z-50"
+                            : "hidden xl:flex items-center justify-around gap-x-5 xl:gap-x-7 text-[15px] font-[500] bg-primary ring-1 ring-slate-900/5 rounded-full p-1"
+                            }`}
+                        onClick={() => setMenuOpened(false)}
+                    />
+                </div>
+
+
+                <div className="flex-1 flex items-center justify-end gap-x-4 xs:gap-x-16">
+                    {menuOpened ? (
+                        <FaBarsStaggered onClick={toggleMenu} className="xl:hidden cursor-pointer text-xl" />
+                    ) : (
+                        <FaBars onClick={toggleMenu} className="xl:hidden cursor-pointer text-xl" />
+                    )}
+
+
+
+                    {/* PROFILE */}
+                    <Link href="/perfil" className="group relative cursor-pointer flex">
+                        <IoPersonOutline size={20} />
+                    </Link>
+
+                    <Link href="/favorites" className="group relative cursor-pointer flex">
+                        <IoHeartOutline size={20} />
+                    </Link>
+
+                    {/* CART */}
+                    <Link href="/cart" className="flex relative">
+                        <IoCartOutline size={20} />
+                        <span className="bg-[#FEC857] text-black text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
+                            {/* {getCartCount()} */}
+                            0
+                        </span>
+                    </Link>
+                </div>
+
+
+            </div>
+        </header>
+
+    );
+}
+
+export default Header;
