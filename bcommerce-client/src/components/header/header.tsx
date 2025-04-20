@@ -11,11 +11,27 @@ import UserIcon from "@/icons/user-icon";
 import HeartIcon from "@/icons/heart-icon";
 import { FaBars, FaBarsStaggered } from "react-icons/fa6";
 import { IoCartOutline, IoPersonOutline, IoHeartOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const Header = () => {
     const [menuOpened, setMenuOpened] = useState(false);
+    const [hasShadow, setHasShadow] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 10) {
+                setHasShadow(true);
+            } else {
+                setHasShadow(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     const toggleMenu = () => setMenuOpened((prev) => !prev);
     // const shopContext = useContext(ShopContext);
 
@@ -27,7 +43,7 @@ const Header = () => {
 
     return (
 
-        <header className="w-full sticky top-0 z-50 bg-white/70 backdrop-blur-md">
+        <header className={`w-full sticky top-0 z-50 bg-white/70 backdrop-blur-md transition-shadow duration-300 ${hasShadow ? "shadow-md" : ""}`}>
             <div className="container flex items-center justify-between">
                 <Link href="/" className="flex flex-1">
                     <Image
@@ -61,17 +77,17 @@ const Header = () => {
 
                     {/* PROFILE */}
                     <Link href="/perfil" className="group relative cursor-pointer flex">
-                        <IoPersonOutline size={20} />
+                        <IoPersonOutline size={20} color="#2d2926" />
                     </Link>
 
                     <Link href="/favorites" className="group relative cursor-pointer flex">
-                        <IoHeartOutline size={20} />
+                        <IoHeartOutline size={20} color="#2d2926" />
                     </Link>
 
                     {/* CART */}
                     <Link href="/cart" className="flex relative">
-                        <IoCartOutline size={20} />
-                        <span className="bg-[#FEC857] text-black text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
+                        <IoCartOutline size={20} color="#2d2926" />
+                        <span className="bg-yellow-primary text-black-400 text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
                             {/* {getCartCount()} */}
                             0
                         </span>

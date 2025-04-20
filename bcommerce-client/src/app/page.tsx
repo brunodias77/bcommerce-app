@@ -1,9 +1,10 @@
 import Image from "next/image";
+import BannerHome from "@/components/home/banner-home";
 
 export default function Home() {
   return (
-    <div className="container">
-      Bruno Dias Bcommerce
-    </div>
+    <>
+      <BannerHome />
+    </>
   );
 }

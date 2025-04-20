@@ -12,8 +12,16 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --text-title-primary: #2d2926;
+
+  --color-black-400: #2d2926;
+
+  --color-yellow-primary: #fec857;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --background-image-banner-home: url("/assets/banners/banner-1.png");
 }
 
 @media (prefers-color-scheme: dark) {
