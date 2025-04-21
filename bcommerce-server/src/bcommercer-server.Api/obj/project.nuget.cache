@@ -1,23 +1,31 @@
 {
   "version": 2,
-  "dgSpecHash": "OrZetklbJ2gUQ6+z7azLL5Q45/ew1PDAm6GlDgeTpzLRNkcAxE8UV3+ztYPQLMZBG0pb37MCUqrw9shJf9zD6A==",
+  "dgSpecHash": "no+/Qv0BqDs=",
   "success": true,
   "projectFilePath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bcommercer-server.Api.csproj",
   "expectedPackageFiles": [
+    "/home/brunodias/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/brunodias/.nuget/packages/dapper/2.1.66/dapper.2.1.66.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.bcl.memory/9.0.0/microsoft.bcl.memory.9.0.0.nupkg.sha512",
     "/home/brunodias/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/home/brunodias/.nuget/packages/microsoft.extensions.configuration/8.0.0/microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "/home/brunodias/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
-    "/home/brunodias/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.4/microsoft.extensions.dependencyinjection.abstractions.9.0.4.nupkg.sha512",
     "/home/brunodias/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
-    "/home/brunodias/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.options/9.0.4/microsoft.extensions.options.9.0.4.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.primitives/9.0.4/microsoft.extensions.primitives.9.0.4.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.identitymodel.abstractions/8.8.0/microsoft.identitymodel.abstractions.8.8.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.8.0/microsoft.identitymodel.jsonwebtokens.8.8.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.identitymodel.logging/8.8.0/microsoft.identitymodel.logging.8.8.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.identitymodel.tokens/8.8.0/microsoft.identitymodel.tokens.8.8.0.nupkg.sha512",
     "/home/brunodias/.nuget/packages/microsoft.openapi/1.6.14/microsoft.openapi.1.6.14.nupkg.sha512",
     "/home/brunodias/.nuget/packages/npgsql/9.0.3/npgsql.9.0.3.nupkg.sha512",
     "/home/brunodias/.nuget/packages/oneof/3.0.271/oneof.3.0.271.nupkg.sha512",
     "/home/brunodias/.nuget/packages/swashbuckle.aspnetcore/6.6.2/swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "/home/brunodias/.nuget/packages/swashbuckle.aspnetcore.swagger/6.6.2/swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "/home/brunodias/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.6.2/swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
-    "/home/brunodias/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.6.2/swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+    "/home/brunodias/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.6.2/swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/system.identitymodel.tokens.jwt/8.8.0/system.identitymodel.tokens.jwt.8.8.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -5,5 +5,7 @@ namespace bcommerce_server.Domain.SeedWork;
 /// </summary>
 public abstract class Identifier : ValueObject
 {
-    public abstract string Value { get; }
+    public abstract Guid Value { get; }
+
+    public override string ToString() => Value.ToString();
 }

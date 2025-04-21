@@ -14,7 +14,7 @@ public class Customer : AggregateRoot<CustomerID>
     private string _password; // 🆕 NOVO
     private Cpf? _cpf;
     private List<Address>? _addresses;
-    private bool _deleted;
+    private DateTime? _deletedAt; 
     private DateTime _createdAt;
     private DateTime _updatedAt;
 
@@ -25,7 +25,7 @@ public class Customer : AggregateRoot<CustomerID>
         string password,
         Cpf? cpf,
         List<Address>? addresses,
-        bool deleted,
+        DateTime? deletedAt, // 🆕 Novo parâmetro
         DateTime createdAt,
         DateTime updatedAt
     ) : base(id)
@@ -35,7 +35,7 @@ public class Customer : AggregateRoot<CustomerID>
         _password = password; // 🆕 NOVO
         _cpf = cpf;
         _addresses = addresses;
-        _deleted = deleted;
+        _deletedAt = deletedAt;
         _createdAt = createdAt;
         _updatedAt = updatedAt;
     }
@@ -50,7 +50,7 @@ public class Customer : AggregateRoot<CustomerID>
             password,
             null,
             null,
-            false,
+            null, // 🆕 deletedAt null = ativo
             now,
             now
         );
@@ -63,19 +63,21 @@ public class Customer : AggregateRoot<CustomerID>
         string password,
         Cpf? cpf,
         List<Address>? addresses,
-        bool deleted,
+        DateTime? deletedAt,
         DateTime createdAt,
         DateTime updatedAt
     )
     {
-        return new Customer(id, name, email,password, cpf, addresses, deleted, createdAt, updatedAt);
+        return new Customer(id, name, email,password, cpf, addresses, deletedAt, createdAt, updatedAt);
     }
 
-    public Customer Update(string name, Email email, string password)
+    // 🔄 ATUALIZADO: método agora também pode atualizar CPF (opcionalmente)
+    public Customer Update(string name, Email email, string password, Cpf? cpf = null)
     {
         _name = name;
         _email = email;
         _password = password;
+        _cpf = cpf ?? _cpf;
         _updatedAt = DateTime.UtcNow;
         return this;
     }
@@ -85,6 +87,27 @@ public class Customer : AggregateRoot<CustomerID>
         _addresses ??= new List<Address>(); // 🛡️ Protege contra null
         _addresses.Add(address);
         _updatedAt = DateTime.UtcNow;
+        return this;
+    }
+    
+    public Customer Deactivate()
+    {
+        if (_deletedAt is null)
+        {
+            _deletedAt = DateTime.UtcNow;
+            _updatedAt = DateTime.UtcNow;
+        }
+        return this;
+    }
+
+    // 🆕 NOVO: reativa o cliente (reseta o deletedAt)
+    public Customer Activate()
+    {
+        if (_deletedAt is not null)
+        {
+            _deletedAt = null;
+            _updatedAt = DateTime.UtcNow;
+        }
         return this;
     }
     
@@ -105,28 +128,31 @@ public class Customer : AggregateRoot<CustomerID>
         return this;
     }
 
-    public Customer Delete()
-    {
-        _deleted = true;
-        _updatedAt = DateTime.UtcNow;
-        return this;
-    }
+
 
     public override void Validate(IValidationHandler handler)
     {
         new CustomerValidator(this, handler).Validate();
     }
 
-    // Propriedades públicas
+    // 🧱 Propriedades públicas expostas (read-only)
+
     public string Name => _name;
     public Email Email => _email;
     public string Password => _password;
     public Cpf? Cpf => _cpf;
-    public IReadOnlyCollection<Address> Addresses => 
+
+    public IReadOnlyCollection<Address> Addresses =>
         (_addresses != null ? _addresses : new List<Address>()).AsReadOnly();
-    public bool IsDeleted => _deleted;
+
     public DateTime CreatedAt => _createdAt;
     public DateTime UpdatedAt => _updatedAt;
+
+    // 🆕 NOVA propriedade para rastrear soft delete
+    public DateTime? DeletedAt => _deletedAt;
+
+    // 🆕 NOVA propriedade para facilitar leitura do status
+    public bool IsActive => _deletedAt is null;
 
     public object Clone()
     {
@@ -136,11 +162,11 @@ public class Customer : AggregateRoot<CustomerID>
             Email,
             Password,
             Cpf,
-            _addresses?.ToList(), // 🔄 safe null
-            IsDeleted,
+            _addresses?.ToList(), // cópia segura
+            DeletedAt,            // 🆕 incluído no clone
             CreatedAt,
             UpdatedAt
-        );    
+        );
     }
 }
 

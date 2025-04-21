@@ -1,4 +1,5 @@
 using bcommerce_server.Domain.Addresses.Identifiers;
+using bcommerce_server.Domain.Addresses.Validators;
 using bcommerce_server.Domain.Customers.Identifiers;
 using bcommerce_server.Domain.SeedWork;
 using bcommerce_server.Domain.Validations;
@@ -14,6 +15,7 @@ public class Address : Entity<AddressID>
     private string _state;
     private string _zipCode;
     private DateTime _createdAt;
+    private DateTime _updatedAt;
 
     private Address(
         AddressID id,
@@ -23,7 +25,8 @@ public class Address : Entity<AddressID>
         string city,
         string state,
         string zipCode,
-        DateTime createdAt
+        DateTime createdAt,
+        DateTime updatedAt
     ) : base(id)
     {
         _customerId = customerId;
@@ -33,6 +36,7 @@ public class Address : Entity<AddressID>
         _state = state;
         _zipCode = zipCode;
         _createdAt = createdAt;
+        _updatedAt = updatedAt;
     }
 
     public static Address NewAddress(
@@ -53,6 +57,7 @@ public class Address : Entity<AddressID>
             city,
             state,
             zipCode,
+            now,
             now
         );
     }
@@ -65,10 +70,11 @@ public class Address : Entity<AddressID>
         string city,
         string state,
         string zipCode,
-        DateTime createdAt
+        DateTime createdAt,
+        DateTime updatedAt
     )
     {
-        return new Address(id, customerId, street, number, city, state, zipCode, createdAt);
+        return new Address(id, customerId, street, number, city, state, zipCode, createdAt, updatedAt);
     }
 
     public Address Update(
@@ -84,16 +90,15 @@ public class Address : Entity<AddressID>
         _city = city;
         _state = state;
         _zipCode = zipCode;
+        _updatedAt = DateTime.UtcNow;
         return this;
     }
 
     public override void Validate(IValidationHandler handler)
     {
-        // Você pode criar um AddressValidator se quiser, como no Customer
-        // new AddressValidator(this, handler).Validate();
+        new AddressValidator(this, handler).Validate();
     }
 
-    // Propriedades públicas
     public CustomerID CustomerId => _customerId;
     public string Street => _street;
     public string Number => _number;
@@ -101,9 +106,10 @@ public class Address : Entity<AddressID>
     public string State => _state;
     public string ZipCode => _zipCode;
     public DateTime CreatedAt => _createdAt;
+    public DateTime UpdatedAt => _updatedAt;
 
     public object Clone()
     {
-        return With(Id, _customerId, _street, _number, _city, _state, _zipCode, _createdAt);
+        return With(Id, _customerId, _street, _number, _city, _state, _zipCode, _createdAt, _updatedAt);
     }
 }

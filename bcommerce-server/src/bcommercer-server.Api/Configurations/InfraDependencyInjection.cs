@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bcommerce_server.Domain.Customers.Repositories;
 using bcommerce_server.Domain.Security;
+using bcommerce_server.Infra.Repositories;
+using bcommerce_server.Infra.Security;
 
 namespace bcommercer_server.Api.Configurations
 {
@@ -26,6 +29,8 @@ namespace bcommercer_server.Api.Configurations
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IUnitOfWork, DapperUnitOfWork>();
         }
+
+
 
     }
 }

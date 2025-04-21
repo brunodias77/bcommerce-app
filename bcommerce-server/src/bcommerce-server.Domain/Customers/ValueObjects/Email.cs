@@ -8,19 +8,10 @@ namespace bcommerce_server.Domain.Customers.ValueObjects;
 /// </summary>
 public sealed class Email : ValueObject
 {
-    private static readonly Regex EmailRegex =
-        new(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
     public string Address { get; }
 
     private Email(string address)
     {
-        if (string.IsNullOrWhiteSpace(address))
-            throw new ArgumentException("Email não pode ser vazio.");
-
-        if (!EmailRegex.IsMatch(address))
-            throw new ArgumentException("Email em formato inválido.");
-
         Address = address.ToLowerInvariant();
     }
 

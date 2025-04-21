@@ -8,9 +8,9 @@ public static class IdUtils
     /// <summary>
     /// Gera um UUID (GUID) em formato string, minúsculo e sem hífens.
     /// </summary>
-    public static string Uuid()
+    public static Guid Uuid()
     {
-        return Guid.NewGuid().ToString("N").ToLowerInvariant();
+        return Guid.NewGuid();
         // "N" = formato sem hífens
     }
 }

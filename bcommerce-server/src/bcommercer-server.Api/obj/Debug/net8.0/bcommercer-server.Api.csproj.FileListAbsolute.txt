@@ -90,3 +90,12 @@
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/bcommercer-server.Api.pdb
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/bcommercer-server.Api.genruntimeconfig.cache
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/obj/Debug/net8.0/ref/bcommercer-server.Api.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/BCrypt.Net-Next.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll

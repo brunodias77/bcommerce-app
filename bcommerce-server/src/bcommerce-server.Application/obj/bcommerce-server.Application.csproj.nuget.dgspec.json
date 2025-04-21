@@ -161,6 +161,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.1.66, )"
@@ -169,9 +173,21 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.8.0, )"
+            },
             "Npgsql": {
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.8.0, )"
             }
           },
           "imports": [

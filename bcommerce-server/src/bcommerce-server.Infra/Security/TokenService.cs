@@ -1,5 +1,5 @@
-using bcommerce_server.Domain.Security;
 using System.IdentityModel.Tokens.Jwt;
+using bcommerce_server.Domain.Security;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;

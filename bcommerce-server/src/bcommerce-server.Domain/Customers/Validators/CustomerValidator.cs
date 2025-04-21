@@ -3,7 +3,6 @@ using bcommerce_server.Domain.Validations;
 
 namespace bcommerce_server.Domain.Customers.Validators;
 
-
 public class CustomerValidator : Validator
 {
     private const int NAME_MIN_LENGTH = 3;
@@ -21,9 +20,10 @@ public class CustomerValidator : Validator
     {
         ValidateName();
         ValidateEmail();
-        ValidatePassword(); // 🆕 NOVO
-        ValidateCpf();      // 🔄 AJUSTADO
+        ValidatePassword();
+        ValidateCpf();
         ValidateAddresses();
+        ValidateActivationStatus();
     }
 
     private void ValidateName()
@@ -32,20 +32,20 @@ public class CustomerValidator : Validator
 
         if (name is null)
         {
-            AddError("'name' should not be null");
+            AddError("'nome' não pode ser nulo.");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(name))
         {
-            AddError("'name' should not be empty");
+            AddError("'nome' não pode estar em branco.");
             return;
         }
 
         var length = name.Trim().Length;
         if (length < NAME_MIN_LENGTH || length > NAME_MAX_LENGTH)
         {
-            AddError($"'name' must be between {NAME_MIN_LENGTH} and {NAME_MAX_LENGTH} characters");
+            AddError($"'nome' deve ter entre {NAME_MIN_LENGTH} e {NAME_MAX_LENGTH} caracteres.");
         }
     }
 
@@ -55,13 +55,20 @@ public class CustomerValidator : Validator
 
         if (email is null)
         {
-            AddError("'email' should not be null");
+            AddError("'email' não pode ser nulo.");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(email.Address))
         {
-            AddError("'email' should not be empty");
+            AddError("'email' não pode estar em branco.");
+            return;
+        }
+
+        var emailRegex = new Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (!emailRegex.IsMatch(email.Address))
+        {
+            AddError("'email' está em um formato inválido.");
         }
     }
 
@@ -71,83 +78,120 @@ public class CustomerValidator : Validator
 
         if (password is null)
         {
-            AddError("'password' should not be null");
+            AddError("'senha' não pode ser nula.");
             return;
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            AddError("'password' should not be empty");
+            AddError("'senha' não pode estar em branco.");
             return;
         }
 
         if (password.Length < 6)
         {
-            AddError("'password' must be at least 6 characters long");
+            AddError("'senha' deve ter pelo menos 6 caracteres.");
         }
 
         if (!Regex.IsMatch(password, @"[A-Z]"))
         {
-            AddError("'password' must contain at least one uppercase letter");
+            AddError("'senha' deve conter ao menos uma letra maiúscula.");
         }
 
         if (!Regex.IsMatch(password, @"\d"))
         {
-            AddError("'password' must contain at least one number");
+            AddError("'senha' deve conter ao menos um número.");
         }
     }
 
-
-    private void ValidateCpf() // 🔄 AJUSTADO
+    private void ValidateCpf()
     {
         var cpf = _customer.Cpf;
 
         if (cpf is null)
-            return; // cpf é opcional agora
+            return; // CPF é opcional
 
         if (string.IsNullOrWhiteSpace(cpf.Number))
         {
-            AddError("'cpf' should not be empty");
+            AddError("'cpf' não pode estar em branco.");
+            return;
         }
-        else if (cpf.Number.Length != 11)
+
+        var digitsOnly = new string(cpf.Number.Where(char.IsDigit).ToArray());
+
+        if (digitsOnly.Length != 11)
         {
-            AddError("'cpf' must contain 11 numeric digits");
+            AddError("'cpf' deve conter exatamente 11 dígitos numéricos.");
+            return;
+        }
+
+        if (!IsValidCpf(digitsOnly))
+        {
+            AddError("'cpf' é inválido.");
         }
     }
 
+    private bool IsValidCpf(string cpf)
+    {
+        if (cpf.All(d => d == cpf[0])) return false;
+
+        int[] multiplicador1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+        int[] multiplicador2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+        string tempCpf = cpf[..9];
+        int soma = tempCpf.Select((t, i) => int.Parse(t.ToString()) * multiplicador1[i]).Sum();
+        int resto = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+        if (resto != int.Parse(cpf[9].ToString()))
+            return false;
+
+        tempCpf += resto;
+        soma = tempCpf.Select((t, i) => int.Parse(t.ToString()) * multiplicador2[i]).Sum();
+        resto = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+        return resto == int.Parse(cpf[10].ToString());
+    }
     private void ValidateAddresses()
     {
         var addresses = _customer.Addresses;
 
         if (addresses is null || !addresses.Any())
-            return;
+            return; // Endereços são opcionais
 
         int index = 0;
         foreach (var address in addresses)
         {
             if (address is null)
             {
-                AddError($"'addresses[{index}]' should not be null");
+                AddError($"'endereços[{index}]' não pode ser nulo.");
                 index++;
                 continue;
             }
 
             if (string.IsNullOrWhiteSpace(address.Street))
-                AddError($"'addresses[{index}].street' should not be empty");
+                AddError($"'endereços[{index}].rua' não pode estar em branco.");
 
             if (string.IsNullOrWhiteSpace(address.Number))
-                AddError($"'addresses[{index}].number' should not be empty");
+                AddError($"'endereços[{index}].número' não pode estar em branco.");
 
             if (string.IsNullOrWhiteSpace(address.City))
-                AddError($"'addresses[{index}].city' should not be empty");
+                AddError($"'endereços[{index}].cidade' não pode estar em branco.");
 
             if (string.IsNullOrWhiteSpace(address.State))
-                AddError($"'addresses[{index}].state' should not be empty");
+                AddError($"'endereços[{index}].estado' não pode estar em branco.");
 
             if (string.IsNullOrWhiteSpace(address.ZipCode))
-                AddError($"'addresses[{index}].zipCode' should not be empty");
+                AddError($"'endereços[{index}].cep' não pode estar em branco.");
 
             index++;
+        }
+    }
+
+    private void ValidateActivationStatus()
+    {
+        if (!_customer.IsActive && _customer.DeletedAt is null)
+        {
+            AddError("'deletedAt' deve estar definido quando o cliente estiver inativo.");
         }
     }
 
@@ -158,9 +202,11 @@ public class CustomerValidator : Validator
 }
 
 
+// using System.Text.RegularExpressions;
 // using bcommerce_server.Domain.Validations;
 //
 // namespace bcommerce_server.Domain.Customers.Validators;
+//
 //
 // public class CustomerValidator : Validator
 // {
@@ -177,10 +223,13 @@ public class CustomerValidator : Validator
 //
 //     public override void Validate()
 //     {
+//         // 🧠 Validações principais
 //         ValidateName();
 //         ValidateEmail();
+//         ValidatePassword();
 //         ValidateCpf();
-//         ValidateAddresses(); // agora addresses são opcionais
+//         ValidateAddresses();
+//         ValidateActivationStatus();
 //     }
 //
 //     private void ValidateName()
@@ -220,6 +269,41 @@ public class CustomerValidator : Validator
 //         {
 //             AddError("'email' should not be empty");
 //         }
+//
+//         // ❓ Você pode também validar o formato do e-mail aqui ou deixar isso para o VO
+//         // Exemplo (opcional): Regex.IsMatch(email.Address, @"...")
+//     }
+//
+//     private void ValidatePassword()
+//     {
+//         var password = _customer.Password;
+//
+//         if (password is null)
+//         {
+//             AddError("'password' should not be null");
+//             return;
+//         }
+//
+//         if (string.IsNullOrWhiteSpace(password))
+//         {
+//             AddError("'password' should not be empty");
+//             return;
+//         }
+//
+//         if (password.Length < 6)
+//         {
+//             AddError("'password' must be at least 6 characters long");
+//         }
+//
+//         if (!Regex.IsMatch(password, @"[A-Z]"))
+//         {
+//             AddError("'password' must contain at least one uppercase letter");
+//         }
+//
+//         if (!Regex.IsMatch(password, @"\d"))
+//         {
+//             AddError("'password' must contain at least one number");
+//         }
 //     }
 //
 //     private void ValidateCpf()
@@ -227,10 +311,7 @@ public class CustomerValidator : Validator
 //         var cpf = _customer.Cpf;
 //
 //         if (cpf is null)
-//         {
-//             AddError("'cpf' should not be null");
-//             return;
-//         }
+//             return; // CPF é opcional
 //
 //         if (string.IsNullOrWhiteSpace(cpf.Number))
 //         {
@@ -238,7 +319,7 @@ public class CustomerValidator : Validator
 //         }
 //         else if (cpf.Number.Length != 11)
 //         {
-//             AddError("'cpf' must contain 11 numeric digits");
+//             AddError("'cpf' must contain exactly 11 numeric digits");
 //         }
 //     }
 //
@@ -246,9 +327,8 @@ public class CustomerValidator : Validator
 //     {
 //         var addresses = _customer.Addresses;
 //
-//         // Address é opcional: só valida se houver pelo menos um
 //         if (addresses is null || !addresses.Any())
-//             return;
+//             return; // address é opcional
 //
 //         int index = 0;
 //         foreach (var address in addresses)
@@ -276,6 +356,16 @@ public class CustomerValidator : Validator
 //                 AddError($"'addresses[{index}].zipCode' should not be empty");
 //
 //             index++;
+//         }
+//     }
+//
+//     // 🆕 NOVO: validação de ativação (se quiser forçar campos obrigatórios só quando ativo, por ex.)
+//     private void ValidateActivationStatus()
+//     {
+//         // Exemplo: regra opcional — se precisar validar algo baseado no estado do cliente
+//         if (!_customer.IsActive && _customer.DeletedAt is null)
+//         {
+//             AddError("'deletedAt' must be set when customer is not active");
 //         }
 //     }
 //

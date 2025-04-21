@@ -4,40 +4,38 @@ using bcommerce_server.Domain.Utils;
 namespace bcommerce_server.Domain.Customers.Identifiers;
 
 
+/// <summary>
+/// Identificador único para a entidade Customer.
+/// </summary>
 public sealed class CustomerID : Identifier
 {
-    private readonly string _value;
+    private readonly Guid _value;
 
-    private CustomerID(string value)
+    private CustomerID(Guid value)
     {
-        _value = value ?? throw new ArgumentNullException(nameof(value));
+        _value = value;
     }
 
     /// <summary>
-    /// Cria uma nova instância com UUID gerado automaticamente.
+    /// Cria uma nova instância com GUID aleatório.
     /// </summary>
-    public static CustomerID Generate() => new(IdUtils.Uuid());
+    public static CustomerID Generate() => new(Guid.NewGuid());
 
     /// <summary>
-    /// Cria uma nova instância a partir de um valor explícito.
+    /// Cria uma nova instância a partir de um Guid existente.
     /// </summary>
-    public static CustomerID From(string id) => new(id);
+    public static CustomerID From(Guid id) => new(id);
 
-    /// <summary>
-    /// Valor interno do identificador.
-    /// </summary>
-    public override string Value => _value;
+    public override Guid Value => _value;
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        
-        throw new NotImplementedException();
+        yield return _value;
     }
 
     public override bool Equals(object? obj)
     {
-        if (obj is not CustomerID other) return false;
-        return Value == other.Value;
+        return obj is CustomerID other && Value.Equals(other.Value);
     }
 
     public override int GetHashCode() => Value.GetHashCode();
