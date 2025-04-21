@@ -81,11 +81,69 @@ public class CustomerRepository : ICustomerRepository
         throw new NotImplementedException();
     }
 
-
-    public Task<Customer> GetByEmail(Email email, CancellationToken cancellationToken)
+    // TODO
+    public async Task<Customer> GetByEmail(Email email, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        const string customerSql = @"
+        SELECT id, name, email, password, cpf, deleted_at, created_at, updated_at 
+        FROM customers 
+        WHERE email = @Email 
+        LIMIT 1";
+
+        const string addressSql = @"
+        SELECT id, customer_id, street, number, city, state, zip_code, created_at, updated_at 
+        FROM customer_addresses 
+        WHERE customer_id = @CustomerId";
+
+        var conn = _unitOfWork.Connection;
+        var trans = _unitOfWork.Transaction;
+
+        var customerData = await conn.QueryFirstOrDefaultAsync(customerSql, new
+        {
+            Email = email.Address
+        }, trans);
+
+        if (customerData is null)
+            return null;
+
+        var customerId = new CustomerID(customerData.id);
+
+        // Executa a query de endereços, MAS pode retornar zero registros
+        var addressData = (await conn.QueryAsync(addressSql, new
+        {
+            CustomerId = customerId.Value
+        }, trans)).ToList();
+
+        // Cria lista de endereços apenas se houver dados
+        List<Address>? addresses = addressData.Any()
+            ? addressData.Select(addr => Address.With(
+                new AddressID(addr.id),
+                new CustomerID(addr.customer_id),
+                addr.street,
+                addr.number,
+                addr.city,
+                addr.state,
+                addr.zip_code,
+                addr.created_at,
+                addr.updated_at
+            )).ToList()
+            : null; // ✅ Aqui está o diferencial: null se não tiver endereços
+
+        var customer = Customer.With(
+            id: customerId,
+            name: customerData.name,
+            email: new Email(customerData.email),
+            password: customerData.password,
+            cpf: customerData.cpf is not null ? new Cpf(customerData.cpf) : null,
+            addresses: addresses,
+            deletedAt: customerData.deleted_at,
+            createdAt: customerData.created_at,
+            updatedAt: customerData.updated_at
+        );
+
+        return customer;
     }
+
 
     public Task<Customer> GetByCpf(string cpf, CancellationToken cancellationToken)
     {
