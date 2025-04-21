@@ -5,11 +5,11 @@ namespace bcommerce_server.Domain.Addresses.Identifiers;
 
 public sealed class AddressID : Identifier
 {
-    private readonly string _value;
+    private readonly Guid _value;
 
-    private AddressID(string value)
+    private AddressID(Guid value)
     {
-        _value = value ?? throw new ArgumentNullException(nameof(value));
+        _value = value;
     }
 
     /// <summary>
@@ -20,12 +20,12 @@ public sealed class AddressID : Identifier
     /// <summary>
     /// Cria um AddressID a partir de um valor existente.
     /// </summary>
-    public static AddressID From(string id) => new(id);
+    public static AddressID From(Guid id) => new(id);
 
     /// <summary>
     /// Retorna o valor interno do identificador.
     /// </summary>
-    public override string Value => _value;
+    public override Guid Value => _value;
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

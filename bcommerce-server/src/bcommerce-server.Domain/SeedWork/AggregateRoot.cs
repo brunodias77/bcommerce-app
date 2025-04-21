@@ -11,6 +11,4 @@ public abstract class AggregateRoot<ID> : Entity<ID> where ID : Identifier
     protected AggregateRoot(ID id) : base(id)
     {
     }
-
-
 }
