@@ -1,7 +1,8 @@
 using bcommercer_server.Api.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddUseCases();
+builder.Services.AddInfrastructure(builder.Configuration);
+
 
 
 builder.Services.AddControllers();
