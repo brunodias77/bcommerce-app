@@ -81,7 +81,8 @@ public class CustomerRepository : ICustomerRepository
         throw new NotImplementedException();
     }
 
-    public Task<Customer> GetByEmail(string email, CancellationToken cancellationToken)
+
+    public Task<Customer> GetByEmail(Email email, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

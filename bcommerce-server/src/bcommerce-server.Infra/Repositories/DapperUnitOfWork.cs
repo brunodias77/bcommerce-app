@@ -2,61 +2,149 @@ using System.Data;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 
+namespace bcommerce_server.Infra.Repositories;
 
-namespace bcommerce_server.Infra.Repositories
+public class DapperUnitOfWork : IUnitOfWork, IAsyncDisposable
 {
+    private readonly NpgsqlConnection _connection;
+    private NpgsqlTransaction? _transaction;
+    private bool _disposed;
 
-
-    public class DapperUnitOfWork : IUnitOfWork, IAsyncDisposable
+    public DapperUnitOfWork(IConfiguration configuration)
     {
-        private readonly NpgsqlConnection _connection;
-        private NpgsqlTransaction? _transaction;
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-        public DapperUnitOfWork(IConfiguration configuration)
+        _connection = new NpgsqlConnection(connectionString);
+    }
+
+    // ✅ Corrigido para interface genérica
+    public IDbConnection Connection => _connection;
+
+    public IDbTransaction Transaction =>
+        _transaction ?? throw new InvalidOperationException("Transação não foi iniciada. Chame Begin().");
+
+    public async Task Begin()
+    {
+        if (_connection.State != ConnectionState.Open)
+            await _connection.OpenAsync();
+
+        _transaction = await _connection.BeginTransactionAsync();
+    }
+
+    public async Task Commit()
+    {
+        if (_transaction is null)
+            throw new InvalidOperationException("Não é possível fazer commit sem uma transação ativa.");
+
+        await _transaction.CommitAsync();
+        await CleanupAsync();
+    }
+
+    public async Task Rollback()
+    {
+        if (_transaction is null)
+            throw new InvalidOperationException("Não é possível fazer rollback sem uma transação ativa.");
+
+        await _transaction.RollbackAsync();
+        await CleanupAsync();
+    }
+
+    private async Task CleanupAsync()
+    {
+        if (_transaction != null)
         {
-            _connection = new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            await _transaction.DisposeAsync();
+            _transaction = null;
         }
 
-        public NpgsqlConnection Connection => _connection;
-
-        public NpgsqlTransaction Transaction => _transaction
-                                                ?? throw new InvalidOperationException("Transaction has not been started.");
-
-        public async Task Begin()
+        if (_connection.State == ConnectionState.Open)
         {
-            if (_connection.State != ConnectionState.Open)
-                await _connection.OpenAsync();
-
-            _transaction = await _connection.BeginTransactionAsync();
-        }
-
-        public async Task Commit()
-        {
-            if (_transaction is null) return;
-            await _transaction.CommitAsync();
             await _connection.CloseAsync();
-        }
-
-        public async Task Rollback()
-        {
-            if (_transaction is null) return;
-            await _transaction.RollbackAsync();
-            await _connection.CloseAsync();
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (_transaction != null)
-            {
-                await _transaction.DisposeAsync();
-            }
-
-            if (_connection.State == ConnectionState.Open)
-            {
-                await _connection.CloseAsync();
-            }
-
-            await _connection.DisposeAsync();
         }
     }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed) return;
+
+        if (_transaction != null)
+        {
+            await _transaction.DisposeAsync();
+            _transaction = null;
+        }
+
+        if (_connection.State == ConnectionState.Open)
+        {
+            await _connection.CloseAsync();
+        }
+
+        await _connection.DisposeAsync();
+        _disposed = true;
+    }
 }
+
+
+
+// using System.Data;
+// using Microsoft.Extensions.Configuration;
+// using Npgsql;
+//
+//
+// namespace bcommerce_server.Infra.Repositories
+// {
+//
+//
+//     public class DapperUnitOfWork : IUnitOfWork, IAsyncDisposable
+//     {
+//         private readonly NpgsqlConnection _connection;
+//         private NpgsqlTransaction? _transaction;
+//
+//         public DapperUnitOfWork(IConfiguration configuration)
+//         {
+//             _connection = new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection"));
+//         }
+//
+//         public NpgsqlConnection Connection => _connection;
+//
+//         public NpgsqlTransaction Transaction => _transaction
+//                                                 ?? throw new InvalidOperationException("Transaction has not been started.");
+//
+//         public async Task Begin()
+//         {
+//             if (_connection.State != ConnectionState.Open)
+//                 await _connection.OpenAsync();
+//
+//             _transaction = await _connection.BeginTransactionAsync();
+//         }
+//
+//         public async Task Commit()
+//         {
+//             if (_transaction is null) return;
+//             await _transaction.CommitAsync();
+//             await _connection.CloseAsync();
+//         }
+//
+//         public async Task Rollback()
+//         {
+//             if (_transaction is null) return;
+//             await _transaction.RollbackAsync();
+//             await _connection.CloseAsync();
+//         }
+//
+//         public async ValueTask DisposeAsync()
+//         {
+//             if (_transaction != null)
+//             {
+//                 await _transaction.DisposeAsync();
+//             }
+//
+//             if (_connection.State == ConnectionState.Open)
+//             {
+//                 await _connection.CloseAsync();
+//             }
+//
+//             await _connection.DisposeAsync();
+//         }
+//     }
+// }

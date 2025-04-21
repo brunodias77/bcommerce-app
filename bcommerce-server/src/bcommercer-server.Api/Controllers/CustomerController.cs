@@ -1,6 +1,7 @@
 using bcommerce_server.Application.Customers.Create;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using bcommerce_server.Domain.Validations;
 
 namespace bcommercer_server.Api.Controllers;
 
@@ -14,14 +15,16 @@ public class CustomerController : ControllerBase
     {
         _createCustomer = createCustomer;
     }
-
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody] CreateCustomerInput command)
+    
+    [HttpPost("signup")]
+    [ProducesResponseType(typeof(CreateCustomerOutput), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(List<Error>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Post([FromBody] CreateCustomerInput input)
     {
-        var result = await _createCustomer.Execute(command);
+        var result = await _createCustomer.Execute(input);
 
         return result.Match<IActionResult>(
-            success => Ok(success),
+            success => CreatedAtAction(nameof(Post), new { id = success.Id }, success),
             error => BadRequest(error.GetErrors())
         );
     }
