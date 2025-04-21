@@ -8,14 +8,15 @@ bcommerce-client/.env.*.local
 bcommerce-client/.vercel/
 bcommerce-client/out/
 
-# ===== .NET 8 =====
-bcommerce-api/bin/
-bcommerce-api/obj/
-bcommerce-api/.vs/
-bcommerce-api/.vscode/
-bcommerce-api/*.user
-bcommerce-api/*.suo
-bcommerce-api/.env
+# ===== .NET / C# =====
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/*.user
+**/*.suo
+**/appsettings.Development.json
+**/.env
 
 # ===== Sistema operacional / Geral =====
 *.DS_Store
