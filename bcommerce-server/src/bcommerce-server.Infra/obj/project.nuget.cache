@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "kpScxheFZoE=",
+  "dgSpecHash": "AGSZH8jyda4HWYIGQESgE6bYtq6gEDeAqPwz0wJFubTnjwmW64udg6swpzFSSaAfvgN8T8wjb6NJrZpBoFGtdQ==",
   "success": true,
-  "projectFilePath": "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj",
+  "projectFilePath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj",
   "expectedPackageFiles": [
-    "/Users/brunodias/.nuget/packages/dapper/2.1.66/dapper.2.1.66.nupkg.sha512",
-    "/Users/brunodias/.nuget/packages/microsoft.extensions.configuration/8.0.0/microsoft.extensions.configuration.8.0.0.nupkg.sha512",
-    "/Users/brunodias/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
-    "/Users/brunodias/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
-    "/Users/brunodias/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
-    "/Users/brunodias/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
-    "/Users/brunodias/.nuget/packages/npgsql/9.0.3/npgsql.9.0.3.nupkg.sha512"
+    "/home/brunodias/.nuget/packages/dapper/2.1.66/dapper.2.1.66.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.configuration/8.0.0/microsoft.extensions.configuration.8.0.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/home/brunodias/.nuget/packages/npgsql/9.0.3/npgsql.9.0.3.nupkg.sha512"
   ],
   "logs": []
 }
