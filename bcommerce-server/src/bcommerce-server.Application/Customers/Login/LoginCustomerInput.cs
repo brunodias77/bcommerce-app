@@ -1,6 +1,6 @@
 namespace bcommerce_server.Application.Customers.Login;
 
-public class LoginCustomerInput
+public record LoginCustomerInput(string Email, string Password)
 {
     
 }

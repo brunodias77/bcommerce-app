@@ -12,6 +12,19 @@ export interface CreateCustomerOutput {
   updatedAt: string;
 }
 
+export interface LoginCustomerInput {
+  email: string;
+  password: string;
+}
+
+export interface LoginCustomerOutput {
+  id: string;
+  name: string;
+  email: string;
+  // opcional, caso você retorne token
+  token?: string;
+}
+
 export interface ErrorResponse {
   message: string;
 }

@@ -1,76 +1,176 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using bcommerce_server.Application.Abstractions;
 using bcommerce_server.Domain.Customers;
 using bcommerce_server.Domain.Customers.Repositories;
 using bcommerce_server.Domain.Customers.ValueObjects;
+using bcommerce_server.Domain.Security;
 using bcommerce_server.Domain.Validations.Handlers;
 using bcommerce_server.Domain.Validations;
 using bcommerce_server.Infra.Repositories;
 
 namespace bcommerce_server.Application.Customers.Create;
 
+
+
+
 public class CreateCustomerUseCase : ICreateCustomerUseCase
 {
-    private readonly ICustomerRepository _customerRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CreateCustomerUseCase(ICustomerRepository customerRepository, IUnitOfWork unitOfWork)
+    public CreateCustomerUseCase(ICustomerRepository customerRepository, IUnitOfWork unitOfWork, IPasswordEncripter passwordEncripter)
     {
         _customerRepository = customerRepository;
         _unitOfWork = unitOfWork;
+        _passwordEncripter = passwordEncripter;
     }
 
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordEncripter _passwordEncripter;
+
+ 
     public async Task<Result<CreateCustomerOutput, Notification>> Execute(CreateCustomerInput input)
     {
         var notification = Notification.Create();
 
+        await BeginTransaction();
+
+        if (await EmailAlreadyExists(input.Email))
+        {
+            return await FailWith("Já existe um cliente com este e-mail.");
+        }
+
+        var customer = BuildAndValidateCustomer(input, notification);
+        if (notification.HasError())
+        {
+            return await FailWith(notification);
+        }
+
+        return await SaveCustomer(customer);
+    }
+
+    // 🔒 MÉTODOS PRIVADOS
+
+    private async Task BeginTransaction()
+    {
+        await _unitOfWork.Begin();
+    }
+
+    private async Task<bool> EmailAlreadyExists(string email)
+    {
+        var existing = await _customerRepository.GetByEmail(email, CancellationToken.None);
+        return existing is not null;
+    }
+
+    private Customer BuildAndValidateCustomer(CreateCustomerInput input, Notification notification)
+    {
+        var passwordEncripted = _passwordEncripter.Encrypt(input.Password);
+        
         var customer = Customer.NewCustomer(
             input.Name,
-            Email.From(input.Email), 
-            input.Password
+            Email.From(input.Email),
+            passwordEncripted
         );
 
         customer.Validate(notification);
-        
-
-
-        if (notification.HasError())
-            return Result<CreateCustomerOutput, Notification>.Fail(notification);
-        
-        // ✅ Verifica se já existe um cliente com o mesmo e-mail
-        // var existing = await _customerRepository.GetByEmail(customer.Email, CancellationToken.None);
-        // if (existing != null)
-        // {
-        //     notification.Append(new Error("Já existe um cliente com este email."));
-        //     return Result<CreateCustomerOutput, Notification>.Fail(notification);
-        // }
-
-        return await Create(customer);
+        return customer;
     }
 
-    private async Task<Result<CreateCustomerOutput, Notification>> Create(Customer customer)
+    private async Task<Result<CreateCustomerOutput, Notification>> SaveCustomer(Customer customer)
     {
-        var began = false;
-
         try
         {
-            await _unitOfWork.Begin();
-            began = true;
-
             await _customerRepository.Insert(customer, CancellationToken.None);
             await _unitOfWork.Commit();
 
-            return Result<CreateCustomerOutput, Notification>.Ok(CreateCustomerOutput.FromCustomer(customer));
+            var output = CreateCustomerOutput.FromCustomer(customer);
+            return Result<CreateCustomerOutput, Notification>.Ok(output);
         }
         catch (Exception ex)
         {
-            if (began)
-                await _unitOfWork.Rollback();
-
+            await _unitOfWork.Rollback();
             return Result<CreateCustomerOutput, Notification>.Fail(Notification.Create(new Error(ex.Message)));
         }
         finally
         {
-            await _unitOfWork.DisposeAsync(); // garante que conexão/transação sejam liberadas
+            await _unitOfWork.DisposeAsync();
         }
     }
+
+    private async Task<Result<CreateCustomerOutput, Notification>> FailWith(string message)
+    {
+        await _unitOfWork.Rollback();
+        await _unitOfWork.DisposeAsync();
+        return Result<CreateCustomerOutput, Notification>.Fail(Notification.Create(new Error("Já existe um cliente com este e-mail.")));
+    }
+
+    private async Task<Result<CreateCustomerOutput, Notification>> FailWith(Notification notification)
+    {
+        await _unitOfWork.Rollback();
+        await _unitOfWork.DisposeAsync();
+        return Result<CreateCustomerOutput, Notification>.Fail(notification);
+    }
 }
+
+
+
+
+
+// public class CreateCustomerUseCase : ICreateCustomerUseCase
+// {
+//     private readonly ICustomerRepository _customerRepository;
+//     private readonly IUnitOfWork _unitOfWork;
+//
+//     public CreateCustomerUseCase(ICustomerRepository customerRepository, IUnitOfWork unitOfWork)
+//     {
+//         _customerRepository = customerRepository;
+//         _unitOfWork = unitOfWork;
+//     }
+//
+//     public async Task<Result<CreateCustomerOutput, Notification>> Execute(CreateCustomerInput input)
+//     {
+//         var notification = Notification.Create();
+//
+//         var customer = Customer.NewCustomer(
+//             input.Name,
+//             Email.From(input.Email), 
+//             input.Password
+//         );
+//
+//         customer.Validate(notification);
+//
+//         if (notification.HasError())
+//             return Result<CreateCustomerOutput, Notification>.Fail(notification);
+//         
+//         // TODO: verificar se outro customer ja existe com esse email
+//
+//         return await Create(customer);
+//     }
+//
+//     private async Task<Result<CreateCustomerOutput, Notification>> Create(Customer customer)
+//     {
+//         var began = false;
+//
+//         try
+//         {
+//             await _unitOfWork.Begin();
+//             began = true;
+//
+//             await _customerRepository.Insert(customer, CancellationToken.None);
+//             await _unitOfWork.Commit();
+//
+//             return Result<CreateCustomerOutput, Notification>.Ok(CreateCustomerOutput.FromCustomer(customer));
+//         }
+//         catch (Exception ex)
+//         {
+//             if (began)
+//                 await _unitOfWork.Rollback();
+//
+//             return Result<CreateCustomerOutput, Notification>.Fail(Notification.Create(new Error(ex.Message)));
+//         }
+//         finally
+//         {
+//             await _unitOfWork.DisposeAsync(); // garante que conexão/transação sejam liberadas
+//         }
+//     }
+// }

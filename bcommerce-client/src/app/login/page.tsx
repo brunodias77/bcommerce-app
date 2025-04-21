@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default async function LoginPage() {
     return (
-        <div className='container'>
+        <div className=" flex items-center justify-center h-full py-20">
             <LoginForm />
         </div>
     );

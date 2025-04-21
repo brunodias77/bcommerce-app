@@ -18,6 +18,8 @@
 
   --color-yellow-primary: #fec857;
 
+  --color-gray-primary: #f8f8fb;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
@@ -56,4 +58,6 @@
 
 .AppBody {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }

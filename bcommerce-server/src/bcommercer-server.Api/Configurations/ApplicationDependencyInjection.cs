@@ -1,4 +1,5 @@
 using bcommerce_server.Application.Customers.Create;
+using bcommerce_server.Application.Customers.Login;
 
 namespace bcommercer_server.Api.Configurations;
 
@@ -12,5 +13,7 @@ public static class ApplicationDependencyInjection
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<ICreateCustomerUseCase, CreateCustomerUseCase>();
+        services.AddScoped<ILoginCustomerUseCase, LoginCustomerUseCase>();
+
     }
 }

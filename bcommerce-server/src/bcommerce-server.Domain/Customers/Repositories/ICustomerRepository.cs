@@ -5,6 +5,6 @@ using bcommerce_server.Domain.SeedWork;
 namespace bcommerce_server.Domain.Customers.Repositories;
 
 public interface ICustomerRepository : IGenericRepository<Customer> {
-    Task<Customer> GetByEmail(Email email, CancellationToken cancellationToken);
+    Task<Customer> GetByEmail(string email, CancellationToken cancellationToken);
     Task<Customer> GetByCpf(string cpf, CancellationToken cancellationToken);
 }
