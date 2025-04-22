@@ -62,3 +62,11 @@
   display: flex;
   flex-direction: column;
 }
+.hide-horizontal-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-horizontal-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow-x: scroll; /* necessário para garantir que o scroll continue funcionando */
+}
