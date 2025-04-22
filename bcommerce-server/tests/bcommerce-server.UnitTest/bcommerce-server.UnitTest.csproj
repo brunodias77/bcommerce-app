@@ -26,4 +26,18 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="GlobalUsings.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Infra\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\bcommerce-server.Application\bcommerce-server.Application.csproj" />
+      <ProjectReference Include="..\..\src\bcommerce-server.Domain\bcommerce-server.Domain.csproj" />
+      <ProjectReference Include="..\..\src\bcommerce-server.Infra\bcommerce-server.Infra.csproj" />
+    </ItemGroup>
+
 </Project>

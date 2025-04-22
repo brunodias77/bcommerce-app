@@ -22,3 +22,15 @@
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/refint/bcommerce-server.Domain.dll
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.pdb
 /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/ref/bcommerce-server.Domain.dll
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bin/Debug/net8.0/bcommerce-server.Domain.deps.json
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bin/Debug/net8.0/bcommerce-server.Domain.dll
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bin/Debug/net8.0/bcommerce-server.Domain.pdb
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.AssemblyInfoInputs.cache
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.AssemblyInfo.cs
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.csproj.CoreCompileInputs.cache
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.sourcelink.json
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.dll
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/refint/bcommerce-server.Domain.dll
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.pdb
+/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/ref/bcommerce-server.Domain.dll

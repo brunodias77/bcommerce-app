@@ -15,5 +15,4 @@
       <ProjectReference Include="..\bcommerce-server.Domain\bcommerce-server.Domain.csproj" />
       <ProjectReference Include="..\bcommerce-server.Infra\bcommerce-server.Infra.csproj" />
     </ItemGroup>
-
 </Project>

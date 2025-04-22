@@ -7,7 +7,9 @@ namespace bcommerce_server.Domain.Security
 {
     public class JwtSettings
     {
-        public uint ExpirationTimeMinutes { get; set; }
-        public string SigninKey { get; set; } = string.Empty;
+        public string SigninKey { get; set; } = null!;
+        public int ExpirationTimeMinutes { get; set; }
+        public string Issuer { get; set; } = null!;
+        public string Audience { get; set; } = null!;
     }
 }

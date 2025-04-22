@@ -1,3 +1,5 @@
+using System;
+
 namespace bcommerce_server.Application.Abstractions;
 
 /// <summary>
@@ -29,7 +31,7 @@ public sealed class Result<TSuccess, TError>
     // ✅ Cria um resultado de sucesso
     public static Result<TSuccess, TError> Ok(TSuccess value)
     {
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        if (value == null) throw new System.ArgumentNullException(nameof(value));
         return new Result<TSuccess, TError>(value);
     }
 
@@ -94,85 +96,3 @@ public sealed class Result<TSuccess, TError>
 }
 
 
-// namespace bcommerce_server.Application.Abstractions;
-//
-// public class Result<TSuccess, TError>
-// {
-//     public bool IsSuccess { get; }
-//     public TSuccess? Success { get; }
-//     public TError? Error { get; }
-//
-//     private Result(TSuccess success)
-//     {
-//         IsSuccess = true;
-//         Success = success;
-//     }
-//
-//     private Result(TError error)
-//     {
-//         IsSuccess = false;
-//         Error = error;
-//     }
-//
-//     public static Result<TSuccess, TError> Ok(TSuccess value) => new(value);
-//
-//     public static Result<TSuccess, TError> Fail(TError error) => new(error);
-//
-//     public void Match(Action<TSuccess> onSuccess, Action<TError> onError)
-//     {
-//         if (IsSuccess)
-//             onSuccess(Success!);
-//         else
-//             onError(Error!);
-//     }
-//
-//     public TResult Match<TResult>(Func<TSuccess, TResult> onSuccess, Func<TError, TResult> onError)
-//     {
-//         return IsSuccess ? onSuccess(Success!) : onError(Error!);
-//     }
-//
-//     public Result<TNewSuccess, TNewError> Bimap<TNewSuccess, TNewError>(
-//         Func<TSuccess, TNewSuccess> mapSuccess,
-//         Func<TError, TNewError> mapError)
-//     {
-//         return IsSuccess
-//             ? Result<TNewSuccess, TNewError>.Ok(mapSuccess(Success!))
-//             : Result<TNewSuccess, TNewError>.Fail(mapError(Error!));
-//     }
-// }
-//
-// // public class Result<TSuccess, TError>
-// // {
-// //     public bool IsSuccess { get; }
-// //     public TSuccess? Success { get; }
-// //     public TError? Error { get; }
-// //
-// //     private Result(TSuccess success)
-// //     {
-// //         IsSuccess = true;
-// //         Success = success;
-// //     }
-// //
-// //     private Result(TError error)
-// //     {
-// //         IsSuccess = false;
-// //         Error = error;
-// //     }
-// //
-// //     public static Result<TSuccess, TError> Ok(TSuccess value) => new(value);
-// //
-// //     public static Result<TSuccess, TError> Fail(TError error) => new(error);
-// //
-// //     public void Match(Action<TSuccess> onSuccess, Action<TError> onError)
-// //     {
-// //         if (IsSuccess)
-// //             onSuccess(Success!);
-// //         else
-// //             onError(Error!);
-// //     }
-// //
-// //     public TResult Match<TResult>(Func<TSuccess, TResult> onSuccess, Func<TError, TResult> onError)
-// //     {
-// //         return IsSuccess ? onSuccess(Success!) : onError(Error!);
-// //     }
-// // }
