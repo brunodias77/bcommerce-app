@@ -56,8 +56,8 @@ const Header = () => {
                 <div className="flex-1">
                     <Navbar
                         containerStyles={`${menuOpened
-                                ? "flex items-start flex-col gap-x-8 fixed top-16 right-6 py-5 px-5 bg-white rounded-xl shadow-md w-52 ring-1 ring-slate-900/5 z-50"
-                                : "hidden xl:flex items-center justify-around gap-x-5 xl:gap-x-7 text-[15px] font-[500] bg-primary ring-1 ring-slate-900/5 rounded-full p-1"
+                            ? "flex items-start flex-col gap-x-8 fixed top-16 right-6 py-5 px-5 bg-white rounded-xl shadow-md w-52 ring-1 ring-slate-900/5 z-50"
+                            : "hidden xl:flex items-center justify-around gap-x-5 xl:gap-x-7 text-[15px] font-[500] bg-primary ring-1 ring-slate-900/5 rounded-full p-1"
                             }`}
                         onClick={() => setMenuOpened(false)}
                     />
@@ -93,7 +93,7 @@ const Header = () => {
                     {/* CARRINHO */}
                     <Link href="/cart" className="flex relative">
                         <IoCartOutline size={20} color="#2d2926" />
-                        <span className="bg-yellow-primary text-black-400 text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
+                        <span className="bg-yellow-primary text-black-primary text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
                             0 {/* Substituir por getCartCount() futuramente */}
                         </span>
                     </Link>

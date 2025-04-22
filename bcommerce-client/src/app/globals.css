@@ -14,11 +14,12 @@
   --color-foreground: var(--foreground);
   --text-title-primary: #2d2926;
 
-  --color-black-400: #2d2926;
+  --color-black-primary: #2d2926;
 
   --color-yellow-primary: #fec857;
 
   --color-gray-primary: #f8f8fb;
+  --color-gray-secondary: #4b5563;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
