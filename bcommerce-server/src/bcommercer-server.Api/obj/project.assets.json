@@ -1234,19 +1234,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/brunodias/.nuget/packages/": {}
+    "/home/brunodias/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bcommercer-server.Api.csproj",
+      "projectUniqueName": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bcommercer-server.Api.csproj",
       "projectName": "bcommercer-server.Api",
-      "projectPath": "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bcommercer-server.Api.csproj",
-      "packagesPath": "/Users/brunodias/.nuget/packages/",
-      "outputPath": "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/obj/",
+      "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/bcommercer-server.Api.csproj",
+      "packagesPath": "/home/brunodias/.nuget/packages/",
+      "outputPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommercer-server.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/brunodias/.nuget/NuGet/NuGet.Config"
+        "/home/brunodias/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -1258,11 +1258,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Application/bcommerce-server.Application.csproj": {
-              "projectPath": "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Application/bcommerce-server.Application.csproj"
+            "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Application/bcommerce-server.Application.csproj": {
+              "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Application/bcommerce-server.Application.csproj"
             },
-            "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj": {
-              "projectPath": "/Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj"
+            "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj": {
+              "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj"
             }
           }
         }
@@ -1271,11 +1271,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -1306,7 +1301,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.115/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

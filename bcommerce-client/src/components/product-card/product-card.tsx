@@ -24,15 +24,15 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
     const isOnSale = oldPrice > price;
     const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
 
-    const productImage = products[0].image[0];;
+    const productImage = products[1].image[0];;
 
     return (
-        <div className="relative flex flex-col items-center group w-full p-4 bg-red-300">
+        <div className="relative flex flex-col items-center group w-full p-4">
             <div className="relative z-10 overflow-hidden border border-gray-200 rounded-lg shadow-sm transition-transform hover:scale-105 duration-300 w-full">
                 {isOnSale && (
                     <>
                         <Badge text="OFERTA" bgColor="bg-yellow-500" top="top-2" />
-                        <Badge text="NOVO" bgColor="bg-[#07AC4F]" top="top-10" />
+                        <Badge text="NOVO" bgColor="bg-black-primary" top="top-10" />
                     </>
                 )}
 
@@ -51,8 +51,8 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
                 </Link>
 
                 <div className="p-3 w-full">
-                    <h2 className="text-[16px] font-bold text-primary line-clamp-1">{name}</h2>
-                    <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-400">{category}</h4>
+                    <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{category}</h4>
+                    <h2 className="text-[16px] font-bold text-blue-primary line-clamp-1">{name}</h2>
 
                     <div className="flex items-center gap-x-2">
                         <StarRating size="text-[10px] md:text-[15px]" />
@@ -62,11 +62,11 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
 
                     <div className="flex items-center justify-between gap-x-2 mt-2">
                         <div className="flex items-center gap-x-2">
-                            <h5 className="text-[14px] md:text-[15px] font-bold text-gray-900">${price}.00</h5>
+                            <h5 className="text-[14px] md:text-[15px] font-bold text-blue-primary">${price}.00</h5>
                             {isOnSale && (
                                 <>
-                                    <span className="text-sm text-gray-400 line-through">${oldPrice}.00</span>
-                                    <span className="text-sm text-yellow-primary font-bold">{discount}% OFF</span>
+                                    <span className="text-sm text-gray-tertiary line-through">${oldPrice}.00</span>
+                                    <span className=" text-yellow-primary font-bold text-sm">{discount}% OFF</span>
                                 </>
                             )}
                         </div>

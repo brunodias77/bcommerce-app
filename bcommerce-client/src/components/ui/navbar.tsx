@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ containerStyles = "", onClick }) => {
                     href={link.path}
                     className={`
             px-3 py-2 rounded-full capitalize transition-colors 
-            ${isActive(link.path) ? "bg-[#2d2926] text-white" : "text-black hover:bg-black/10"}
+            ${isActive(link.path) ? "bg-[#2d2926] text-white" : "text-black-primary hover:bg-black-primary/10"}
           `}
                     onClick={onClick}
                 >

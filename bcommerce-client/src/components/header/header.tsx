@@ -9,6 +9,9 @@ import { IoCartOutline, IoPersonOutline, IoHeartOutline } from "react-icons/io5"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
+import UserIcon from "@/icons/user-icon";
+import HeartIcon from "@/icons/heart-icon";
+import CartIcon from "@/icons/cart-icon";
 
 const Header = () => {
     const [menuOpened, setMenuOpened] = useState(false);
@@ -82,17 +85,17 @@ const Header = () => {
                         onClick={handleProfileClick}
                         className="group relative cursor-pointer flex"
                     >
-                        <IoPersonOutline size={20} color="#2d2926" />
+                        <UserIcon color="#2d2926" />
                     </button>
 
                     {/* FAVORITOS */}
                     <Link href="/favorites" className="group relative cursor-pointer flex">
-                        <IoHeartOutline size={20} color="#2d2926" />
+                        <HeartIcon color="#2d2926" />
                     </Link>
 
                     {/* CARRINHO */}
                     <Link href="/cart" className="flex relative">
-                        <IoCartOutline size={20} color="#2d2926" />
+                        <CartIcon color="#2d2926" />
                         <span className="bg-yellow-primary text-black-primary text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
                             0 {/* Substituir por getCartCount() futuramente */}
                         </span>

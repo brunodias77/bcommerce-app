@@ -18,8 +18,11 @@
 
   --color-yellow-primary: #fec857;
 
-  --color-gray-primary: #f8f8fb;
+  --color-gray-primary: #777777;
   --color-gray-secondary: #4b5563;
+  --color-gray-tertiary: #999999;
+
+  --color-blue-primary: #4b5966;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

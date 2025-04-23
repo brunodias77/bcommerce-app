@@ -49,12 +49,12 @@ const NewProducstSection: React.FC = () => {
                 />
                 <div
                     ref={carouselRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory space-x-6 scroll-smooth hide-horizontal-scrollbar h-[399px]"
+                    className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar h-[399px]"
                 >
                     {PopularProducts.map((product) => (
                         <div
                             key={product._id}
-                            className="snap-start shrink-0 w-[250px] md:w-[300px] xl:w-[320px]"
+                            className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
                         >
                             <ProductCard {...product} />
                         </div>
