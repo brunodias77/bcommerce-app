@@ -13,9 +13,9 @@ const UserIcon: React.FC<UserIconProps> = ({
   color = "#111827",
 }) => {
   return (
-    <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 13C13.3137 13 16 10.3137 16 7C16 3.68629 13.3137 1 10 1C6.68629 1 4 3.68629 4 7C4 10.3137 6.68629 13 10 13Z" stroke="#191C1F" stroke-width="1.5" stroke-miterlimit="10" />
-      <path d="M0.90625 18.2501C1.82775 16.6537 3.15328 15.328 4.74958 14.4062C6.34588 13.4845 8.1567 12.9993 10 12.9993C11.8433 12.9993 13.6541 13.4845 15.2504 14.4062C16.8467 15.328 18.1722 16.6537 19.0938 18.2501" stroke="#191C1F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <svg width={width} height={height} viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 13C13.3137 13 16 10.3137 16 7C16 3.68629 13.3137 1 10 1C6.68629 1 4 3.68629 4 7C4 10.3137 6.68629 13 10 13Z" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" />
+      <path d="M0.90625 18.2501C1.82775 16.6537 3.15328 15.328 4.74958 14.4062C6.34588 13.4845 8.1567 12.9993 10 12.9993C11.8433 12.9993 13.6541 13.4845 15.2504 14.4062C16.8467 15.328 18.1722 16.6537 19.0938 18.2501" stroke="#191C1F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 
   );

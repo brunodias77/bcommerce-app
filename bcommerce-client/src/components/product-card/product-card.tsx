@@ -18,13 +18,14 @@ const Badge = ({ text, bgColor, top }: { text: string; bgColor: string; top: str
     </div>
 );
 
-const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) => {
+const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isNew }) => {
     const [isFavorite, setIsFavorite] = useState(false);
-    const oldPrice = price + 10;
-    const isOnSale = oldPrice > price;
-    const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
+    const oldPrice = price.amount + 10;
+    const isOnSale = oldPrice > price.amount;
+    // verificar se os precos nao sao iguais
+    const discount = Math.round(((oldPrice - price.amount) / oldPrice) * 100);
 
-    const productImage = products[1].image[0];;
+    const productImage = products[1].images[0]
 
     return (
         <div className="relative flex flex-col items-center group w-full p-4">
@@ -32,6 +33,10 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
                 {isOnSale && (
                     <>
                         <Badge text="OFERTA" bgColor="bg-yellow-500" top="top-2" />
+                    </>
+                )}
+                {isNew && (
+                    <>
                         <Badge text="NOVO" bgColor="bg-black-primary" top="top-10" />
                     </>
                 )}
@@ -40,9 +45,9 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
                     <FireIcon />
                 </div>
 
-                <Link href={`/product/${_id}`} className="block bg-gray-100 overflow-hidden w-full">
+                <Link href={`/product/${id}`} className="block bg-gray-100 overflow-hidden w-full">
                     <Image
-                        src={productImage}
+                        src={productImage.url}
                         alt={name}
                         width={300}
                         height={220}
@@ -51,7 +56,7 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
                 </Link>
 
                 <div className="p-3 w-full">
-                    <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{category}</h4>
+                    <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{category.name}</h4>
                     <h2 className="text-[16px] font-bold text-blue-primary line-clamp-1">{name}</h2>
 
                     <div className="flex items-center gap-x-2">
@@ -62,7 +67,7 @@ const ProductCard: React.FC<Product> = ({ _id, image, name, price, category }) =
 
                     <div className="flex items-center justify-between gap-x-2 mt-2">
                         <div className="flex items-center gap-x-2">
-                            <h5 className="text-[14px] md:text-[15px] font-bold text-blue-primary">${price}.00</h5>
+                            <h5 className="text-[14px] md:text-[15px] font-bold text-blue-primary">${price.amount}.00</h5>
                             {isOnSale && (
                                 <>
                                     <span className="text-sm text-gray-tertiary line-through">${oldPrice}.00</span>

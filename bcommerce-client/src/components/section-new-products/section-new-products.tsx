@@ -53,7 +53,7 @@ const NewProducstSection: React.FC = () => {
                 >
                     {PopularProducts.map((product) => (
                         <div
-                            key={product._id}
+                            key={product.id}
                             className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
                         >
                             <ProductCard {...product} />

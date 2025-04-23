@@ -28,7 +28,7 @@ const PopularProductsSection: React.FC = () => {
 
                 <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 '>
                     {PopularProducts.map((product) => (
-                        <div key={product._id} className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
+                        <div key={product.id} className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
                         >
                             <ProductCard {...product} />
                         </div>
