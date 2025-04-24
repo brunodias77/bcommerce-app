@@ -99,9 +99,18 @@ public class ProductValidator : Validator
     {
         var images = _product.Images;
 
-        if (images is null || !images.Any())
+        // ✅ Permite lista nula ou vazia (regra opcional agora)
+        if (images == null)
         {
-            AddError("O produto deve ter pelo menos uma imagem.");
+            // Comentado para não obrigar imagem
+            // AddError("O produto deve ter pelo menos uma imagem.");
+            return;
+        }
+
+        if (!images.Any())
+        {
+            // Comentado para permitir lista vazia
+            // AddError("O produto deve ter pelo menos uma imagem.");
             return;
         }
 
