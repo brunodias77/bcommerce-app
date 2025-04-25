@@ -1,4 +1,4 @@
-using bcommerce_server.Domain.Addresses;
+using bcommerce_server.Domain.Customers.Entities;
 using bcommerce_server.Domain.Customers.Identifiers;
 using bcommerce_server.Domain.Customers.Validators;
 using bcommerce_server.Domain.Customers.ValueObjects;
@@ -7,14 +7,17 @@ using bcommerce_server.Domain.Validations;
 
 namespace bcommerce_server.Domain.Customers;
 
+/// <summary>
+/// Raiz de agregação que representa um cliente do sistema.
+/// </summary>
 public class Customer : AggregateRoot<CustomerID>
 {
     private string _name;
     private Email _email;
-    private string _password; // 🆕 NOVO
+    private string _password;
     private Cpf? _cpf;
-    private List<Address>? _addresses;
-    private DateTime? _deletedAt; 
+    private List<CustomerAddress>? _addresses;
+    private DateTime? _deletedAt;
     private DateTime _createdAt;
     private DateTime _updatedAt;
 
@@ -24,15 +27,15 @@ public class Customer : AggregateRoot<CustomerID>
         Email email,
         string password,
         Cpf? cpf,
-        List<Address>? addresses,
-        DateTime? deletedAt, // 🆕 Novo parâmetro
+        List<CustomerAddress>? addresses,
+        DateTime? deletedAt,
         DateTime createdAt,
         DateTime updatedAt
     ) : base(id)
     {
         _name = name;
         _email = email;
-        _password = password; // 🆕 NOVO
+        _password = password;
         _cpf = cpf;
         _addresses = addresses;
         _deletedAt = deletedAt;
@@ -49,8 +52,8 @@ public class Customer : AggregateRoot<CustomerID>
             email,
             password,
             null,
+            new List<CustomerAddress>(),
             null,
-            null, // 🆕 deletedAt null = ativo
             now,
             now
         );
@@ -62,16 +65,15 @@ public class Customer : AggregateRoot<CustomerID>
         Email email,
         string password,
         Cpf? cpf,
-        List<Address>? addresses,
+        List<CustomerAddress>? addresses,
         DateTime? deletedAt,
         DateTime createdAt,
         DateTime updatedAt
     )
     {
-        return new Customer(id, name, email,password, cpf, addresses, deletedAt, createdAt, updatedAt);
+        return new Customer(id, name, email, password, cpf, addresses, deletedAt, createdAt, updatedAt);
     }
 
-    // 🔄 ATUALIZADO: método agora também pode atualizar CPF (opcionalmente)
     public Customer Update(string name, Email email, string password, Cpf? cpf = null)
     {
         _name = name;
@@ -82,14 +84,14 @@ public class Customer : AggregateRoot<CustomerID>
         return this;
     }
 
-    public Customer AddAddress(Address address)
+    public Customer AddAddress(CustomerAddress address)
     {
-        _addresses ??= new List<Address>(); // 🛡️ Protege contra null
+        _addresses ??= new List<CustomerAddress>();
         _addresses.Add(address);
         _updatedAt = DateTime.UtcNow;
         return this;
     }
-    
+
     public Customer Deactivate()
     {
         if (_deletedAt is null)
@@ -100,7 +102,6 @@ public class Customer : AggregateRoot<CustomerID>
         return this;
     }
 
-    // 🆕 NOVO: reativa o cliente (reseta o deletedAt)
     public Customer Activate()
     {
         if (_deletedAt is not null)
@@ -110,9 +111,7 @@ public class Customer : AggregateRoot<CustomerID>
         }
         return this;
     }
-    
-    
-    // 🆕 NOVO: método para atualizar a senha
+
     public Customer UpdatePassword(string newPassword)
     {
         _password = newPassword;
@@ -120,15 +119,12 @@ public class Customer : AggregateRoot<CustomerID>
         return this;
     }
 
-    // 🆕 NOVO: método para adicionar CPF separadamente
     public Customer AddCpf(Cpf cpf)
     {
         _cpf = cpf;
         _updatedAt = DateTime.UtcNow;
         return this;
     }
-
-
 
     public override void Validate(IValidationHandler handler)
     {
@@ -142,16 +138,12 @@ public class Customer : AggregateRoot<CustomerID>
     public string Password => _password;
     public Cpf? Cpf => _cpf;
 
-    public IReadOnlyCollection<Address> Addresses =>
-        (_addresses != null ? _addresses : new List<Address>()).AsReadOnly();
+    public IReadOnlyCollection<CustomerAddress> Addresses =>
+        (_addresses ?? new List<CustomerAddress>()).AsReadOnly();
 
     public DateTime CreatedAt => _createdAt;
     public DateTime UpdatedAt => _updatedAt;
-
-    // 🆕 NOVA propriedade para rastrear soft delete
     public DateTime? DeletedAt => _deletedAt;
-
-    // 🆕 NOVA propriedade para facilitar leitura do status
     public bool IsActive => _deletedAt is null;
 
     public object Clone()
@@ -162,11 +154,22 @@ public class Customer : AggregateRoot<CustomerID>
             Email,
             Password,
             Cpf,
-            _addresses?.ToList(), // cópia segura
-            DeletedAt,            // 🆕 incluído no clone
+            _addresses?.Select(a =>
+                CustomerAddress.With(
+                    a.Id,
+                    a.Street,
+                    a.Number,
+                    a.City,
+                    a.State,
+                    a.ZipCode,
+                    a.CreatedAt,
+                    a.UpdatedAt
+                )).ToList(),
+            DeletedAt,
             CreatedAt,
             UpdatedAt
         );
     }
 }
+
 

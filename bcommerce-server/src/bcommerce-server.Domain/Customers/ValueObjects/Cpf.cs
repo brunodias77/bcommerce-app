@@ -14,7 +14,7 @@ public sealed class Cpf : ValueObject
         Number = new string(number.Where(char.IsDigit).ToArray());
     }
 
-    public static Cpf From(string number) => new(number);
+    public static Cpf From(string raw) => new(raw);
 
     public override string ToString()
         => Convert.ToUInt64(Number).ToString(@"000\.000\.000\-00");

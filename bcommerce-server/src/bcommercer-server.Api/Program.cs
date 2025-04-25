@@ -24,6 +24,7 @@ builder.Services.AddCors(options =>
         // .AllowCredentials(); // Descomente se estiver usando autenticação via cookies
     });
 });
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var app = builder.Build();
 
@@ -44,30 +45,3 @@ app.MapControllers();
 
 app.Run();
 
-// using bcommercer_server.Api.Configurations;
-//
-// var builder = WebApplication.CreateBuilder(args);
-// builder.Services.AddInfrastructure(builder.Configuration);
-// builder.Services.AddApplication(builder.Configuration);
-//
-//
-// builder.Services.AddControllers();
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
-//
-//
-//
-// var app = builder.Build();
-//
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-//
-// app.UseHttpsRedirection();
-//
-// app.UseAuthorization();
-//
-// app.MapControllers();
-// app.Run();

@@ -1,69 +1,74 @@
+using bcommerce_server.Domain.Products.Entities;
 using bcommerce_server.Domain.Products.Identifiers;
 using bcommerce_server.Domain.Products.Validators;
-using bcommerce_server.Domain.Products.ValueObjects;
 using bcommerce_server.Domain.SeedWork;
 using bcommerce_server.Domain.Validations;
+using System.Collections.ObjectModel;
 
 namespace bcommerce_server.Domain.Products;
 
+/// <summary>
+/// Raiz de agregação que representa um produto do catálogo.
+/// </summary>
 public class Product : AggregateRoot<ProductID>
 {
     private string _name;
     private string _description;
-    private Price _price;
-    private Price? _oldPrice;
-    private List<ImageUrl> _images;
-    private Category _category;
-    private List<Color> _colors;
-    private Stock _stock;
+    private decimal _price;
+    private decimal? _oldPrice;
+    private CategoryID _categoryId;
+    private int _stockQuantity;
     private int _sold;
     private bool _isActive;
     private bool _popular;
+    private List<ProductImage> _images;
+    private List<ProductColor> _colors;
+    private List<ProductReview> _reviews;
+    private DateTime? _deletedAt;
     private DateTime _createdAt;
-    private DateTime _updatedAt; // 🆕 Novo campo
+    private DateTime _updatedAt;
 
     private Product(
         ProductID id,
         string name,
         string description,
-        Price price,
-        Price? oldPrice,
-        List<ImageUrl> images,
-        Category category,
-        List<Color> colors,
-        Stock stock,
+        decimal price,
+        decimal? oldPrice,
+        CategoryID categoryId,
+        int stockQuantity,
         int sold,
         bool isActive,
         bool popular,
+        List<ProductImage> images,
+        List<ProductColor> colors,
+        List<ProductReview> reviews,
+        DateTime? deletedAt,
         DateTime createdAt,
-        DateTime updatedAt // 🆕 Novo parâmetro
+        DateTime updatedAt
     ) : base(id)
     {
         _name = name;
         _description = description;
         _price = price;
         _oldPrice = oldPrice;
-        _images = images;
-        _category = category;
-        _colors = colors;
-        _stock = stock;
+        _categoryId = categoryId;
+        _stockQuantity = stockQuantity;
         _sold = sold;
         _isActive = isActive;
         _popular = popular;
+        _images = images ?? new();
+        _colors = colors ?? new();
+        _reviews = reviews ?? new();
+        _deletedAt = deletedAt;
         _createdAt = createdAt;
         _updatedAt = updatedAt;
     }
 
-    public static Product NewProduct(
+    public static Product Create(
         string name,
         string description,
-        Price price,
-        List<ImageUrl> images,
-        Category category,
-        List<Color> colors,
-        Stock stock,
-        bool isActive = true,
-        bool popular = false
+        decimal price,
+        CategoryID categoryId
     )
     {
         var now = DateTime.UtcNow;
@@ -73,13 +78,15 @@ public class Product : AggregateRoot<ProductID>
             description,
             price,
             null,
-            images,
-            category,
-            colors,
-            stock,
+            categoryId,
             0,
-            isActive,
-            popular,
+            0,
+            true,
+            false,
+            new List<ProductImage>(),
+            new List<ProductColor>(),
+            new List<ProductReview>(),
+            null,
             now,
             now
         );
@@ -89,33 +96,30 @@ public class Product : AggregateRoot<ProductID>
         ProductID id,
         string name,
         string description,
-        Price price,
-        Price? oldPrice,
-        List<ImageUrl> images,
-        Category category,
-        List<Color> colors,
-        Stock stock,
+        decimal price,
+        decimal? oldPrice,
+        CategoryID categoryId,
+        int stockQuantity,
         int sold,
         bool isActive,
         bool popular,
+        List<ProductImage> images,
+        List<ProductColor> colors,
+        List<ProductReview> reviews,
+        DateTime? deletedAt,
         DateTime createdAt,
         DateTime updatedAt
     )
     {
-        return new Product(id, name, description, price, oldPrice, images, category, colors, stock, sold, isActive, popular, createdAt, updatedAt);
+        return new Product(id, name, description, price, oldPrice, categoryId, stockQuantity, sold, isActive, popular, images, colors, reviews, deletedAt, createdAt, updatedAt);
     }
 
     public Product Update(
         string name,
         string description,
-        Price price,
-        Price? oldPrice,
-        List<ImageUrl> images,
-        Category category,
-        List<Color> colors,
-        Stock stock,
-        int sold,
-        bool isActive,
+        decimal price,
+        decimal? oldPrice,
+        int stockQuantity,
         bool popular
     )
     {
@@ -123,36 +127,47 @@ public class Product : AggregateRoot<ProductID>
         _description = description;
         _price = price;
         _oldPrice = oldPrice;
-        _images = images;
-        _category = category;
-        _colors = colors;
-        _stock = stock;
-        _sold = sold;
-        _isActive = isActive;
+        _stockQuantity = stockQuantity;
         _popular = popular;
-        _updatedAt = DateTime.UtcNow; // 🆕 Atualiza modificação
-
+        _updatedAt = DateTime.UtcNow;
         return this;
     }
 
-    // 🆕 Ativar o produto
-    public void Activate()
+    public Product AddImage(ProductImage image)
     {
-        if (!_isActive)
-        {
-            _isActive = true;
-            _updatedAt = DateTime.UtcNow;
-        }
+        _images.Add(image);
+        _updatedAt = DateTime.UtcNow;
+        return this;
     }
 
-    // 🆕 Desativar o produto
-    public void Deactivate()
+    public Product AddColor(ProductColor color)
     {
-        if (_isActive)
-        {
-            _isActive = false;
-            _updatedAt = DateTime.UtcNow;
-        }
+        _colors.Add(color);
+        _updatedAt = DateTime.UtcNow;
+        return this;
+    }
+
+    public Product AddReview(ProductReview review)
+    {
+        _reviews.Add(review);
+        _updatedAt = DateTime.UtcNow;
+        return this;
+    }
+
+    public Product Deactivate()
+    {
+        _isActive = false;
+        _deletedAt = DateTime.UtcNow;
+        _updatedAt = DateTime.UtcNow;
+        return this;
+    }
+
+    public Product Activate()
+    {
+        _isActive = true;
+        _deletedAt = null;
+        _updatedAt = DateTime.UtcNow;
+        return this;
     }
 
     public override void Validate(IValidationHandler handler)
@@ -160,25 +175,23 @@ public class Product : AggregateRoot<ProductID>
         new ProductValidator(this, handler).Validate();
     }
 
-    // Propriedades públicas
-
+    // 🧱 Propriedades públicas (read-only)
     public string Name => _name;
     public string Description => _description;
-    public Price Price => _price;
-    public Price? OldPrice => _oldPrice;
-    public IReadOnlyCollection<ImageUrl> Images => _images.AsReadOnly();
-    public Category Category => _category;
-    public IReadOnlyCollection<Color> Colors => _colors.AsReadOnly();
-    public Stock Stock => _stock;
+    public decimal Price => _price;
+    public decimal? OldPrice => _oldPrice;
+    public CategoryID CategoryId => _categoryId;
+    public int StockQuantity => _stockQuantity;
     public int Sold => _sold;
     public bool IsActive => _isActive;
     public bool Popular => _popular;
+    public DateTime? DeletedAt => _deletedAt;
     public DateTime CreatedAt => _createdAt;
-    public DateTime UpdatedAt => _updatedAt; // 🆕
+    public DateTime UpdatedAt => _updatedAt;
 
-    // Propriedades derivadas
-    public bool IsNew => _createdAt >= DateTime.UtcNow.AddDays(-30);
-    public bool Sale => _oldPrice is not null && _oldPrice.Amount > _price.Amount;
+    public IReadOnlyCollection<ProductImage> Images => _images.AsReadOnly();
+    public IReadOnlyCollection<ProductColor> Colors => _colors.AsReadOnly();
+    public IReadOnlyCollection<ProductReview> Reviews => _reviews.AsReadOnly();
 
     public object Clone()
     {
@@ -188,13 +201,15 @@ public class Product : AggregateRoot<ProductID>
             Description,
             Price,
             OldPrice,
-            _images.ToList(),
-            Category,
-            _colors.ToList(),
-            Stock,
+            CategoryId,
+            StockQuantity,
             Sold,
             IsActive,
             Popular,
+            _images.ToList(),
+            _colors.ToList(),
+            _reviews.ToList(),
+            DeletedAt,
             CreatedAt,
             UpdatedAt
         );
@@ -202,6 +217,196 @@ public class Product : AggregateRoot<ProductID>
 }
 
 
+// using bcommerce_server.Domain.Products.Entities;
+// using bcommerce_server.Domain.Products.Identifiers;
+// using bcommerce_server.Domain.Products.Validators;
+// using bcommerce_server.Domain.SeedWork;
+// using bcommerce_server.Domain.Validations;
+// using System.Collections.ObjectModel;
+//
+// namespace bcommerce_server.Domain.Products;
+//
+// /// <summary>
+// /// Raiz de agregação que representa um produto do catálogo.
+// /// </summary>
+// public class Product : AggregateRoot<ProductID>
+// {
+//     private string _name;
+//     private string _description;
+//     private decimal _price;
+//     private decimal? _oldPrice;
+//     private int _stockQuantity;
+//     private int _sold;
+//     private bool _isActive;
+//     private bool _popular;
+//     private List<ProductImage> _images;
+//     private List<ProductColor> _colors;
+//     private List<ProductReview> _reviews;
+//     private DateTime? _deletedAt;
+//     private DateTime _createdAt;
+//     private DateTime _updatedAt;
+//
+//     private Product(
+//         ProductID id,
+//         string name,
+//         string description,
+//         decimal price,
+//         decimal? oldPrice,
+//         int stockQuantity,
+//         int sold,
+//         bool isActive,
+//         bool popular,
+//         List<ProductImage> images,
+//         List<ProductColor> colors,
+//         List<ProductReview> reviews,
+//         DateTime? deletedAt,
+//         DateTime createdAt,
+//         DateTime updatedAt
+//     ) : base(id)
+//     {
+//         _name = name;
+//         _description = description;
+//         _price = price;
+//         _oldPrice = oldPrice;
+//         _stockQuantity = stockQuantity;
+//         _sold = sold;
+//         _isActive = isActive;
+//         _popular = popular;
+//         _images = images;
+//         _colors = colors;
+//         _reviews = reviews;
+//         _deletedAt = deletedAt;
+//         _createdAt = createdAt;
+//         _updatedAt = updatedAt;
+//     }
+//
+//     public static Product Create(
+//         string name,
+//         string description,
+//         decimal price
+//     )
+//     {
+//         var now = DateTime.UtcNow;
+//         return new Product(
+//             ProductID.Generate(),
+//             name,
+//             description,
+//             price,
+//             null,
+//             0,
+//             0,
+//             true,
+//             false,
+//             new List<ProductImage>(),
+//             new List<ProductColor>(),
+//             new List<ProductReview>(),
+//             null,
+//             now,
+//             now
+//         );
+//     }
+//
+//     public static Product With(
+//         ProductID id,
+//         string name,
+//         string description,
+//         decimal price,
+//         decimal? oldPrice,
+//         int stockQuantity,
+//         int sold,
+//         bool isActive,
+//         bool popular,
+//         List<ProductImage> images,
+//         List<ProductColor> colors,
+//         List<ProductReview> reviews,
+//         DateTime? deletedAt,
+//         DateTime createdAt,
+//         DateTime updatedAt
+//     )
+//     {
+//         return new Product(id, name, description, price, oldPrice, stockQuantity, sold, isActive, popular, images, colors, reviews, deletedAt, createdAt, updatedAt);
+//     }
+//
+//     public Product Update(
+//         string name,
+//         string description,
+//         decimal price,
+//         decimal? oldPrice,
+//         int stockQuantity,
+//         bool popular
+//     )
+//     {
+//         _name = name;
+//         _description = description;
+//         _price = price;
+//         _oldPrice = oldPrice;
+//         _stockQuantity = stockQuantity;
+//         _popular = popular;
+//         _updatedAt = DateTime.UtcNow;
+//         return this;
+//     }
+//
+//     public Product AddImage(ProductImage image)
+//     {
+//         _images.Add(image);
+//         _updatedAt = DateTime.UtcNow;
+//         return this;
+//     }
+//
+//     public Product AddColor(ProductColor color)
+//     {
+//         _colors.Add(color);
+//         _updatedAt = DateTime.UtcNow;
+//         return this;
+//     }
+//
+//     public Product AddReview(ProductReview review)
+//     {
+//         _reviews.Add(review);
+//         _updatedAt = DateTime.UtcNow;
+//         return this;
+//     }
+//
+//     public Product Deactivate()
+//     {
+//         _isActive = false;
+//         _deletedAt = DateTime.UtcNow;
+//         _updatedAt = DateTime.UtcNow;
+//         return this;
+//     }
+//
+//     public Product Activate()
+//     {
+//         _isActive = true;
+//         _deletedAt = null;
+//         _updatedAt = DateTime.UtcNow;
+//         return this;
+//     }
+//
+//     public override void Validate(IValidationHandler handler)
+//     {
+//         new ProductValidator(this, handler).Validate();
+//     }
+//
+//     // Propriedades públicas (read-only)
+//     public string Name => _name;
+//     public string Description => _description;
+//     public decimal Price => _price;
+//     public decimal? OldPrice => _oldPrice;
+//     public int StockQuantity => _stockQuantity;
+//     public int Sold => _sold;
+//     public bool IsActive => _isActive;
+//     public bool Popular => _popular;
+//     public DateTime? DeletedAt => _deletedAt;
+//     public DateTime CreatedAt => _createdAt;
+//     public DateTime UpdatedAt => _updatedAt;
+//
+//     public IReadOnlyCollection<ProductImage> Images => _images.AsReadOnly();
+//     public IReadOnlyCollection<ProductColor> Colors => _colors.AsReadOnly();
+//     public IReadOnlyCollection<ProductReview> Reviews => _reviews.AsReadOnly();
+// }
+
+
 // using bcommerce_server.Domain.Products.Identifiers;
 // using bcommerce_server.Domain.Products.Validators;
 // using bcommerce_server.Domain.Products.ValueObjects;
@@ -216,7 +421,7 @@ public class Product : AggregateRoot<ProductID>
 //     private string _description;
 //     private Price _price;
 //     private Price? _oldPrice;
-//     private List<ImageUrl> _images;
+//     private List<ImageUrl>? _images;
 //     private Category _category;
 //     private List<Color> _colors;
 //     private Stock _stock;
@@ -224,6 +429,7 @@ public class Product : AggregateRoot<ProductID>
 //     private bool _isActive;
 //     private bool _popular;
 //     private DateTime _createdAt;
+//     private DateTime _updatedAt; // 🆕 Novo campo
 //
 //     private Product(
 //         ProductID id,
@@ -231,14 +437,15 @@ public class Product : AggregateRoot<ProductID>
 //         string description,
 //         Price price,
 //         Price? oldPrice,
-//         List<ImageUrl> images,
+//         List<ImageUrl>? images,
 //         Category category,
 //         List<Color> colors,
 //         Stock stock,
 //         int sold,
 //         bool isActive,
 //         bool popular,
-//         DateTime createdAt
+//         DateTime createdAt,
+//         DateTime updatedAt // 🆕 Novo parâmetro
 //     ) : base(id)
 //     {
 //         _name = name;
@@ -253,13 +460,14 @@ public class Product : AggregateRoot<ProductID>
 //         _isActive = isActive;
 //         _popular = popular;
 //         _createdAt = createdAt;
+//         _updatedAt = updatedAt;
 //     }
 //
 //     public static Product NewProduct(
 //         string name,
 //         string description,
 //         Price price,
-//         List<ImageUrl> images,
+//         List<ImageUrl>? images,
 //         Category category,
 //         List<Color> colors,
 //         Stock stock,
@@ -281,6 +489,7 @@ public class Product : AggregateRoot<ProductID>
 //             0,
 //             isActive,
 //             popular,
+//             now,
 //             now
 //         );
 //     }
@@ -291,17 +500,18 @@ public class Product : AggregateRoot<ProductID>
 //         string description,
 //         Price price,
 //         Price? oldPrice,
-//         List<ImageUrl> images,
+//         List<ImageUrl>? images,
 //         Category category,
 //         List<Color> colors,
 //         Stock stock,
 //         int sold,
 //         bool isActive,
 //         bool popular,
-//         DateTime createdAt
+//         DateTime createdAt,
+//         DateTime updatedAt
 //     )
 //     {
-//         return new Product(id, name, description, price, oldPrice, images, category, colors, stock, sold, isActive, popular, createdAt);
+//         return new Product(id, name, description, price, oldPrice, images, category, colors, stock, sold, isActive, popular, createdAt, updatedAt);
 //     }
 //
 //     public Product Update(
@@ -309,7 +519,7 @@ public class Product : AggregateRoot<ProductID>
 //         string description,
 //         Price price,
 //         Price? oldPrice,
-//         List<ImageUrl> images,
+//         List<ImageUrl>? images,
 //         Category category,
 //         List<Color> colors,
 //         Stock stock,
@@ -329,8 +539,29 @@ public class Product : AggregateRoot<ProductID>
 //         _sold = sold;
 //         _isActive = isActive;
 //         _popular = popular;
+//         _updatedAt = DateTime.UtcNow; // 🆕 Atualiza modificação
 //
 //         return this;
+//     }
+//
+//     // 🆕 Ativar o produto
+//     public void Activate()
+//     {
+//         if (!_isActive)
+//         {
+//             _isActive = true;
+//             _updatedAt = DateTime.UtcNow;
+//         }
+//     }
+//
+//     // 🆕 Desativar o produto
+//     public void Deactivate()
+//     {
+//         if (_isActive)
+//         {
+//             _isActive = false;
+//             _updatedAt = DateTime.UtcNow;
+//         }
 //     }
 //
 //     public override void Validate(IValidationHandler handler)
@@ -338,24 +569,25 @@ public class Product : AggregateRoot<ProductID>
 //         new ProductValidator(this, handler).Validate();
 //     }
 //
-//     // Propriedades públicas de leitura
+//     // Propriedades públicas
 //
 //     public string Name => _name;
 //     public string Description => _description;
 //     public Price Price => _price;
 //     public Price? OldPrice => _oldPrice;
-//     public IReadOnlyCollection<ImageUrl> Images => _images.AsReadOnly();
+//     public IReadOnlyCollection<ImageUrl> Images => (IReadOnlyCollection<ImageUrl>?)_images?.AsReadOnly() ?? Array.Empty<ImageUrl>();
 //     public Category Category => _category;
 //     public IReadOnlyCollection<Color> Colors => _colors.AsReadOnly();
 //     public Stock Stock => _stock;
-//     public int Sold => _sold;
+//     public int Sold => _sold; // Vendidos
 //     public bool IsActive => _isActive;
 //     public bool Popular => _popular;
 //     public DateTime CreatedAt => _createdAt;
+//     public DateTime UpdatedAt => _updatedAt; // 🆕
 //
-//     // Calculadas dinamicamente
-//     public bool IsNew => _createdAt >= DateTime.UtcNow.AddDays(-30);
-//     public bool Sale => _oldPrice is not null && _oldPrice.Amount > _price.Amount;
+//     // Propriedades derivadas
+//     public bool IsNew => _createdAt >= DateTime.UtcNow.AddDays(-30); // Novidade
+//     public bool Sale => _oldPrice is not null && _oldPrice.Amount > _price.Amount; // Promocao
 //
 //     public object Clone()
 //     {
@@ -372,505 +604,11 @@ public class Product : AggregateRoot<ProductID>
 //             Sold,
 //             IsActive,
 //             Popular,
-//             CreatedAt
-//         );
-//     }
-// }
-
-
-// using bcommerce_server.Domain.Products.Identifiers;
-// using bcommerce_server.Domain.Products.Validators;
-// using bcommerce_server.Domain.Products.ValueObjects;
-// using bcommerce_server.Domain.SeedWork;
-// using bcommerce_server.Domain.Validations;
-//
-// namespace bcommerce_server.Domain.Products;
-//
-// public class Product : AggregateRoot<ProductID>
-// {
-//     private string _name;
-//     private string _description;
-//     private Price _price;
-//     private Price? _oldPrice;
-//     private List<ImageUrl> _images;
-//     private Category _category;
-//     private List<Color> _colors;
-//     private int _stock;
-//     private int _sold;
-//     private bool _isActive;
-//     private bool _popular;
-//     private DateTime _createdAt;
-//
-//     private Product(
-//         ProductID id,
-//         string name,
-//         string description,
-//         Price price,
-//         Price? oldPrice,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         int sold,
-//         bool isActive,
-//         bool popular,
-//         DateTime createdAt
-//     ) : base(id)
-//     {
-//         _name = name;
-//         _description = description;
-//         _price = price;
-//         _oldPrice = oldPrice;
-//         _images = images;
-//         _category = category;
-//         _colors = colors;
-//         _stock = stock;
-//         _sold = sold;
-//         _isActive = isActive;
-//         _popular = popular;
-//         _createdAt = createdAt;
-//     }
-//
-//     public static Product NewProduct(
-//         string name,
-//         string description,
-//         Price price,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         bool isActive = true,
-//         bool popular = false
-//     )
-//     {
-//         var now = DateTime.UtcNow;
-//         return new Product(
-//             ProductID.Generate(),
-//             name,
-//             description,
-//             price,
-//             null,
-//             images,
-//             category,
-//             colors,
-//             stock,
-//             0,
-//             isActive,
-//             popular,
-//             now
-//         );
-//     }
-//
-//     public static Product With(
-//         ProductID id,
-//         string name,
-//         string description,
-//         Price price,
-//         Price? oldPrice,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         int sold,
-//         bool isActive,
-//         bool popular,
-//         DateTime createdAt
-//     )
-//     {
-//         return new Product(id, name, description, price, oldPrice, images, category, colors, stock, sold, isActive, popular, createdAt);
-//     }
-//
-//     public Product Update(
-//         string name,
-//         string description,
-//         Price price,
-//         Price? oldPrice,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         int sold,
-//         bool isActive,
-//         bool popular
-//     )
-//     {
-//         _name = name;
-//         _description = description;
-//         _price = price;
-//         _oldPrice = oldPrice;
-//         _images = images;
-//         _category = category;
-//         _colors = colors;
-//         _stock = stock;
-//         _sold = sold;
-//         _isActive = isActive;
-//         _popular = popular;
-//
-//         return this;
-//     }
-//
-//     public override void Validate(IValidationHandler handler)
-//     {
-//         new ProductValidator(this, handler).Validate();
-//     }
-//
-//     // Propriedades públicas de leitura
-//
-//     public string Name => _name;
-//     public string Description => _description;
-//     public Price Price => _price;
-//     public Price? OldPrice => _oldPrice;
-//     public IReadOnlyCollection<ImageUrl> Images => _images.AsReadOnly();
-//     public Category Category => _category;
-//     public IReadOnlyCollection<Color> Colors => _colors.AsReadOnly();
-//     public int Stock => _stock;
-//     public int Sold => _sold; // VENDIDOS
-//     public bool IsActive => _isActive;
-//     public bool Popular => _popular;
-//     public DateTime CreatedAt => _createdAt;
-//
-//     // 🧠 Calculadas dinamicamente
-//     public bool IsNew => _createdAt >= DateTime.UtcNow.AddDays(-30); // E  NOVIDADE ?
-//     public bool Sale => _oldPrice is not null && _oldPrice.Amount > _price.Amount; // E PROMOCAO ?
-//
-//     public object Clone()
-//     {
-//         return With(
-//             Id,
-//             Name,
-//             Description,
-//             Price,
-//             OldPrice,
-//             _images.ToList(),
-//             Category,
-//             _colors.ToList(),
-//             Stock,
-//             Sold,
-//             IsActive,
-//             Popular,
-//             CreatedAt
-//         );
-//     }
-// }
-
-
-// using bcommerce_server.Domain.Products.Identifiers;
-// using bcommerce_server.Domain.Products.Validators;
-// using bcommerce_server.Domain.Products.ValueObjects;
-// using bcommerce_server.Domain.SeedWork;
-// using bcommerce_server.Domain.Validations;
-//
-// namespace bcommerce_server.Domain.Products;
-//
-// public class Product : AggregateRoot<ProductID>
-// {
-//     private string _name;
-//     private string _description;
-//     private Price _price;
-//     private Price? _oldPrice;
-//     private List<ImageUrl> _images;
-//     private Category _category;
-//     private List<Color> _colors;
-//     private int _stock;
-//     private int _sold;
-//     private bool _isActive;
-//     private bool _isNew;
-//     private bool _sale;
-//     private bool _popular;
-//     private DateTime _createdAt;
-//
-//     private Product(
-//         ProductID id,
-//         string name,
-//         string description,
-//         Price price,
-//         Price? oldPrice,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         int sold,
-//         bool isActive,
-//         bool isNew,
-//         bool sale,
-//         bool popular,
-//         DateTime createdAt
-//     ) : base(id)
-//     {
-//         _name = name;
-//         _description = description;
-//         _price = price;
-//         _oldPrice = oldPrice;
-//         _images = images;
-//         _category = category;
-//         _colors = colors;
-//         _stock = stock;
-//         _sold = sold;
-//         _isActive = isActive;
-//         _isNew = isNew;
-//         _sale = sale;
-//         _popular = popular;
-//         _createdAt = createdAt;
-//     }
-//
-//     public static Product NewProduct(
-//         string name,
-//         string description,
-//         Price price,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         bool isActive = true,
-//         bool isNew = true,
-//         bool sale = false,
-//         bool popular = false
-//     )
-//     {
-//         var now = DateTime.UtcNow;
-//         return new Product(
-//             ProductID.Generate(),
-//             name,
-//             description,
-//             price,
-//             null, // oldPrice
-//             images,
-//             category,
-//             colors,
-//             stock,
-//             0, // sold
-//             isActive,
-//             isNew,
-//             sale,
-//             popular,
-//             now
-//         );
-//     }
-//
-//     public static Product With(
-//         ProductID id,
-//         string name,
-//         string description,
-//         Price price,
-//         Price? oldPrice,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         int sold,
-//         bool isActive,
-//         bool isNew,
-//         bool sale,
-//         bool popular,
-//         DateTime createdAt
-//     )
-//     {
-//         return new Product(id, name, description, price, oldPrice, images, category, colors, stock, sold, isActive, isNew, sale, popular, createdAt);
-//     }
-//
-//     public Product Update(
-//         string name,
-//         string description,
-//         Price price,
-//         Price? oldPrice,
-//         List<ImageUrl> images,
-//         Category category,
-//         List<Color> colors,
-//         int stock,
-//         int sold,
-//         bool isActive,
-//         bool isNew,
-//         bool sale,
-//         bool popular
-//     )
-//     {
-//         _name = name;
-//         _description = description;
-//         _price = price;
-//         _oldPrice = oldPrice;
-//         _images = images;
-//         _category = category;
-//         _colors = colors;
-//         _stock = stock;
-//         _sold = sold;
-//         _isActive = isActive;
-//         _isNew = isNew;
-//         _sale = sale;
-//         _popular = popular;
-//
-//         return this;
-//     }
-//
-//     public override void Validate(IValidationHandler handler)
-//     {
-//         new ProductValidator(this, handler).Validate();
-//     }
-//
-//     // Propriedades públicas de leitura
-//
-//     public string Name => _name;
-//     public string Description => _description;
-//     public Price Price => _price;
-//     public Price? OldPrice => _oldPrice;
-//     public IReadOnlyCollection<ImageUrl> Images => _images.AsReadOnly();
-//     public Category Category => _category;
-//     public IReadOnlyCollection<Color> Colors => _colors.AsReadOnly();
-//     public int Stock => _stock;
-//     public int Sold => _sold;
-//     public bool IsActive => _isActive;
-//     public bool IsNew => _isNew;
-//     public bool Sale => _sale;
-//     public bool Popular => _popular;
-//     public DateTime CreatedAt => _createdAt;
-//
-//     public object Clone()
-//     {
-//         return With(
-//             Id,
-//             Name,
-//             Description,
-//             Price,
-//             OldPrice,
-//             _images.ToList(),
-//             Category,
-//             _colors.ToList(),
-//             Stock,
-//             Sold,
-//             IsActive,
-//             IsNew,
-//             Sale,
-//             Popular,
-//             CreatedAt
+//             CreatedAt,
+//             UpdatedAt
 //         );
 //     }
 // }
 //
-// // using bcommerce_server.Domain.Products.Identifiers;
-// // using bcommerce_server.Domain.Products.Validators;
-// // using bcommerce_server.Domain.Products.ValueObjects;
-// // using bcommerce_server.Domain.SeedWork;
-// // using bcommerce_server.Domain.Validations;
-// //
-// // namespace bcommerce_server.Domain.Products;
-// //
-// // public class Product : AggregateRoot<ProductID>
-// // {
-// //     private string _name;
-// //     private string _description;
-// //     private Price _price;
-// //     private List<ImageUrl> _images;
-// //     private Category _category;
-// //     private List<Color> _colors;
-// //     private DateTime _createdAt;
-// //     private bool _popular;
-// //
-// //     private Product(
-// //         ProductID id,
-// //         string name,
-// //         string description,
-// //         Price price,
-// //         List<ImageUrl> images,
-// //         Category category,
-// //         List<Color> colors,
-// //         DateTime createdAt,
-// //         bool popular
-// //     ) : base(id)
-// //     {
-// //         _name = name;
-// //         _description = description;
-// //         _price = price;
-// //         _images = images;
-// //         _category = category;
-// //         _colors = colors;
-// //         _createdAt = createdAt;
-// //         _popular = popular;
-// //     }
-// //
-// //     public static Product NewProduct(
-// //         string name,
-// //         string description,
-// //         Price price,
-// //         List<ImageUrl> images,
-// //         Category category,
-// //         List<Color> colors,
-// //         bool popular = false
-// //     )
-// //     {
-// //         var now = DateTime.UtcNow;
-// //         return new Product(
-// //             ProductID.Generate(),
-// //             name,
-// //             description,
-// //             price,
-// //             images,
-// //             category,
-// //             colors,
-// //             now,
-// //             popular
-// //         );
-// //     }
-// //
-// //     public static Product With(
-// //         ProductID id,
-// //         string name,
-// //         string description,
-// //         Price price,
-// //         List<ImageUrl> images,
-// //         Category category,
-// //         List<Color> colors,
-// //         DateTime createdAt,
-// //         bool popular
-// //     )
-// //     {
-// //         return new Product(id, name, description, price, images, category, colors, createdAt, popular);
-// //     }
-// //
-// //     public Product Update(
-// //         string name,
-// //         string description,
-// //         Price price,
-// //         List<ImageUrl> images,
-// //         Category category,
-// //         List<Color> colors,
-// //         bool popular
-// //     )
-// //     {
-// //         _name = name;
-// //         _description = description;
-// //         _price = price;
-// //         _images = images;
-// //         _category = category;
-// //         _colors = colors;
-// //         _popular = popular;
-// //         return this;
-// //     }
-// //
-// //     public override void Validate(IValidationHandler handler)
-// //     {
-// //         new ProductValidator(this, handler).Validate();
-// //     }
-// //
-// //     public string Name => _name;
-// //     public string Description => _description;
-// //     public Price Price => _price;
-// //     public IReadOnlyCollection<ImageUrl> Images => _images.AsReadOnly();
-// //     public Category Category => _category;
-// //     public IReadOnlyCollection<Color> Colors => _colors.AsReadOnly();
-// //     public DateTime CreatedAt => _createdAt;
-// //     public bool Popular => _popular;
-// //
-// //     public object Clone()
-// //     {
-// //         return With(
-// //             Id,
-// //             Name,
-// //             Description,
-// //             Price,
-// //             _images.ToList(),
-// //             Category,
-// //             _colors.ToList(),
-// //             CreatedAt,
-// //             Popular
-// //         );
-// //     }
-// // }
+//
+//
