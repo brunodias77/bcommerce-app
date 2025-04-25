@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using bcommerce_server.Domain.Customers.Repositories;
 using bcommerce_server.Domain.Products.Repostories;
 using bcommerce_server.Domain.Security;
-using bcommerce_server.Infra.Data.Repositories;
 using bcommerce_server.Infra.Repositories;
 using bcommerce_server.Infra.Security;
 
@@ -28,8 +23,8 @@ namespace bcommercer_server.Api.Configurations
 
         private static void AddRepositories(IServiceCollection services)
         {
-            services.AddTransient<ICustomerRepository, CustomerRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICustomerRepository, DapperCustomerRepository>();
+            services.AddTransient<IProductRepository, DapperProductRepository>();
             services.AddScoped<IUnitOfWork, DapperUnitOfWork>();
         }
         
