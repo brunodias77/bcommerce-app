@@ -2,18 +2,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bcommerce_server.Application.Abstractions;
+using bcommerce_server.Application.Products.GetAll;
+using bcommerce_server.Domain.Validations.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bcommercer_server.Api.Controllers
 {
     [ApiController]
-    [Route("api/product")]
+    [Route("api/products")]
     public class ProductController : ControllerBase
     {
+        public ProductController(IGetAllProuctsUseCase getAllProuctsUseCase)
+        {
+            _getAllProuctsUseCase = getAllProuctsUseCase;
+        }
         // private readonly ICreateProductUseCase _createProduct;
         // private readonly IUpdateProductUseCase _updateProduct;
         // private readonly IGetProductUseCase _getProduct;
         // private readonly IDeleteProductUseCase _deleteProduct;
+        
+        private readonly IGetAllProuctsUseCase _getAllProuctsUseCase;
+        
+        [HttpGet]
+        [ProducesResponseType(typeof(List<GetAllProductsOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
+        {
+            var result = await _getAllProuctsUseCase.Execute(Unit.Value);
+
+            return result.Match<IActionResult>(
+                success => Ok(success),
+                error => BadRequest(error)
+            );
+        }
 
         // public ProductController(
         //     ICreateProductUseCase createProduct,
@@ -26,6 +48,8 @@ namespace bcommercer_server.Api.Controllers
         //     _getProduct = getProduct;
         //     _deleteProduct = deleteProduct;
         // }
+        
+        
 
         // [HttpPost]
         // [ProducesResponseType(typeof(CreateProductOutput), StatusCodes.Status201Created)]

@@ -1,25 +1,29 @@
-export type Price = {
+// src/types/product.ts
+
+export type ProductID = string;
+
+export interface Price {
   amount: number;
-};
+}
 
-export type Category = {
-  name: string;
-};
-
-export type Color = {
-  value: string;
-};
-
-export type ImageUrl = {
-  url: string;
-};
-
-export type Stock = {
+export interface Stock {
   quantity: number;
-};
+}
 
-export type Product = {
-  id: string;
+export interface ImageUrl {
+  url: string;
+}
+
+export interface Category {
+  name: string;
+}
+
+export interface Color {
+  value: string;
+}
+
+export interface Product {
+  id: ProductID;
   name: string;
   description: string;
   price: Price;
@@ -31,71 +35,42 @@ export type Product = {
   sold: number;
   isActive: boolean;
   popular: boolean;
-  createdAt: string; // DateTime ISO
-  updatedAt: string;
+  createdAt: string; // ISO string
+  updatedAt: string; // ISO string
   isNew: boolean;
   sale: boolean;
-};
+}
+// src/types/blog.ts
 
-// // Definição do tipo para um produto
-// // export interface Product {
-// //     _id: string;
-// //     name: string;
-// //     description: string;
-// //     price: number;
-// //     image: string[];
-// //     category: string;
-// //     colors: string[];
-// //     date: number;
-// //     popular: boolean;
-// //   }
-
-// export type ProductID = string;
-
-// export interface Price {
-//   amount: number;
-// }
-
-// export interface Stock {
-//   quantity: number;
-// }
-
-// export interface ImageUrl {
-//   url: string;
-// }
-
-// export interface Category {
-//   name: string;
-// }
-
-// export interface Color {
-//   value: string;
-// }
-
-// export interface Product {
-//   id: ProductID;
-//   name: string;
-//   description: string;
-//   price: Price;
-//   oldPrice?: Price;
-//   images: ImageUrl[];
-//   category: Category;
-//   colors: Color[];
-//   stock: Stock;
-//   sold: number;
-//   isActive: boolean;
-//   popular: boolean;
-//   createdAt: string; // ISO date
-//   updatedAt: string; // ISO date
-
-//   // Computed properties
-//   isNew: boolean;
-//   sale: boolean;
-// }
-
-// Definição do tipo para um blog
 export interface Blog {
   title: string;
   category: string;
   image: string;
+}
+export interface ReviewItem {
+  rating: number;
+  comment?: string;
+  createdAt: string;
+}
+
+export interface ProductItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  oldPrice?: number | null;
+  categoryId: string;
+  stockQuantity: number;
+  sold: number;
+  isActive: boolean;
+  popular: boolean;
+  createdAt: string;
+  updatedAt: string;
+  images: string[];
+  colors: string[];
+  reviews: ReviewItem[];
+}
+
+export interface GetAllProductsResponse {
+  products: ProductItem[];
 }
