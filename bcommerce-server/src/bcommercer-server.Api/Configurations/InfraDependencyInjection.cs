@@ -1,4 +1,7 @@
+using bcommerce_server.Domain.Carts.Repositories;
+using bcommerce_server.Domain.Coupons.Repositories;
 using bcommerce_server.Domain.Customers.Repositories;
+using bcommerce_server.Domain.Orders.Repositories;
 using bcommerce_server.Domain.Products.Repostories;
 using bcommerce_server.Domain.Security;
 using bcommerce_server.Infra.Repositories;
@@ -25,9 +28,13 @@ namespace bcommercer_server.Api.Configurations
         {
             services.AddTransient<ICustomerRepository, DapperCustomerRepository>();
             services.AddTransient<IProductRepository, DapperProductRepository>();
+            services.AddTransient<IOrderRepository, DapperOrderRepository>();
+            services.AddTransient<ICouponRepository, DapperCouponRepository>();
+            services.AddTransient<ICartRepository, DapperCartRepository>();
+
             services.AddScoped<IUnitOfWork, DapperUnitOfWork>();
         }
-        
+
         private static void AddPasswordEncrypter(IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IPasswordEncripter, PasswordEncripter>();

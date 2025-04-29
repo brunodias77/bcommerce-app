@@ -1,5 +1,7 @@
-import { Product } from "@/types/product";
+// src/services/productsService.ts
+
 import { ErrorResponse } from "@/types/api";
+import {GetAllProductsResponse, } from "@/types/product";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";
 
@@ -27,18 +29,18 @@ async function handleApiResponse<T>(
 }
 
 export async function getAllProducts(): Promise<
-  | { success: true; data: Product[] }
+  | { success: true; data: GetAllProductsResponse }
   | { success: false; errors: ErrorResponse[] }
 > {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/product`, {
+    const response = await fetch(`${API_BASE_URL}/api/products`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    return await handleApiResponse<Product[]>(response);
+    return await handleApiResponse<GetAllProductsResponse>(response);
   } catch (error) {
     console.error("Erro ao se conectar com a API:", error);
     return {
@@ -47,40 +49,3 @@ export async function getAllProducts(): Promise<
     };
   }
 }
-
-// import { useEffect, useState } from "react";
-// import { getAllProducts } from "@/services/api/product";
-// import { ProductOutput } from "@/types/product-types";
-
-// export default function ProductList() {
-//   const [products, setProducts] = useState<ProductOutput[]>([]);
-
-//   useEffect(() => {
-//     getAllProducts().then((res) => {
-//       if (res.success) {
-//         setProducts(res.data);
-//       } else {
-//         console.error("Erro ao carregar produtos:", res.errors);
-//       }
-//     });
-//   }, []);
-
-//   return (
-//     <div>
-//       {products.map((p) => (
-//         <div key={p.id}>
-//           <h2>{p.name}</h2>
-//           <p>{p.description}</p>
-//           <span>Preço: R$ {p.price.amount.toFixed(2)}</span>
-//           {p.oldPrice && (
-//             <span style={{ textDecoration: "line-through", marginLeft: "1rem" }}>
-//               De: R$ {p.oldPrice.amount.toFixed(2)}
-//             </span>
-//           )}
-//           <p>Categoria: {p.category.name}</p>
-//           <p>Cores: {p.colors.map(c => c.value).join(", ")}</p>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }

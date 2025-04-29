@@ -16,7 +16,7 @@ public static class ProductMapper
             model.Description,
             model.Price,
             model.OldPrice,
-            model.CategoryId,
+            CategoryID.From(model.CategoryId), // <-- Transforma Guid em CategoryID VO
             model.StockQuantity,
             model.Sold,
             model.IsActive,
@@ -32,20 +32,21 @@ public static class ProductMapper
 
     public static ProductDataModel ToDataModel(Product product)
     {
-        return new ProductDataModel(
-            product.Id.Value,
-            product.Name,
-            product.Description,
-            product.Price,
-            product.OldPrice,
-            product.CategoryId,
-            product.StockQuantity,
-            product.Sold,
-            product.IsActive,
-            product.Popular,
-            product.DeletedAt,
-            product.CreatedAt,
-            product.UpdatedAt
-        );
+        return new ProductDataModel
+        {
+            Id = product.Id.Value,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            OldPrice = product.OldPrice,
+            CategoryId = product.CategoryId.Value, // <-- CategoryID VO para Guid
+            StockQuantity = product.StockQuantity,
+            Sold = product.Sold,
+            IsActive = product.IsActive,
+            Popular = product.Popular,
+            CreatedAt = product.CreatedAt,
+            UpdatedAt = product.UpdatedAt,
+            DeletedAt = product.DeletedAt
+        };
     }
 }

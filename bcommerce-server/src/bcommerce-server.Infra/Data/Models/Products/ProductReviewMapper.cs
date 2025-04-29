@@ -16,10 +16,12 @@ public static class ProductReviewMapper
         );
     }
 
-    public static ProductReviewDataModel ToDataModel(ProductReview review)
+    public static ProductReviewDataModel ToDataModel(ProductReview review, Guid productId, Guid customerId)
     {
         return new ProductReviewDataModel(
             review.Id.Value,
+            productId,         // <- novo parâmetro
+            customerId,        // <- novo parâmetro
             review.Rating,
             review.Comment,
             review.CreatedAt,
