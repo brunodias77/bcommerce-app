@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rFYHTRwxABOOttNRxmHhYCfI5p96AfE+HspiTHocM0CGazje9MK6bQn/igrrKBxxRem+/iQvVIMUKo1Uh6bq4w==",
+  "dgSpecHash": "tD26Z2ZAtIo=",
   "success": true,
   "projectFilePath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/bcommerce-server.IntegrationTest.csproj",
   "expectedPackageFiles": [

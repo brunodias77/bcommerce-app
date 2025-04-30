@@ -1,9 +1,10 @@
 // src/services/productsService.ts
 
 import { ErrorResponse } from "@/types/api";
-import {GetAllProductsResponse, } from "@/types/product";
+import { GetAllProductsResponse } from "@/types/product";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7209";
 
 async function handleApiResponse<T>(
   response: Response
@@ -39,6 +40,8 @@ export async function getAllProducts(): Promise<
         "Content-Type": "application/json",
       },
     });
+
+    console.log("Response da API:", response);
 
     return await handleApiResponse<GetAllProductsResponse>(response);
   } catch (error) {
