@@ -12,6 +12,7 @@ public sealed record GetAllProductItemOutput(
     decimal Price,
     decimal? OldPrice,
     Guid CategoryId,
+    string? CategoryName, // ✅ nova propriedade
     int StockQuantity,
     int Sold,
     bool IsActive,

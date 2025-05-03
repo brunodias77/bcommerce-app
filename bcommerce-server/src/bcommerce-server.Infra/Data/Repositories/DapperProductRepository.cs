@@ -42,9 +42,10 @@ public class DapperProductRepository : IProductRepository
 
         var images = await GetImages(model.Id);
         var colors = await GetColors(model.Id);
-        var reviews = await GetReviews(model.Id);
+        var reviews = await GetReviews(model.Id); // ✅ corrigido
+        var category = await GetCategory(model.CategoryId); // ✅ carregando a Category
 
-        return ProductMapper.ToDomain(model, images, colors, reviews);
+        return ProductMapper.ToDomain(model, images, colors, reviews, category); // ✅ repassando a Category
     }
 
     public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken)
@@ -57,13 +58,15 @@ public class DapperProductRepository : IProductRepository
         {
             var images = await GetImages(model.Id);
             var colors = await GetColors(model.Id);
-            var reviews = await GetReviews(model.Id);
+            var reviews = await GetReviews(model.Id); // ✅ corrigido
+            var category = await GetCategory(model.CategoryId); // ✅ corrigido
 
-            products.Add(ProductMapper.ToDomain(model, images, colors, reviews));
+            products.Add(ProductMapper.ToDomain(model, images, colors, reviews, category));
         }
 
         return products;
     }
+
 
     public async Task<IEnumerable<Product>> GetByCategory(Guid categoryId, CancellationToken cancellationToken)
     {
@@ -83,6 +86,27 @@ public class DapperProductRepository : IProductRepository
 
         return products;
     }
+    
+    // public async Task<IEnumerable<Product>> GetByCategory(Guid categoryId, CancellationToken cancellationToken)
+    // {
+    //     const string sql = "SELECT * FROM products WHERE category_id = @CategoryId;";
+    //     var models = await _unitOfWork.Connection.QueryAsync<ProductDataModel>(
+    //         sql, new { CategoryId = categoryId }, _unitOfWork.Transaction);
+    //
+    //     var category = await GetCategory(categoryId); // ✅ carregar uma vez só
+    //
+    //     var products = new List<Product>();
+    //     foreach (var model in models)
+    //     {
+    //         var images = await GetImages(model.Id);
+    //         var colors = await GetColors(model.Id);
+    //         var reviews = await GetReviews(model.Id);
+    //
+    //         products.Add(ProductMapper.ToDomain(model, images, colors, reviews, category));
+    //     }
+    //
+    //     return products;
+    // }
 
     public async Task Update(Product aggregate, CancellationToken cancellationToken)
     {
@@ -133,5 +157,12 @@ public class DapperProductRepository : IProductRepository
         const string sql = "SELECT * FROM product_reviews WHERE product_id = @ProductId;";
         var models = await _unitOfWork.Connection.QueryAsync<ProductReviewDataModel>(sql, new { ProductId = productId }, _unitOfWork.Transaction);
         return models.Select(ProductReviewMapper.ToDomain).ToList();
+    }
+
+    private async Task<Category> GetCategory(Guid categoryId)
+    {
+        const string sql = "SELECT * FROM categories WHERE id = @CategoryId;";
+        var models = await _unitOfWork.Connection.QueryAsync<CategoryDataModel>(sql, new { CategoryId = categoryId }, _unitOfWork.Transaction);
+        return models.Select(CategoryMapper.ToDomain).FirstOrDefault();
     }
 }

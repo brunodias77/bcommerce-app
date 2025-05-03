@@ -10,8 +10,7 @@
         "dependencies": {
           "Swashbuckle.AspNetCore": "6.6.2",
           "bcommerce-server.Application": "1.0.0",
-          "bcommerce-server.Infra": "1.0.0",
-          "Bogus": "35.6.3.0"
+          "bcommerce-server.Infra": "1.0.0"
         },
         "runtime": {
           "bcommercer-server.Api.dll": {}
@@ -241,14 +240,6 @@
         "runtime": {
           "bcommerce-server.Infra.dll": {}
         }
-      },
-      "Bogus/35.6.3.0": {
-        "runtime": {
-          "Bogus.dll": {
-            "assemblyVersion": "35.6.3.0",
-            "fileVersion": "35.6.3.0"
-          }
-        }
       }
     }
   },
@@ -424,11 +415,6 @@
     },
     "bcommerce-server.Infra/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Bogus/35.6.3.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

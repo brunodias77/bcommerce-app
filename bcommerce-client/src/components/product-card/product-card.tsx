@@ -24,11 +24,12 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
         : null;
 
     const productImage = images[0];
+    console.log(category, "category");
 
     return (
         <Link href={`/product/${id}`}>
             <div className="relative flex flex-col items-center group w-full min-h-[399px] h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
-                {isOnSale && <div className="absolute top-2 left-2 z-30 text-white font-bold text-sm bg-yellow-primary rounded-lg p-1">OFERTA</div>}
+                {isOnSale && <div className="absolute top-2 left-2 z-30 text-xs text-white font-bold bg-yellow-primary rounded-lg p-[4px]">OFERTA</div>}
                 <button onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();

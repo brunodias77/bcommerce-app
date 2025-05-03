@@ -5,6 +5,7 @@ import { GetAllProductsResponse } from "@/types/product";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7209";
+// process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";
 
 async function handleApiResponse<T>(
   response: Response
