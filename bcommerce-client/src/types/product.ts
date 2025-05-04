@@ -60,6 +60,7 @@ export interface ProductItem {
   price: number;
   oldPrice?: number | null;
   categoryId: string;
+  categoryName: string;
   stockQuantity: number;
   sold: number;
   isActive: boolean;

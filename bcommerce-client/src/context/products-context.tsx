@@ -62,7 +62,7 @@ function mapProductItemToProduct(item: ProductItem): Product {
         price: { amount: item.price },
         oldPrice: item.oldPrice !== null && item.oldPrice !== undefined ? { amount: item.oldPrice } : null,
         images: item.images.map((url) => ({ url })), // mapeando urls em objetos { url }
-        category: { name: "" }, // Valor placeholder, preencha conforme necessário
+        category: { name: item.categoryName },
         colors: item.colors.map((color) => ({ value: color })), // transformando string em objeto { value }
         stock: { quantity: item.stockQuantity }, // stock quantity
         sold: item.sold,
