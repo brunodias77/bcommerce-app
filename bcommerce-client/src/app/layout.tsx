@@ -30,6 +30,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <AuthProvider>
           <ProductsProvider>
+            <ToastContainer aria-label={undefined} />
             <div className="App">
               <HeaderInfo />
               <Header />
