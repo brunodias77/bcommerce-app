@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("bcommerce-server.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+141dcf9becd03d808a2396055c45be0659027693")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa38d5defe71efa93393709e6c05f10a1f1d65f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("bcommerce-server.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("bcommerce-server.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
