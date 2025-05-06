@@ -1,4 +1,7 @@
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using bcommerce_server.Application.Abstractions;
 using bcommerce_server.Domain.Products;
 using bcommerce_server.Domain.Products.Repostories;
@@ -74,6 +77,7 @@ namespace bcommerce_server.Application.Products.GetAll
                 Price: product.Price,
                 OldPrice: product.OldPrice,
                 CategoryId: product.CategoryId.Value,
+                CategoryName: product.Category?.Name, // ✅ pega o nome da Category se estiver presente
                 StockQuantity: product.StockQuantity,
                 Sold: product.Sold,
                 IsActive: product.IsActive,

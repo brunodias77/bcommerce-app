@@ -1,18 +1,27 @@
 "use client"
 import { Product } from "@/types/product";
-import { products } from "@/data";
 import React, { useEffect, useRef } from "react";
 import ProductCard from "../product-card/product-card";
 import Title from "../ui/Title";
 import Section from "../ui/Section";
+import { useProductsContext } from "@/context/products-context";
 
 const NewProducstSection: React.FC = () => {
+    const { products } = useProductsContext();
     const [PopularProducts, setPopularProducts] = React.useState<Product[]>([])
     const carouselRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         if (!products) return
-        const data = products.slice(0, 7)
+        const data = [...products]
+            .sort((a: Product, b: Product) => {
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            })
+            .slice(0, 7)
+            .map((product) => ({
+                ...product,
+                isNew: true,
+            }));
         setPopularProducts(data)
     }, [products])
 
@@ -49,7 +58,7 @@ const NewProducstSection: React.FC = () => {
                 />
                 <div
                     ref={carouselRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar h-[399px]"
+                    className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar "
                 >
                     {PopularProducts.map((product) => (
                         <div

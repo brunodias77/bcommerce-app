@@ -1,9 +1,11 @@
 // src/services/productsService.ts
 
 import { ErrorResponse } from "@/types/api";
-import {GetAllProductsResponse, } from "@/types/product";
+import { GetAllProductsResponse } from "@/types/product";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";
+const API_BASE_URL =
+  // process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7209";
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";
 
 async function handleApiResponse<T>(
   response: Response
@@ -12,6 +14,8 @@ async function handleApiResponse<T>(
 > {
   if (response.ok) {
     const data: T = await response.json();
+    console.log("Dados da API:", data);
+
     return { success: true, data };
   } else {
     try {
