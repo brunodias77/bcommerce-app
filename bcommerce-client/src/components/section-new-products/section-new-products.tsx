@@ -4,10 +4,10 @@ import React, { useEffect, useRef } from "react";
 import ProductCard from "../product-card/product-card";
 import Title from "../ui/Title";
 import Section from "../ui/Section";
-import { useProducts } from "@/context/products-context";
+import { useProductsContext } from "@/context/products-context";
 
 const NewProducstSection: React.FC = () => {
-    const { products } = useProducts();
+    const { products } = useProductsContext();
     const [PopularProducts, setPopularProducts] = React.useState<Product[]>([])
     const carouselRef = useRef<HTMLDivElement>(null)
 
@@ -58,7 +58,7 @@ const NewProducstSection: React.FC = () => {
                 />
                 <div
                     ref={carouselRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar h-[399px]"
+                    className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar "
                 >
                     {PopularProducts.map((product) => (
                         <div

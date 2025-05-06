@@ -50,7 +50,7 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
                 </div>
                 <div className="p-3 w-full flex flex-col">
                     <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{category.name}</h4>
-                    <h2 className="text-[16px] font-bold text-blue-primary line-clamp-2 ">{name}</h2>
+                    <h2 className="text-[16px] font-bold text-blue-primary line-clamp-1 ">{name}</h2>
                     <div className="flex items-center space-x-1">
                         <StarRating size="text-[10px] md:text-[15px]" />
                         <span className="text-[8px] md:text-[11px] text-gray-500 text-center">4.5</span>

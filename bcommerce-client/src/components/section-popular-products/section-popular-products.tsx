@@ -4,11 +4,11 @@ import Section from "../ui/Section";
 import Title from "../ui/Title";
 import { Product } from "@/types/product";
 import ProductCard from "../product-card/product-card";
-import { useProducts } from "@/context/products-context";
+import { useProductsContext } from "@/context/products-context";
 
 const PopularProductsSection: React.FC = () => {
     const [PopularProducts, setPopularProducts] = React.useState<Product[]>([]);
-    const { products } = useProducts();
+    const { products } = useProductsContext();
     useEffect(() => {
         if (!products) return
         const data = products.slice(0, 7)
