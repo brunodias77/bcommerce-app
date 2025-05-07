@@ -9,6 +9,7 @@ import FireIcon from "@/icons/fire-icon";
 import FavoriteIcon from "@/icons/favorite-icon";
 import { formatPrice } from "@/utils/format-price";
 import CartIcon from "@/icons/cart-icon";
+import { useCartContext } from "@/context/cart-context";
 
 const Badge = ({ text, bgColor, top }: { text: string; bgColor: string; top: string }) => (
     <div className={`absolute ${top} left-2 ${bgColor} text-white text-xs px-2 py-1 rounded font-bold`}>
@@ -16,8 +17,9 @@ const Badge = ({ text, bgColor, top }: { text: string; bgColor: string; top: str
     </div>
 );
 
-const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isNew, oldPrice }) => {
+const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isNew, oldPrice, colors }) => {
     const [isFavorite, setIsFavorite] = useState(false);
+    const { addToCart } = useCartContext(); // 👈 hook do carrinho
 
     const isOnSale = oldPrice?.amount != null && oldPrice.amount > price.amount;
     const discount = isOnSale
@@ -25,6 +27,7 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
         : null;
 
     const productImage = images[0];
+    console.log("Colors", colors);
     console.log(category, "category");
 
     return (
@@ -66,7 +69,13 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
                                 </>
                             )}
                         </div>
-                        <button className="bg-yellow-primary hover:bg-yellow-secondary rounded p-2 cursor-pointer  transition transform active:scale-95 text-xs flex items-center justify-center " onClick={() => setIsFavorite(!isFavorite)}>
+                        <button
+                            // onClick={(e) => {
+                            //     e.preventDefault();
+                            //     e.stopPropagation();
+                            //     addToCart(id, color); // 👈 ação do carrinho
+                            // }}
+                            className="bg-yellow-primary hover:bg-yellow-secondary rounded p-2 cursor-pointer  transition transform active:scale-95 text-xs flex items-center justify-center " onClick={() => setIsFavorite(!isFavorite)}>
                             <CartIcon color="#2d2926" height={20} width={20} />
                         </button>
                     </div>
