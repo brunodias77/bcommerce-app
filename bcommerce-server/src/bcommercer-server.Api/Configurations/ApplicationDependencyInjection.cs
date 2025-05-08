@@ -1,6 +1,7 @@
 using bcommerce_server.Application.Customers.Create;
 using bcommerce_server.Application.Customers.Login;
 using bcommerce_server.Application.Products.GetAll;
+using bcommerce_server.Application.Products.GetById;
 
 namespace bcommercer_server.Api.Configurations;
 
@@ -16,6 +17,6 @@ public static class ApplicationDependencyInjection
         services.AddScoped<ICreateCustomerUseCase, CreateCustomerUseCase>();
         services.AddScoped<ILoginCustomerUseCase, LoginCustomerUseCase>();
         services.AddScoped<IGetAllProuctsUseCase, GetAllProductsUseCase>();
-
+        services.AddScoped<IGetProductByIdUseCase, GetProductByIdUseCase>();
     }
 }

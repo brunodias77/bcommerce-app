@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bcommerce_server.Application.Abstractions;
 using bcommerce_server.Application.Products.GetAll;
+using bcommerce_server.Application.Products.GetById;
 using bcommerce_server.Domain.Validations.Handlers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,28 +14,44 @@ namespace bcommercer_server.Api.Controllers
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
-        public ProductController(IGetAllProuctsUseCase getAllProuctsUseCase)
+        public ProductController(IGetAllProuctsUseCase getAllProuctsUseCase, IGetProductByIdUseCase getProductByIdUseCase)
         {
             _getAllProuctsUseCase = getAllProuctsUseCase;
+            _getProductByIdUseCase = getProductByIdUseCase;
         }
+
         // private readonly ICreateProductUseCase _createProduct;
         // private readonly IUpdateProductUseCase _updateProduct;
         // private readonly IGetProductUseCase _getProduct;
         // private readonly IDeleteProductUseCase _deleteProduct;
         
         private readonly IGetAllProuctsUseCase _getAllProuctsUseCase;
+        private readonly IGetProductByIdUseCase _getProductByIdUseCase;
         
         [HttpGet]
         [ProducesResponseType(typeof(List<GetAllProductsOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
         {
+            
             var result = await _getAllProuctsUseCase.Execute(Unit.Value);
 
             return result.Match<IActionResult>(
                 success => Ok(success),
                 error => BadRequest(error)
             );
+        }
+
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(List<GetProductByIdOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetProductById([FromRoute] string id, CancellationToken cancellationToken)
+        {
+            var result = await _getProductByIdUseCase.Execute(new GetProductByIdInput(id));
+            return result.Match<IActionResult>(
+                success => Ok(success),
+                error => BadRequest(error)
+            );       
         }
 
         // public ProductController(

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/types/product";
+import { Color, Product } from "@/types/product";
 import StarRating from "../star-rating/star-rating";
 import FireIcon from "@/icons/fire-icon";
 import FavoriteIcon from "@/icons/favorite-icon";
@@ -25,14 +25,13 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
     const discount = isOnSale
         ? Math.round(((oldPrice!.amount - price.amount) / oldPrice!.amount) * 100)
         : null;
-
     const productImage = images[0];
-    console.log("Colors", colors);
-    console.log(category, "category");
+
+    const color = colors[0].value;
 
     return (
         <Link href={`/product/${id}`}>
-            <div className="relative flex flex-col items-center group w-full  h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
+            <div className="relative max-w-[280px] flex flex-col items-center group w-full  h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
                 {isOnSale && <div className="absolute top-2 left-2 z-30 text-xs text-white font-bold bg-yellow-primary rounded-lg p-[4px]">OFERTA</div>}
                 <button onClick={(e) => {
                     e.stopPropagation();
@@ -70,12 +69,12 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
                             )}
                         </div>
                         <button
-                            // onClick={(e) => {
-                            //     e.preventDefault();
-                            //     e.stopPropagation();
-                            //     addToCart(id, color); // 👈 ação do carrinho
-                            // }}
-                            className="bg-yellow-primary hover:bg-yellow-secondary rounded p-2 cursor-pointer  transition transform active:scale-95 text-xs flex items-center justify-center " onClick={() => setIsFavorite(!isFavorite)}>
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                addToCart(id, color);
+                            }}
+                            className="bg-yellow-primary hover:bg-yellow-secondary rounded p-2 cursor-pointer  transition transform active:scale-95 text-xs flex items-center justify-center " >
                             <CartIcon color="#2d2926" height={20} width={20} />
                         </button>
                     </div>
