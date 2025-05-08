@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext } from "react";
 import { useCart } from "@/hooks/useCart";
 import { ReactNode } from "react";

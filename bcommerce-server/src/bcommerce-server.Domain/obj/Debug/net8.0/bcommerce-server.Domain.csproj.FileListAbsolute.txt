@@ -34,3 +34,15 @@
 /Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/refint/bcommerce-server.Domain.dll
 /Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/bcommerce-server.Domain.pdb
 /Users/brunodias/Documents/Programacao/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/Debug/net8.0/ref/bcommerce-server.Domain.dll
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\bin\Debug\net8.0\bcommerce-server.Domain.deps.json
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\bin\Debug\net8.0\bcommerce-server.Domain.dll
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\bin\Debug\net8.0\bcommerce-server.Domain.pdb
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.AssemblyInfoInputs.cache
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.AssemblyInfo.cs
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.csproj.CoreCompileInputs.cache
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.sourcelink.json
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.dll
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\refint\bcommerce-server.Domain.dll
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\bcommerce-server.Domain.pdb
+C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\src\bcommerce-server.Domain\obj\Debug\net8.0\ref\bcommerce-server.Domain.dll

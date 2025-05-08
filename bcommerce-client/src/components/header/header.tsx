@@ -12,12 +12,14 @@ import { useAuth } from "@/context/auth-context";
 import UserIcon from "@/icons/user-icon";
 import HeartIcon from "@/icons/heart-icon";
 import CartIcon from "@/icons/cart-icon";
+import { useCartContext } from "@/context/cart-context";
 
 const Header = () => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [hasShadow, setHasShadow] = useState(false);
     const router = useRouter();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, userName } = useAuth();
+    const { getCartCount } = useCartContext();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -43,7 +45,7 @@ const Header = () => {
             className={`w-full sticky top-0 z-50 bg-white/70 backdrop-blur-md transition-shadow duration-300 ${hasShadow ? "shadow-md" : ""
                 }`}
         >
-            <div className="container flex items-center justify-between">
+            <div className="mx-auto max-w-[1440px] px-6 py-1 lg:px-12 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex flex-1">
                     <Image
@@ -80,6 +82,8 @@ const Header = () => {
                         />
                     )}
 
+                    <span>olá, {userName}</span>
+
                     {/* PROFILE */}
                     <button
                         onClick={handleProfileClick}
@@ -97,7 +101,7 @@ const Header = () => {
                     <Link href="/cart" className="flex relative">
                         <CartIcon color="#2d2926" />
                         <span className="bg-yellow-primary text-black-primary text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
-                            0 {/* Substituir por getCartCount() futuramente */}
+                            {getCartCount}
                         </span>
                     </Link>
                 </div>

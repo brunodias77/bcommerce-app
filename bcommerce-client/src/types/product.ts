@@ -75,3 +75,6 @@ export interface ProductItem {
 export interface GetAllProductsResponse {
   products: ProductItem[];
 }
+export interface GetProductByIdResponse {
+  product: ProductItem;
+}

@@ -1,8 +1,5 @@
-import {
-  CreateCustomerInput,
-  CreateCustomerOutput,
-  ErrorResponse,
-} from "./customer-types";
+import { CreateCustomerInput, CreateCustomerOutput } from "@/types/customer";
+import { ErrorResponse } from "@/types/api";
 
 // Crie um cliente API configurado para DRY (Don't Repeat Yourself)
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";

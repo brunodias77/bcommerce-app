@@ -1,3 +1,4 @@
+"use client";
 import { CartItems } from "@/types/cart";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { toast } from "react-toastify";
@@ -18,10 +19,6 @@ function cartReducer(state: CartItems, action: Action): CartItems {
   const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case "ADD_TO_CART":
-      if (!action.color) {
-        toast.error("Selecione uma cor!");
-        return state;
-      }
       if (!newState[action.productId]) {
         newState[action.productId] = {};
       }
@@ -44,7 +41,12 @@ export function useCart() {
   const { products } = useProductsContext();
 
   const addToCart = (productId: string, color: string) => {
+    if (!color) {
+      toast.error("Selecione uma cor!");
+      return;
+    }
     dispatch({ type: "ADD_TO_CART", productId, color });
+    toast.success("Produto adicionado ao carrinho!");
   };
   const updateQuantities = (
     productId: string,

@@ -1,6 +1,6 @@
 namespace bcommerce_server.Application.Customers.Login;
 
-public record LoginCustomerOutput(string Token)
+public record LoginCustomerOutput(string Token, string name)
 {
     
 }

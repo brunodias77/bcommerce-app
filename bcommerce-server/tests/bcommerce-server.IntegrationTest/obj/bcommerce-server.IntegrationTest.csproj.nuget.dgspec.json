@@ -1,25 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/bcommerce-server.IntegrationTest.csproj": {}
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\tests\\bcommerce-server.IntegrationTest\\bcommerce-server.IntegrationTest.csproj": {}
   },
   "projects": {
-    "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/bcommerce-server.IntegrationTest.csproj": {
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\tests\\bcommerce-server.IntegrationTest\\bcommerce-server.IntegrationTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/bcommerce-server.IntegrationTest.csproj",
+        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\tests\\bcommerce-server.IntegrationTest\\bcommerce-server.IntegrationTest.csproj",
         "projectName": "bcommerce-server.IntegrationTest",
-        "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/bcommerce-server.IntegrationTest.csproj",
-        "packagesPath": "/home/brunodias/.nuget/packages/",
-        "outputPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/obj/",
+        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\tests\\bcommerce-server.IntegrationTest\\bcommerce-server.IntegrationTest.csproj",
+        "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\tests\\bcommerce-server.IntegrationTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/brunodias/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +36,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -91,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.115/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

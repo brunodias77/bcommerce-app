@@ -1,18 +1,22 @@
 "use client";
-
 import React, { useRef, useState } from "react";
 import { z } from "zod";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { signInCustomer } from "@/services/customers/login-customer-service";
-import { useAuth } from "@/context/auth-context"; // 👈 IMPORTANTE!
+import { useAuth } from "@/context/auth-context"; // ✅ CONTEXTO
 
 // ✅ Schema de validação
 const loginSchema = z.object({
-    email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
-    password: z.string().nonempty("A senha é obrigatória").min(6, "A senha deve ter no mínimo 6 caracteres"),
+    email: z
+        .string()
+        .nonempty("O email é obrigatório")
+        .email("Formato de email inválido"),
+    password: z
+        .string()
+        .nonempty("A senha é obrigatória")
+        .min(6, "A senha deve ter no mínimo 6 caracteres"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -20,7 +24,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 const LoginForm: React.FC = () => {
     const formRef = useRef<HTMLFormElement>(null);
     const router = useRouter();
-    const { login } = useAuth(); // 👈 USANDO O CONTEXTO
+    const { login } = useAuth(); // ✅ USA O CONTEXTO
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,14 +48,10 @@ const LoginForm: React.FC = () => {
         setLoading(true);
 
         try {
-            const result = await signInCustomer(data);
+            const result = await login(data); // ✅ CHAMADA DIRETA AO CONTEXTO
 
             if (result.success) {
                 toast.success("Login realizado com sucesso! 🎉");
-
-                // ✅ Usa o contexto para salvar o token globalmente
-                login(result.data.token);
-
                 router.push("/perfil");
             } else {
                 const errorMessages = result.errors.map((e) => e.message).join("\n");
@@ -67,12 +67,32 @@ const LoginForm: React.FC = () => {
     return (
         <div className="max-w-sm w-full mx-auto p-6 bg-white rounded shadow">
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-                <h3 className="text-xl font-medium text-gray-900">Acessar Conta</h3>
+                <h3 className="text-xl font-medium text-gray-900">Acessar sua Conta</h3>
 
-                <Input id="email" name="email" label="Email" placeholder="Digite o email" required />
-                <Input id="password" name="password" label="Senha" placeholder="Digite a senha" type="password" required />
+                <Input
+                    id="email"
+                    name="email"
+                    label="Email"
+                    placeholder="Digite o email"
+                    required
+                />
 
-                <Button type="submit" variant="primary" size="medium" fullWidth isLoading={loading}>
+                <Input
+                    id="password"
+                    name="password"
+                    label="Senha"
+                    placeholder="Digite a senha"
+                    type="password"
+                    required
+                />
+
+                <Button
+                    type="submit"
+                    variant="primary"
+                    size="medium"
+                    fullWidth
+                    isLoading={loading}
+                >
                     Entrar
                 </Button>
             </form>
@@ -81,6 +101,7 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
+
 
 
 // "use client";
@@ -92,17 +113,12 @@ export default LoginForm;
 // import { useRouter } from "next/navigation";
 // import { toast } from "react-toastify";
 // import { signInCustomer } from "@/services/customers/login-customer-service";
+// import { useAuth } from "@/context/auth-context"; // 👈 IMPORTANTE!
 
-// // ✅ Schema de validação com Zod
+// // ✅ Schema de validação
 // const loginSchema = z.object({
-//     email: z
-//         .string()
-//         .nonempty("O email é obrigatório")
-//         .email("Formato de email inválido"),
-//     password: z
-//         .string()
-//         .nonempty("A senha é obrigatória")
-//         .min(6, "A senha deve ter no mínimo 6 caracteres"),
+//     email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
+//     password: z.string().nonempty("A senha é obrigatória").min(6, "A senha deve ter no mínimo 6 caracteres"),
 // });
 
 // type LoginFormData = z.infer<typeof loginSchema>;
@@ -110,6 +126,7 @@ export default LoginForm;
 // const LoginForm: React.FC = () => {
 //     const formRef = useRef<HTMLFormElement>(null);
 //     const router = useRouter();
+//     const { login } = useAuth(); // 👈 USANDO O CONTEXTO
 //     const [loading, setLoading] = useState(false);
 
 //     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -130,7 +147,6 @@ export default LoginForm;
 //         }
 
 //         const data: LoginFormData = parsed.data;
-
 //         setLoading(true);
 
 //         try {
@@ -139,10 +155,8 @@ export default LoginForm;
 //             if (result.success) {
 //                 toast.success("Login realizado com sucesso! 🎉");
 
-//                 // ✅ Se você tiver token no backend, armazena aqui
-//                 if (result.data.token) {
-//                     localStorage.setItem("token", result.data.token);
-//                 }
+//                 // ✅ Usa o contexto para salvar o token globalmente
+//                 login(result.data.token);
 
 //                 router.push("/perfil");
 //             } else {
@@ -159,32 +173,12 @@ export default LoginForm;
 //     return (
 //         <div className="max-w-sm w-full mx-auto p-6 bg-white rounded shadow">
 //             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-//                 <h3 className="text-xl font-medium text-gray-900">Acessar Conta</h3>
+//                 <h3 className="text-xl font-medium text-gray-900">Acessar sua Conta</h3>
 
-//                 <Input
-//                     id="email"
-//                     name="email"
-//                     label="Email"
-//                     placeholder="Digite o email"
-//                     required
-//                 />
+//                 <Input id="email" name="email" label="Email" placeholder="Digite o email" required />
+//                 <Input id="password" name="password" label="Senha" placeholder="Digite a senha" type="password" required />
 
-//                 <Input
-//                     id="password"
-//                     name="password"
-//                     label="Senha"
-//                     placeholder="Digite a senha"
-//                     type="password"
-//                     required
-//                 />
-
-//                 <Button
-//                     type="submit"
-//                     variant="primary"
-//                     size="medium"
-//                     fullWidth
-//                     isLoading={loading}
-//                 >
+//                 <Button type="submit" variant="primary" size="medium" fullWidth isLoading={loading}>
 //                     Entrar
 //                 </Button>
 //             </form>

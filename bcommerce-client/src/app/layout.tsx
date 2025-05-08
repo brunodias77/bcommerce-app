@@ -9,6 +9,7 @@ import Footer from "@/components/ui/footer";
 import { AuthProvider } from "@/context/auth-context";
 import { ToastContainer } from "react-toastify";
 import { ProductsProvider } from "@/context/products-context";
+import AppProviders from "@/context/AppProviders";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,20 +29,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.variable} antialiased`}>
-        <AuthProvider>
-          <ProductsProvider>
+        <AppProviders>
+          <div className="App">
+            <HeaderInfo />
+            <Header />
+            <main className="AppBody">{children}</main>
+            <Footer />
             <ToastContainer aria-label={undefined} />
-            <div className="App">
-              <HeaderInfo />
-              <Header />
-              <main className="AppBody">{children}</main>
-              <Footer />
-              <ToastContainer aria-label={undefined} />
-            </div>
-          </ProductsProvider>
-        </AuthProvider>
+          </div>
+        </AppProviders>
       </body>
-    </html>
+    </html >
   );
 }
 
