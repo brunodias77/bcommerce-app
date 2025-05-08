@@ -1,8 +1,5 @@
-import {
-  ErrorResponse,
-  LoginCustomerInput,
-  LoginCustomerOutput,
-} from "./customer-types";
+import { LoginCustomerInput, LoginCustomerOutput } from "@/types/customer";
+import { ErrorResponse } from "@/types/api";
 
 // Centraliza URL da API
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5111";

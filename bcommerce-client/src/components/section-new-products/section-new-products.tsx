@@ -1,3 +1,5 @@
+
+
 "use client"
 import { Product } from "@/types/product";
 import React, { useEffect, useRef } from "react";
@@ -7,7 +9,7 @@ import Section from "../ui/Section";
 import { useProductsContext } from "@/context/products-context";
 
 const NewProducstSection: React.FC = () => {
-    const { products } = useProductsContext();
+    const { products, error, loading } = useProductsContext();
     const [PopularProducts, setPopularProducts] = React.useState<Product[]>([])
     const carouselRef = useRef<HTMLDivElement>(null)
 
@@ -47,30 +49,66 @@ const NewProducstSection: React.FC = () => {
 
     return (
         <Section>
-            <div className='container'>
+            <div className="container">
                 <Title
-                    title='Novos'
-                    subtitle=' Produtos'
-                    content='Explore os lançamentos mais recentes, selecionados para transformar sua rotina com inovação e estilo.'
-                    titleStyles='pb-1'
-                    contentStyles='block'
-                    styles='block pb-10'
+                    title="Novos"
+                    subtitle=" Produtos"
+                    content="Explore os lançamentos mais recentes, selecionados para transformar sua rotina com inovação e estilo."
+                    titleStyles="pb-1"
+                    contentStyles="block"
+                    styles="block pb-10"
                 />
-                <div
-                    ref={carouselRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar "
-                >
-                    {PopularProducts.map((product) => (
+                {loading ? (
+                    <div className="flex justify-center items-center py-20">
+                        <div className="animate-spin w-5 h-5 border-2 border-t-transparent border-black-primary rounded-full" />
+                    </div>
+                ) : error ? (
+                    <div className="text-red-500 text-center py-10">{error}</div>
+                ) : (
+                    <>
+
                         <div
-                            key={product.id}
-                            className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
+                            ref={carouselRef}
+                            className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar"
                         >
-                            <ProductCard {...product} />
+                            {PopularProducts.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="snap-start shrink-0 w-[200px] md:w-[250px] xl:w-[280px]"
+                                >
+                                    <ProductCard {...product} />
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </>
+                )}
             </div>
         </Section>
+        // <Section>
+        //     <div className='container'>
+        //         <Title
+        //             title='Novos'
+        //             subtitle=' Produtos'
+        //             content='Explore os lançamentos mais recentes, selecionados para transformar sua rotina com inovação e estilo.'
+        //             titleStyles='pb-1'
+        //             contentStyles='block'
+        //             styles='block pb-10'
+        //         />
+        //         <div
+        //             ref={carouselRef}
+        //             className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar "
+        //         >
+        //             {PopularProducts.map((product) => (
+        //                 <div
+        //                     key={product.id}
+        //                     className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
+        //                 >
+        //                     <ProductCard {...product} />
+        //                 </div>
+        //             ))}
+        //         </div>
+        //     </div>
+        // </Section>
 
     );
 

@@ -23,7 +23,10 @@ const ProductsContext = createContext<ReturnType<typeof useProducts> | undefined
 export function ProductsProvider({ children }: { children: ReactNode }) {
     const manager = useProducts();
 
-    const value = useMemo(() => manager, [manager.products, manager.loading, manager.error]);
+    const value = useMemo(
+        () => manager,
+        [manager.products, manager.loading, manager.error]
+    );
 
     return <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>;
 }
@@ -40,7 +43,7 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
 export function useProductsContext() {
     const context = useContext(ProductsContext);
     if (!context) {
-        throw new Error("useProducts deve ser usado dentro de ProductsProvider.");
+        throw new Error("useProductsContext deve ser usado dentro de ProductsProvider.");
     }
     return context;
 }

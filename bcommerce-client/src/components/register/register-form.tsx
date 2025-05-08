@@ -6,8 +6,9 @@ import Input from "../ui/input";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { createCustomer } from "@/services/customers/create-customer-service";
+import { useAuth } from "@/context/auth-context"; // ✅ Importa o contexto
 
+// Schema de validação
 const registerSchema = z.object({
     name: z.string().nonempty("O nome é obrigatório"),
     email: z
@@ -25,6 +26,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 const RegisterForm: React.FC = () => {
     const formRef = useRef<HTMLFormElement>(null);
     const router = useRouter();
+    const { register } = useAuth(); // ✅ Hook de contexto
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,11 +47,10 @@ const RegisterForm: React.FC = () => {
         }
 
         const data: RegisterFormData = parsed.data;
-
         setLoading(true);
 
         try {
-            const result = await createCustomer(data);
+            const result = await register(data); // ✅ Chama o contexto
 
             if (result.success) {
                 toast.success("Conta criada com sucesso! 🎉");
@@ -71,7 +72,7 @@ const RegisterForm: React.FC = () => {
     return (
         <div className="max-w-sm w-full mx-auto p-6 bg-white rounded shadow">
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-                <h3 className="text-xl font-medium text-gray-900">Criar Conta</h3>
+                <h3 className="text-xl font-medium text-gray-900">Crie sua Conta</h3>
 
                 <Input
                     id="name"
@@ -114,7 +115,6 @@ const RegisterForm: React.FC = () => {
 
 export default RegisterForm;
 
-
 // "use client";
 
 // import React, { useRef, useState } from "react";
@@ -123,11 +123,14 @@ export default RegisterForm;
 // import Button from "../ui/button";
 // import { useRouter } from "next/navigation";
 // import { toast } from "react-toastify";
-// import { createCustomer } from "@/services/customers/register-customer-service";
+// import { createCustomer } from "@/services/customers/create-customer-service";
 
 // const registerSchema = z.object({
 //     name: z.string().nonempty("O nome é obrigatório"),
-//     email: z.string().nonempty("O email é obrigatório").email("Formato de email inválido"),
+//     email: z
+//         .string()
+//         .nonempty("O email é obrigatório")
+//         .email("Formato de email inválido"),
 //     password: z
 //         .string()
 //         .nonempty("A senha é obrigatória")
@@ -160,25 +163,22 @@ export default RegisterForm;
 
 //         const data: RegisterFormData = parsed.data;
 
+//         setLoading(true);
+
 //         try {
-//             setLoading(true);
-
-//             const result = await createCustomer({
-//                 name: data.name,
-//                 email: data.email,
-//                 password: data.password,
-//             });
-
-//             console.log("result", result);
+//             const result = await createCustomer(data);
 
 //             if (result.success) {
 //                 toast.success("Conta criada com sucesso! 🎉");
 //                 router.push("/login");
 //             } else {
-//                 const errorMessages = result.errors.map((e) => e.message).join("\n");
+//                 const errorMessages = result.errors
+//                     .map((err) => err.message)
+//                     .join("\n");
+
 //                 toast.error(errorMessages || "Erro ao criar conta ❌");
 //             }
-//         } catch {
+//         } catch (error) {
 //             toast.error("Erro de conexão com o servidor ❌");
 //         } finally {
 //             setLoading(false);
@@ -188,7 +188,7 @@ export default RegisterForm;
 //     return (
 //         <div className="max-w-sm w-full mx-auto p-6 bg-white rounded shadow">
 //             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-//                 <h3 className="text-xl font-medium text-gray-900">Criar Conta</h3>
+//                 <h3 className="text-xl font-medium text-gray-900">Crie sua Conta</h3>
 
 //                 <Input
 //                     id="name"
@@ -230,4 +230,5 @@ export default RegisterForm;
 // };
 
 // export default RegisterForm;
+
 

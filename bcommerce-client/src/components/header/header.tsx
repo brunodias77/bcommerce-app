@@ -18,7 +18,7 @@ const Header = () => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [hasShadow, setHasShadow] = useState(false);
     const router = useRouter();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, userName } = useAuth();
     const { getCartCount } = useCartContext();
 
     useEffect(() => {
@@ -81,6 +81,8 @@ const Header = () => {
                             className="xl:hidden cursor-pointer text-xl"
                         />
                     )}
+
+                    <span>olá, {userName}</span>
 
                     {/* PROFILE */}
                     <button

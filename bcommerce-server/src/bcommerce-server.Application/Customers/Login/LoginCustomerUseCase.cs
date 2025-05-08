@@ -42,9 +42,9 @@ public class LoginCustomerUseCase : ILoginCustomerUseCase
                 return Fail("Email ou senha inválidos.");
 
             var token = GenerateToken(customer);
-            return Success(token);
+            return Success(token, customer.Name);
         }
-        catch (System.Exception ex) // 👈 Resolvendo ambiguidade com `System.Exception`
+        catch (System.Exception ex) 
         {
             return Fail(ex.Message);
         }
@@ -76,9 +76,9 @@ public class LoginCustomerUseCase : ILoginCustomerUseCase
         return _tokenService.GenerateToken(customer.Id.Value);
     }
 
-    private Result<LoginCustomerOutput, Notification> Success(string token)
+    private Result<LoginCustomerOutput, Notification> Success(string token, string name)
     {
-        return Result<LoginCustomerOutput, Notification>.Ok(new LoginCustomerOutput(token));
+        return Result<LoginCustomerOutput, Notification>.Ok(new LoginCustomerOutput(token, name));
     }
 
     private Result<LoginCustomerOutput, Notification> Fail(string message)
