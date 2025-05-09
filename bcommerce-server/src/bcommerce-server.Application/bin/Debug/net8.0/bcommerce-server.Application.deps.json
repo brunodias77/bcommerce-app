@@ -178,10 +178,7 @@
       },
       "bcommerce-server.Domain/1.0.0": {
         "runtime": {
-          "bcommerce-server.Domain.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "bcommerce-server.Domain.dll": {}
         }
       },
       "bcommerce-server.Infra/1.0.0": {
@@ -196,10 +193,7 @@
           "bcommerce-server.Domain": "1.0.0"
         },
         "runtime": {
-          "bcommerce-server.Infra.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "bcommerce-server.Infra.dll": {}
         }
       }
     }
