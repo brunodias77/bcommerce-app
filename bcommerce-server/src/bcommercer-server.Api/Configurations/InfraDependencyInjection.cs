@@ -4,8 +4,10 @@ using bcommerce_server.Domain.Customers.Repositories;
 using bcommerce_server.Domain.Orders.Repositories;
 using bcommerce_server.Domain.Products.Repostories;
 using bcommerce_server.Domain.Security;
+using bcommerce_server.Domain.Services;
 using bcommerce_server.Infra.Repositories;
 using bcommerce_server.Infra.Security;
+using bcommerce_server.Infra.Services;
 
 namespace bcommercer_server.Api.Configurations
 {
@@ -16,6 +18,7 @@ namespace bcommercer_server.Api.Configurations
             AddToken(services, configuration);
             AddRepositories(services);
             AddPasswordEncrypter(services, configuration); // ✅ ADICIONE ESTA LINHA
+            AddLoggedCustomer(services, configuration);
         }
 
         private static void AddToken(IServiceCollection services, IConfigurationManager configuration)
@@ -40,7 +43,10 @@ namespace bcommercer_server.Api.Configurations
             services.AddScoped<IPasswordEncripter, PasswordEncripter>();
         }
 
-
+        private static void AddLoggedCustomer(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped<ILoggedCustomer, LoggedCustomer>();
+        }
 
     }
 }

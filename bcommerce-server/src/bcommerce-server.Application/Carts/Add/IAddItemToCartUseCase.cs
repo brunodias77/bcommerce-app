@@ -1,6 +1,9 @@
+using bcommerce_server.Application.Abstractions;
+using bcommerce_server.Domain.Validations.Handlers;
+
 namespace bcommerce_server.Application.Carts.Add;
 
-public class IAddItemToCartUseCase
+public interface IAddItemToCartUseCase : IUseCase<AddItemToCartInput, AddItemToCartOutput, Notification>
 {
     
 }

@@ -6,4 +6,5 @@ public interface ICartRepository : IGenericRepository<Cart>
 {
     // Aqui você pode adicionar métodos específicos se necessário, ex:
     // Task<Cart?> GetByCustomerId(Guid customerId, CancellationToken cancellationToken);
+    Task<Cart?> GetByCustomerId(Guid customerId, CancellationToken cancellationToken);
 }

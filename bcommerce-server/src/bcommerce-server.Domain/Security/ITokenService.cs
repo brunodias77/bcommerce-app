@@ -10,7 +10,5 @@ namespace bcommerce_server.Domain.Security
         public string GenerateToken(Guid userId);
 
         public Guid ValidateAndGetUserIdentifier(string token);
-
-
     }
 }

@@ -30,7 +30,7 @@ public class Cart : AggregateRoot<CartID>
         _updatedAt = updatedAt;
     }
 
-    public static Cart New(Guid customerId)
+    public static Cart NewCart(Guid customerId)
     {
         var now = DateTime.UtcNow;
         return new Cart(

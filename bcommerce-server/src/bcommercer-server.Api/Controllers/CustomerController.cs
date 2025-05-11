@@ -3,6 +3,7 @@ using bcommerce_server.Application.Customers.Login;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using bcommerce_server.Domain.Validations;
+using bcommercer_server.Api.Attributes;
 
 namespace bcommercer_server.Api.Controllers;
 
@@ -10,17 +11,13 @@ namespace bcommercer_server.Api.Controllers;
 [Route("api/customer")]
 public class CustomerController : ControllerBase
 {
-    public CustomerController(ICreateCustomerUseCase createCustomer, ILoginCustomerUseCase loginCustomer)
+    public CustomerController(ICreateCustomerUseCase createCustomer)
     {
         _createCustomer = createCustomer;
-        _loginCustomer = loginCustomer;
     }
 
     private readonly ICreateCustomerUseCase _createCustomer;
-    private readonly ILoginCustomerUseCase _loginCustomer;
 
-
-    
     [HttpPost("signup")]
     [ProducesResponseType(typeof(CreateCustomerOutput), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(List<Error>), StatusCodes.Status400BadRequest)]
@@ -37,7 +34,7 @@ public class CustomerController : ControllerBase
     [HttpPost("signin")]
     [ProducesResponseType(typeof(LoginCustomerOutput), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(List<Error>), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Login([FromBody] LoginCustomerInput input)
+    public async Task<IActionResult> Login([FromServices] ILoginCustomerUseCase _loginCustomer, [FromBody] LoginCustomerInput input)
     {
         var result = await _loginCustomer.Execute(input);
 

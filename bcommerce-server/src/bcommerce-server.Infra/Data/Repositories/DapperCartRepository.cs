@@ -105,4 +105,11 @@ public class DapperCartRepository : ICartRepository
         await _unitOfWork.Connection.ExecuteAsync(deleteItemsSql, new { CartId = cart.Id.Value }, _unitOfWork.Transaction);
         await _unitOfWork.Connection.ExecuteAsync(deleteCartSql, new { Id = cart.Id.Value }, _unitOfWork.Transaction);
     }
+
+    public async Task<Cart?> GetByCustomerId(Guid customerId, CancellationToken cancellationToken)
+    {
+        
+        const string sql = "SELECT * FROM carts WHERE customer_id = @CustomerId;";
+        return null;
+    }
 }

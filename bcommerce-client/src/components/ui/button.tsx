@@ -25,8 +25,8 @@ const Button = ({
     const base = "rounded focus:outline-none transition transform active:scale-95 flex items-center justify-center cursor-pointer";
 
     const variants = {
-        primary: "bg-[#2D2926] text-white hover:brightness-50",
-        secondary: "bg-[#FEC857] text-black hover:brightness-90",
+        primary: "bg-[#2d2926] text-white hover:brightness-50",
+        secondary: "bg-[#fec857] text-black hover:brightness-90",
     };
 
     const sizes = {

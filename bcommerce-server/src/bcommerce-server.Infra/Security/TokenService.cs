@@ -43,7 +43,7 @@ namespace bcommerce_server.Infra.Security
 
             return tokenHandler.WriteToken(token);
         }
-
+        
         public Guid ValidateAndGetUserIdentifier(string token)
         {
             var validationParameters = new TokenValidationParameters
@@ -63,14 +63,46 @@ namespace bcommerce_server.Infra.Security
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
 
-                var userId = principal.Claims.First(c => c.Type == "sub").Value;
-                return Guid.Parse(userId);
+                var userIdClaim = principal.FindFirst("sub") ?? principal.FindFirst(ClaimTypes.NameIdentifier);
+
+                if (userIdClaim == null)
+                    throw new SecurityTokenException("Claim de identificação do usuário não encontrada.");
+
+                return Guid.Parse(userIdClaim.Value);
             }
-            catch
+            catch (Exception)
             {
-                throw new SecurityTokenException("Invalid token");
+                throw new SecurityTokenException("Token inválido.");
             }
         }
+
+        // public Guid ValidateAndGetUserIdentifier(string token)
+        // {
+        //     var validationParameters = new TokenValidationParameters
+        //     {
+        //         ValidateIssuer = true,
+        //         ValidateAudience = true,
+        //         ValidIssuer = _settings.Issuer,
+        //         ValidAudience = _settings.Audience,
+        //         ValidateIssuerSigningKey = true,
+        //         IssuerSigningKey = _securityKey,
+        //         ValidateLifetime = true,
+        //         ClockSkew = TimeSpan.Zero
+        //     };
+        //
+        //     try
+        //     {
+        //         var tokenHandler = new JwtSecurityTokenHandler();
+        //         var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+        //
+        //         var userId = principal.Claims.First(c => c.Type == "sub").Value;
+        //         return Guid.Parse(userId);
+        //     }
+        //     catch
+        //     {
+        //         throw new SecurityTokenException("Invalid token");
+        //     }
+        // }
     }
 }
 
