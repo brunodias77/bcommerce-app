@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
 using bcommerce_server.Application.Abstractions;
+using bcommerce_server.Domain.Carts;
+using bcommerce_server.Domain.Carts.Entities;
 using bcommerce_server.Domain.Carts.Repositories;
 using bcommerce_server.Domain.Products.Repostories;
 using bcommerce_server.Domain.Services;
+using bcommerce_server.Domain.Validations;
 using bcommerce_server.Domain.Validations.Handlers;
 using bcommerce_server.Infra.Repositories;
 
@@ -26,19 +29,68 @@ public class AddItemToCartUseCase : IAddItemToCartUseCase
 
     public async Task<Result<AddItemToCartOutput, Notification>> Execute(AddItemToCartInput input)
     {
-        // cart e cart_items
-        var notification = Notification.Create();
-        // vou receber um { productID: {color: 1}}
-        // pegar o usuario
-        var customer = _loggedCustomer.User();
-        // verificar se o carrinho desse usuario existe 
-        //var cart = await _cartRepository.Get()
-        // verificar se o produto existe 
-        // validar tudo Cart.Validate(notification), CartItem.Validate(notification);
-        //
-        return  Task.FromResult(
-            Result<AddItemToCartOutput, Notification>.Ok(new AddItemToCartOutput())
-        );
+     var notification = Notification.Create();
 
+        try
+        {
+            // 🔐 1. Obter cliente logado e validar
+            var customer = await _loggedCustomer.User();
+            customer.Validate(notification);
+            if (notification.HasError())
+                return Result<AddItemToCartOutput, Notification>.Fail(notification);
+
+            // 💾 2. Iniciar transação (antes de qualquer SELECT/INSERT/UPDATE)
+            if (!_unitOfWork.HasActiveTransaction)
+                await _unitOfWork.Begin();
+            
+            // 🔍 3. Verificar se o produto existe
+            var product = await _productRepository.Get(input.ProductId, CancellationToken.None);
+            if (product is null)
+            {
+                notification.Append(new Error("Produto não encontrado."));
+                await _unitOfWork.Rollback();
+                return Result<AddItemToCartOutput, Notification>.Fail(notification);
+            }
+
+            // 🛒 4. Buscar ou criar carrinho do cliente
+            var existingCart = await _cartRepository.GetByCustomerId(customer.Id.Value, CancellationToken.None);
+            var cart = existingCart ?? Cart.NewCart(customer.Id.Value);
+
+            // ➕ 5. Criar e validar item
+            var item = CartItem.NewCartItem(input.ProductId, input.Quantity);
+            item.Validate(notification);
+            if (notification.HasError())
+            {
+                await _unitOfWork.Rollback();
+                return Result<AddItemToCartOutput, Notification>.Fail(notification);
+            }
+
+            // 🧱 6. Adicionar item e validar carrinho
+            cart.AddItem(item);
+            cart.Validate(notification);
+            if (notification.HasError())
+            {
+                await _unitOfWork.Rollback();
+                return Result<AddItemToCartOutput, Notification>.Fail(notification);
+            }
+
+            // 💽 7. Persistir carrinho
+            if (existingCart is null)
+                await _cartRepository.Insert(cart, CancellationToken.None);
+            else
+                await _cartRepository.Update(cart, CancellationToken.None);
+
+            // ✅ 8. Commit
+            await _unitOfWork.Commit();
+
+            // var output = new AddItemToCartOutput(cart.Id.Value);
+            // return Result<AddItemToCartOutput, Notification>.Ok(output);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            await _unitOfWork.Rollback();
+            return Result<AddItemToCartOutput, Notification>.Fail(Notification.Create(ex));
+        }
     }
 }

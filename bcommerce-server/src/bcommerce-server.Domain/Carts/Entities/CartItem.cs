@@ -23,7 +23,7 @@ public class CartItem : Entity<CartItemID>
         _addedAt = addedAt;
     }
 
-    public static CartItem Create(Guid productId, int quantity)
+    public static CartItem NewCartItem(Guid productId, int quantity)
     {
         return new CartItem(
             CartItemID.Generate(),

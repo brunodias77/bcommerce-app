@@ -33,5 +33,7 @@ namespace bcommerce_server.Infra.Repositories
         /// Transação atual em execução.
         /// </summary>
         IDbTransaction Transaction { get; }
+        bool HasActiveTransaction { get; } // 👈 ADICIONADO
+
     }
 }

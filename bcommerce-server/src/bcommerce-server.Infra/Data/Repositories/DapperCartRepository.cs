@@ -108,8 +108,13 @@ public class DapperCartRepository : ICartRepository
 
     public async Task<Cart?> GetByCustomerId(Guid customerId, CancellationToken cancellationToken)
     {
-        
         const string sql = "SELECT * FROM carts WHERE customer_id = @CustomerId;";
-        return null;
-    }
+        var cartModel = await _unitOfWork.Connection.QuerySingleOrDefaultAsync<CartDataModel>(
+            sql, new { CustomerId = customerId }, _unitOfWork.Transaction);
+        if (cartModel is null) return null;
+        var itemModels = await _unitOfWork.Connection.QueryAsync<CartItemDataModel>(
+            "SELECT * FROM cart_items WHERE cart_id = @CartId;",
+            new { CartId = cartModel.Id }, _unitOfWork.Transaction);
+        var items = itemModels.Select(CartItemMapper.ToDomain).ToList();
+        return CartMapper.ToDomain(cartModel, items);    }
 }

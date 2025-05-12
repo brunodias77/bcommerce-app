@@ -43,7 +43,6 @@ public class LoggedCustomer : ILoggedCustomer
         {
             throw new UnauthorizedAccessException("Cliente não encontrado.");
         }
-
         return customer;
     }
 
