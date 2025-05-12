@@ -57,7 +57,7 @@ public class AddItemToCartUseCase : IAddItemToCartUseCase
             var cart = existingCart ?? Cart.NewCart(customer.Id.Value);
 
             // ➕ 5. Criar e validar item
-            var item = CartItem.NewCartItem(input.ProductId, input.Quantity);
+            var item = CartItem.NewCartItem(input.ProductId,Guid.NewGuid(), 100, input.Quantity);
             item.Validate(notification);
             if (notification.HasError())
             {
@@ -85,6 +85,14 @@ public class AddItemToCartUseCase : IAddItemToCartUseCase
 
             // var output = new AddItemToCartOutput(cart.Id.Value);
             // return Result<AddItemToCartOutput, Notification>.Ok(output);
+            // montar o carrinho completo com todos os products color e prices
+            // Ter acesso ao cartID
+            
+            // pegar todos os cartItems que tem relacao com o nosso cartID
+            
+            // com cada cartID pegar seu respectivo product para ter acesso a outras informacoes
+            // monstar o DTO e retornar
+            
             return null;
         }
         catch (Exception ex)

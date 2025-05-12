@@ -5,6 +5,6 @@ namespace bcommerce_server.Application.Carts.Add;
 
 public record AddItemToCartInput(
     Guid ProductId,
-    string Color,
+    Guid ColorId,
     int Quantity
 );

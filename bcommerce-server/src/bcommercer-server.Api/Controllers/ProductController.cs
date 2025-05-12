@@ -22,7 +22,7 @@ namespace bcommercer_server.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<GetAllProductsOutput>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<GetAllProductItemOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
         {

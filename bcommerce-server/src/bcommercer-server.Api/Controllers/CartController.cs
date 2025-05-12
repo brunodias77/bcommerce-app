@@ -21,6 +21,9 @@ public class CartController: ControllerBase
         CancellationToken cancellationToken)
     {
         var result = await useCase.Execute(input);
-        return Ok();
-    }
+        
+        if (result.IsSuccess)
+            return Ok(result.Value);
+
+        return BadRequest(result.Error!.GetErrors());    }
 }
