@@ -1,85 +1,63 @@
 using System;
+using System.Text.RegularExpressions;
 using bcommerce_server.Domain.Products.Entities;
 using bcommerce_server.Domain.Validations;
 
-namespace bcommerce_server.Domain.Products.Validators
+namespace bcommerce_server.Domain.Products.Validators;
+
+public sealed class ProductColorValidator : Validator
 {
-    public class ProductColorValidator : Validator
+    private readonly ProductColor _productColor;
+
+    public ProductColorValidator(ProductColor productColor, IValidationHandler handler)
+        : base(handler)
     {
-        private readonly ProductColor _entity;
+        _productColor = productColor ?? throw new ArgumentNullException(nameof(productColor));
+    }
 
-        public ProductColorValidator(ProductColor entity, IValidationHandler handler)
-            : base(handler)
+    public override void Validate()
+    {
+        ValidateProductId();
+        ValidateColor();
+    }
+
+    private void ValidateProductId()
+    {
+        if (_productColor.ProductId == Guid.Empty)
+            AddError("O 'ProductId' não pode ser vazio.");
+    }
+
+    private void ValidateColor()
+    {
+        var color = _productColor.Color;
+
+        if (color == null)
         {
-            _entity = entity ?? throw new ArgumentNullException(nameof(entity));
+            AddError("A instância da cor não pode ser nula.");
+            return;
         }
 
-        public override void Validate()
+        if (color.Id.Value == Guid.Empty)
+            AddError("O 'ColorId' não pode ser vazio.");
+
+        if (string.IsNullOrWhiteSpace(color.Name))
+            AddError("O nome da cor não pode ser vazio.");
+
+        if (string.IsNullOrWhiteSpace(color.Value))
         {
-            ValidateProductId();
-            ValidateColorId();
+            AddError("O valor da cor não pode ser vazio.");
+            return;
         }
 
-        private void ValidateProductId()
-        {
-            if (_entity.ProductId == Guid.Empty)
-            {
-                AddError("'ProductId' não pode ser vazio.");
-            }
-        }
+        var isHex = Regex.IsMatch(color.Value, @"^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$");
+        var isNamed = Regex.IsMatch(color.Value, @"^[A-Za-z]+$");
 
-        private void ValidateColorId()
-        {
-            if (_entity.ColorId == Guid.Empty)
-            {
-                AddError("'ColorId' não pode ser vazio.");
-            }
-        }
+        if (!isHex && !isNamed)
+            AddError("A cor deve ser um valor HEX válido (ex: #FF00FF) ou um nome (ex: Red).");
+    }
 
-        private void AddError(string message)
-        {
-            ValidationHandler.Append(new Error(message));
-        }
+    private void AddError(string message)
+    {
+        ValidationHandler.Append(new Error(message));
     }
 }
-
-
-
-// using bcommerce_server.Domain.Products.Entities;
-// using bcommerce_server.Domain.Validations;
-//
-// namespace bcommerce_server.Domain.Products.Validators;
-//
-// public class ProductColorValidator : Validator
-// {
-//     private readonly ProductColor _color;
-//
-//     public ProductColorValidator(ProductColor color, IValidationHandler handler)
-//         : base(handler)
-//     {
-//         _color = color ?? throw new ArgumentNullException(nameof(color));
-//     }
-//
-//     public override void Validate()
-//     {
-//         var value = _color.Color.Value;
-//
-//         if (string.IsNullOrWhiteSpace(value))
-//         {
-//             AddError("'color' não pode estar em branco.");
-//             return;
-//         }
-//
-//         if (value.Length > 20)
-//         {
-//             AddError("'color' deve ter no máximo 20 caracteres.");
-//         }
-//
-//         // A validação de formato (hex, nome de cor) pode ficar no ProductValidator, como combinamos
-//     }
-//
-//     private void AddError(string message)
-//     {
-//         ValidationHandler.Append(new Error(message));
-//     }
-// }

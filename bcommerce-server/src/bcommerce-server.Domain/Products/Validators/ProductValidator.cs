@@ -1,186 +1,232 @@
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using bcommerce_server.Domain.Products.Entities;
 using bcommerce_server.Domain.Validations;
 
-namespace bcommerce_server.Domain.Products.Validators
+namespace bcommerce_server.Domain.Products.Validators;
+public sealed class ProductValidator : Validator
 {
-    public class ProductValidator : Validator
+    private const int NAME_MIN = 3;
+    private const int NAME_MAX = 150;
+    private const int DESC_MIN = 10;
+    private const int DESC_MAX = 1000;
+    private const int URL_MAX = 2048;
+
+    private readonly Product _product;
+
+    public ProductValidator(Product product, IValidationHandler handler)
+        : base(handler)
     {
-        private const int NAME_MIN_LENGTH = 3;
-        private const int NAME_MAX_LENGTH = 150;
-        private const int DESC_MIN_LENGTH = 10;
-        private const int DESC_MAX_LENGTH = 1000;
+        _product = product ?? throw new ArgumentNullException(nameof(product));
+    }
 
-        private readonly Product _product;
+    public override void Validate()
+    {
+        ValidateName();
+        ValidateDescription();
+        ValidatePrice();
+        ValidateOldPrice();
+        ValidateStockAndSold();
+        ValidateCategory();
+        ValidateImages();
+        ValidateColors();
+        ValidateReviews();
+        ValidateTimestamps();
+        ValidatePromotionFlags();
+        ValidateSoftDelete();
+    }
 
-        public ProductValidator(Product product, IValidationHandler handler)
-            : base(handler)
+    private void ValidateName()
+    {
+        if (string.IsNullOrWhiteSpace(_product.Name))
         {
-            _product = product ?? throw new ArgumentNullException(nameof(product));
+            AddError("'name' não pode estar em branco.");
+            return;
         }
 
-        public override void Validate()
+        var length = _product.Name.Trim().Length;
+        if (length < NAME_MIN || length > NAME_MAX)
         {
-            ValidateName();
-            ValidateDescription();
-            ValidatePrice();
-            ValidateStock();
-            ValidateSold();
-            ValidateTimestamps();
-            ValidateDerivedFlags();
-            ValidateColors();
-            ValidateImages();
-            ValidateReviews();
-            ValidateSoftDelete();
+            AddError($"'name' deve ter entre {NAME_MIN} e {NAME_MAX} caracteres.");
+        }
+    }
+
+    private void ValidateDescription()
+    {
+        if (string.IsNullOrWhiteSpace(_product.Description))
+        {
+            AddError("'description' não pode estar em branco.");
+            return;
         }
 
-        private void ValidateName()
+        var length = _product.Description.Trim().Length;
+        if (length < DESC_MIN || length > DESC_MAX)
         {
-            if (string.IsNullOrWhiteSpace(_product.Name))
+            AddError($"'description' deve ter entre {DESC_MIN} e {DESC_MAX} caracteres.");
+        }
+    }
+
+    private void ValidatePrice()
+    {
+        if (_product.Price <= 0)
+        {
+            AddError("'price' deve ser maior que zero.");
+        }
+    }
+
+    private void ValidateOldPrice()
+    {
+        if (_product.OldPrice.HasValue && _product.OldPrice < 0)
+        {
+            AddError("'oldPrice' não pode ser negativo.");
+        }
+    }
+
+    private void ValidateStockAndSold()
+    {
+        if (_product.StockQuantity < 0)
+            AddError("'stockQuantity' não pode ser negativo.");
+
+        if (_product.Sold < 0)
+            AddError("'sold' não pode ser negativo.");
+    }
+
+    private void ValidateCategory()
+    {
+        if (_product.CategoryId == null || _product.CategoryId.Value == Guid.Empty)
+        {
+            AddError("'categoryId' não pode ser vazio.");
+        }
+
+        if (_product.Category is not null && string.IsNullOrWhiteSpace(_product.Category.Name))
+        {
+            AddError("'category.name' não pode estar em branco.");
+        }
+    }
+
+    private void ValidateImages()
+    {
+        if (_product.Images == null) return;
+
+        int index = 0;
+        foreach (var img in _product.Images)
+        {
+            if (img == null)
             {
-                AddError("'name' não pode estar em branco.");
-                return;
-            }
-
-            var length = _product.Name.Trim().Length;
-            if (length < NAME_MIN_LENGTH || length > NAME_MAX_LENGTH)
-            {
-                AddError($"'name' deve ter entre {NAME_MIN_LENGTH} e {NAME_MAX_LENGTH} caracteres.");
-            }
-        }
-
-        private void ValidateDescription()
-        {
-            if (string.IsNullOrWhiteSpace(_product.Description))
-            {
-                AddError("'description' não pode estar em branco.");
-                return;
-            }
-
-            var length = _product.Description.Trim().Length;
-            if (length < DESC_MIN_LENGTH || length > DESC_MAX_LENGTH)
-            {
-                AddError($"'description' deve ter entre {DESC_MIN_LENGTH} e {DESC_MAX_LENGTH} caracteres.");
-            }
-        }
-
-        private void ValidatePrice()
-        {
-            if (_product.Price <= 0)
-                AddError("'price' deve ser maior que 0.");
-
-            if (_product.OldPrice.HasValue && _product.OldPrice.Value < 0)
-                AddError("'oldPrice' não pode ser negativo.");
-        }
-
-        private void ValidateStock()
-        {
-            if (_product.StockQuantity < 0)
-                AddError("'stockQuantity' não pode ser negativo.");
-        }
-
-        private void ValidateSold()
-        {
-            if (_product.Sold < 0)
-                AddError("'sold' não pode ser negativo.");
-        }
-
-        private void ValidateTimestamps()
-        {
-            if (_product.UpdatedAt < _product.CreatedAt)
-                AddError("'updatedAt' não pode ser anterior a 'createdAt'.");
-
-            if (_product.UpdatedAt > DateTime.UtcNow)
-                AddError("'updatedAt' não pode estar no futuro.");
-        }
-
-        private void ValidateDerivedFlags()
-        {
-            if (_product.OldPrice.HasValue && _product.OldPrice.Value <= _product.Price)
-                AddError("'oldPrice' deve ser maior que 'price' para promoção.");
-
-            if (_product.CreatedAt < DateTime.UtcNow.AddDays(-30))
-                AddError("Produto com mais de 30 dias não é considerado 'novo'.");
-        }
-
-        private void ValidateColors()
-        {
-            if (_product.Colors == null || !_product.Colors.Any())
-            {
-                AddError("O produto deve ter pelo menos uma cor.");
-                return;
-            }
-
-            int index = 0;
-            foreach (var pc in _product.Colors)
-            {
-                if (pc == null)
-                {
-                    AddError($"'colors[{index}]' não pode ser nulo.");
-                }
-                else
-                {
-                    if (pc.ProductId == Guid.Empty)
-                        AddError($"'colors[{index}].ProductId' não pode ser vazio.");
-
-                    if (pc.ColorId == Guid.Empty)
-                        AddError($"'colors[{index}].ColorId' não pode ser vazio.");
-                }
-
+                AddError($"'images[{index}]' não pode ser nula.");
                 index++;
+                continue;
             }
+
+            if (string.IsNullOrWhiteSpace(img.Url))
+                AddError($"'images[{index}].url' não pode estar em branco.");
+
+            if (img.Url.Length > URL_MAX)
+                AddError($"'images[{index}].url' excede {URL_MAX} caracteres.");
+
+            index++;
+        }
+    }
+
+    private void ValidateColors()
+    {
+        var colors = _product.Colors;
+
+        if (colors == null || !colors.Any())
+        {
+            AddError("O produto deve conter pelo menos uma cor.");
+            return;
         }
 
-        private void ValidateImages()
+        int index = 0;
+        foreach (var color in colors)
         {
-            if (_product.Images == null) return;
-            int index = 0;
-            foreach (var img in _product.Images)
+            if (color is null)
             {
-                if (img == null)
-                {
-                    AddError($"'images[{index}]' não pode ser nula.");
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(img.Url))
-                        AddError($"'images[{index}].url' não pode estar em branco.");
-                    if (img.Url.Length > 2048)
-                        AddError($"'images[{index}].url' excede 2048 caracteres.");
-                }
+                AddError($"'colors[{index}]' não pode ser nula.");
                 index++;
+                continue;
             }
-        }
 
-        private void ValidateReviews()
-        {
-            if (_product.Reviews == null) return;
-            int index = 0;
-            foreach (var rev in _product.Reviews)
+            if (color.ProductId == Guid.Empty)
+                AddError($"'colors[{index}].productId' não pode ser vazio.");
+
+            var value = color.Color?.Value;
+            if (string.IsNullOrWhiteSpace(value))
             {
-                if (rev == null)
-                {
-                    AddError($"'reviews[{index}]' não pode ser nulo.");
-                }
-                else
-                {
-                    if (rev.Rating < 1 || rev.Rating > 5)
-                        AddError($"'reviews[{index}].rating' deve estar entre 1 e 5.");
-                    if (rev.Comment?.Length > 1000)
-                        AddError($"'reviews[{index}].comment' excede 1000 caracteres.");
-                }
-                index++;
+                AddError($"'colors[{index}].value' não pode estar em branco.");
             }
-        }
+            else
+            {
+                var isHex = Regex.IsMatch(value, @"^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$");
+                var isNamed = Regex.IsMatch(value, @"^[A-Za-z]+$");
 
-        private void ValidateSoftDelete()
+                if (!isHex && !isNamed)
+                {
+                    AddError($"'colors[{index}].value' deve ser HEX ou nome válido.");
+                }
+            }
+
+            index++;
+        }
+    }
+
+    private void ValidateReviews()
+    {
+        if (_product.Reviews == null) return;
+
+        int index = 0;
+        foreach (var review in _product.Reviews)
         {
-            if (!_product.IsActive && !_product.DeletedAt.HasValue)
-                AddError("'deletedAt' deve ser definido quando 'isActive' é false.");
+            if (review is null)
+            {
+                AddError($"'reviews[{index}]' não pode ser nula.");
+                index++;
+                continue;
+            }
+
+            if (review.Rating < 1 || review.Rating > 5)
+                AddError($"'reviews[{index}].rating' deve estar entre 1 e 5.");
+
+            if (!string.IsNullOrWhiteSpace(review.Comment) && review.Comment.Length > 1000)
+                AddError($"'reviews[{index}].comment' excede 1000 caracteres.");
+
+            index++;
+        }
+    }
+
+    private void ValidateTimestamps()
+    {
+        if (_product.UpdatedAt < _product.CreatedAt)
+            AddError("'updatedAt' não pode ser anterior a 'createdAt'.");
+
+        if (_product.UpdatedAt > DateTime.UtcNow.AddDays(1))
+            AddError("'updatedAt' não pode estar no futuro.");
+    }
+
+    private void ValidatePromotionFlags()
+    {
+        if (_product.OldPrice.HasValue && _product.OldPrice.Value <= _product.Price)
+        {
+            AddError("'oldPrice' deve ser maior que 'price' para indicar promoção.");
         }
 
-        private void AddError(string message) => ValidationHandler.Append(new Error(message));
+        if (_product.CreatedAt < DateTime.UtcNow.AddDays(-30))
+        {
+            AddError("Produto com mais de 30 dias não deve ser considerado novo.");
+        }
+    }
+
+    private void ValidateSoftDelete()
+    {
+        if (!_product.IsActive && !_product.DeletedAt.HasValue)
+            AddError("'deletedAt' deve ser preenchido quando o produto está inativo.");
+    }
+
+    private void AddError(string message)
+    {
+        ValidationHandler.Append(new Error(message));
     }
 }
 

@@ -1,61 +1,39 @@
-using System;
 using bcommerce_server.Domain.Products.Entities;
 using bcommerce_server.Domain.Products.Identifiers;
 
-namespace bcommerce_server.Infra.Data.Models.Products
-{
-    public static class ProductColorMapper
-    {
-        public static ProductColor ToDomain(ProductColorDataModel model)
-        {
-            return ProductColor.With(
-                ProductColorID.From(model.Id),
-                model.ProductId,
-                model.ColorId,
-                model.CreatedAt,
-                model.UpdatedAt
-            );
-        }
+namespace bcommerce_server.Infra.Data.Models.Products;
 
-        public static ProductColorDataModel ToDataModel(ProductColor entity, Guid productId)
-        {
-            return new ProductColorDataModel(
-                entity.Id.Value,
-                productId,
-                entity.ColorId,
-                entity.CreatedAt,
-                entity.UpdatedAt
-            );
-        }
+public static class ProductColorMapper
+{
+    public static ProductColor ToDomain(ProductColorDataModel model)
+    {
+        var color = Color.With(
+            ColorID.From(model.ColorId),
+            model.ColorName,
+            model.ColorValue,
+            model.CreatedAt,
+            model.UpdatedAt
+        );
+
+        return ProductColor.With(
+            ProductColorID.From(model.Id),
+            model.ProductId,
+            color,
+            model.CreatedAt,
+            model.UpdatedAt
+        );
+    }
+
+    public static ProductColorDataModel ToDataModel(ProductColor entity)
+    {
+        return new ProductColorDataModel(
+            Id: entity.Id.Value,
+            ProductId: entity.ProductId,
+            ColorId: entity.Color.Id.Value,
+            ColorName: entity.Color.Name,
+            ColorValue: entity.Color.Value,
+            CreatedAt: entity.CreatedAt,
+            UpdatedAt: entity.UpdatedAt
+        );
     }
 }
-
-
-
-// using bcommerce_server.Domain.Products.Entities;
-// using bcommerce_server.Domain.Products.Identifiers;
-// using bcommerce_server.Domain.Products.ValueObjects;
-//
-// namespace bcommerce_server.Infra.Data.Models.Products;
-//
-// public static class ProductColorMapper
-// {
-//     public static ProductColor ToDomain(ProductColorDataModel model)
-//     {
-//         return ProductColor.With(
-//             ProductColorID.From(model.Id),
-//             ColorValue.From(model.ColorValue),
-//             model.CreatedAt
-//         );
-//     }
-//
-//     public static ProductColorDataModel ToDataModel(ProductColor color, Guid productId)
-//     {
-//         return new ProductColorDataModel(
-//             color.Id.Value,
-//             productId,
-//             color.Color.Value,
-//             color.CreatedAt
-//         );
-//     }
-// }

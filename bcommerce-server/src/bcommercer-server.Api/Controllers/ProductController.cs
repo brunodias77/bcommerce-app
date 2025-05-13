@@ -1,7 +1,9 @@
 using bcommerce_server.Application.Abstractions;
 using bcommerce_server.Application.Products.GetAll;
 using bcommerce_server.Application.Products.GetById;
+using bcommerce_server.Domain.Products.Repostories;
 using bcommerce_server.Domain.Validations.Handlers;
+using bcommerce_server.Infra.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bcommercer_server.Api.Controllers
@@ -10,41 +12,49 @@ namespace bcommercer_server.Api.Controllers
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
-        private readonly IGetAllProuctsUseCase _getAllProuctsUseCase;
-        private readonly IGetProductByIdUseCase _getProductByIdUseCase;
-
-        public ProductController(
-            IGetAllProuctsUseCase getAllProuctsUseCase,
-            IGetProductByIdUseCase getProductByIdUseCase)
+        public ProductController(IGetAllProuctsUseCase getAllProuctsUseCase, IGetProductByIdUseCase getProductByIdUseCase, IUnitOfWork unitOfWork)
         {
             _getAllProuctsUseCase = getAllProuctsUseCase;
             _getProductByIdUseCase = getProductByIdUseCase;
+            _unitOfWork = unitOfWork;
         }
+
+        private readonly IGetAllProuctsUseCase _getAllProuctsUseCase;
+        private readonly IGetProductByIdUseCase _getProductByIdUseCase;
+        private readonly IUnitOfWork _unitOfWork;
+
+  
 
         [HttpGet]
         [ProducesResponseType(typeof(List<GetAllProductItemOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllProducts([FromServices] IProductRepository productRepository, CancellationToken cancellationToken)
         {
-            var result = await _getAllProuctsUseCase.Execute(Unit.Value);
-
-            if (result.IsSuccess)
-                return Ok(result.Value);
-
-            return BadRequest(result.Error);
+            await _unitOfWork.Begin();
+            var response = await productRepository.GetAll(CancellationToken.None);
+            return Ok(response);
+            // var result = await _getAllProuctsUseCase.Execute(Unit.Value);
+            //
+            // if (result.IsSuccess)
+            //     return Ok(result.Value);
+            //
+            // return BadRequest(result.Error);
         }
 
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(GetProductByIdOutput), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetProductById([FromRoute] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProductById([FromRoute] string id, [FromServices] IProductRepository productRepository, CancellationToken cancellationToken)
         {
-            var result = await _getProductByIdUseCase.Execute(new GetProductByIdInput(id));
-
-            if (result.IsSuccess)
-                return Ok(result.Value);
-
-            return BadRequest(result.Error);
+            await _unitOfWork.Begin();
+            var response = await productRepository.Get(Guid.Parse(id), CancellationToken.None);
+            return Ok(response);
+            // var result = await _getProductByIdUseCase.Execute(new GetProductByIdInput(id));
+            //
+            // if (result.IsSuccess)
+            //     return Ok(result.Value);
+            //
+            // return BadRequest(result.Error);
         }
     }
 }

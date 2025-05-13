@@ -125,15 +125,18 @@ CREATE TABLE colors (
 CREATE INDEX ix_colors_value ON colors(value);
 
 CREATE TABLE product_colors (
-    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    product_id  UUID NOT NULL,
-    color_id    UUID NOT NULL,
+    product_id  UUID      NOT NULL,
+    color_id    UUID      NOT NULL,
     created_at  TIMESTAMP NOT NULL DEFAULT now(),
     updated_at  TIMESTAMP NOT NULL DEFAULT now(),
-    CONSTRAINT fk_prodcolor_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    CONSTRAINT fk_prodcolor_color   FOREIGN KEY (color_id)   REFERENCES colors(id)   ON DELETE RESTRICT
+    CONSTRAINT pk_product_colors PRIMARY KEY (product_id, color_id),
+    CONSTRAINT fk_prodcolor_product FOREIGN KEY (product_id)
+        REFERENCES products(id) ON DELETE CASCADE,
+    CONSTRAINT fk_prodcolor_color FOREIGN KEY (color_id)
+        REFERENCES colors(id) ON DELETE RESTRICT
 );
-CREATE UNIQUE INDEX uq_product_color ON product_colors(product_id, color_id);
+
+-- Índices adicionais (opcionais, mas úteis para buscas isoladas)
 CREATE INDEX ix_prodcolor_product ON product_colors(product_id);
 CREATE INDEX ix_prodcolor_color   ON product_colors(color_id);
 
@@ -147,19 +150,22 @@ CREATE TABLE sizes (
 
 CREATE INDEX ix_sizes_name ON sizes(name);
 
+-- Nova definição de product_size com PK composta (product_id, size_id)
 CREATE TABLE product_size (
-    id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    product_id     UUID NOT NULL,
-    size_id        UUID NOT NULL,
-    stock_quantity INT NOT NULL DEFAULT 0,
+    product_id     UUID      NOT NULL,
+    size_id        UUID      NOT NULL,
+    stock_quantity INT       NOT NULL DEFAULT 0,
     created_at     TIMESTAMP NOT NULL DEFAULT now(),
     updated_at     TIMESTAMP NOT NULL DEFAULT now(),
-    CONSTRAINT fk_productsize_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    CONSTRAINT fk_productsize_size    FOREIGN KEY (size_id)    REFERENCES sizes(id)    ON DELETE RESTRICT,
-    CONSTRAINT ck_productsize_stock   CHECK (stock_quantity >= 0),
-    CONSTRAINT uq_productsize UNIQUE (product_id, size_id)
+    CONSTRAINT pk_product_size PRIMARY KEY (product_id, size_id),
+    CONSTRAINT fk_productsize_product FOREIGN KEY (product_id)
+        REFERENCES products(id) ON DELETE CASCADE,
+    CONSTRAINT fk_productsize_size FOREIGN KEY (size_id)
+        REFERENCES sizes(id) ON DELETE RESTRICT,
+    CONSTRAINT ck_productsize_stock CHECK (stock_quantity >= 0)
 );
 
+-- Índices adicionais para consultas isoladas
 CREATE INDEX ix_productsize_product ON product_size(product_id);
 CREATE INDEX ix_productsize_size    ON product_size(size_id);
 
@@ -251,18 +257,28 @@ CREATE TABLE carts (
 );
 
 CREATE TABLE cart_items (
-    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    cart_id     UUID NOT NULL,
-    product_id  UUID NOT NULL,
-    quantity    INT NOT NULL CHECK (quantity > 0),
+    cart_id     UUID      NOT NULL,
+    product_id  UUID      NOT NULL,
+    color_id    UUID      NULL,
+    quantity    INT       NOT NULL CHECK (quantity > 0),
     unit_price  NUMERIC(18,2) NOT NULL,
-    color_id    UUID NULL,
     added_at    TIMESTAMP NOT NULL DEFAULT now(),
-    CONSTRAINT fk_cartitems_cart     FOREIGN KEY (cart_id)    REFERENCES carts(id)            ON DELETE CASCADE,
-    CONSTRAINT fk_cartitems_product  FOREIGN KEY (product_id) REFERENCES products(id)         ON DELETE RESTRICT,
-    CONSTRAINT fk_cartitems_color    FOREIGN KEY (color_id)   REFERENCES product_colors(id) ON DELETE SET NULL
+    
+    -- PK composta
+    CONSTRAINT pk_cart_items PRIMARY KEY (cart_id, product_id, color_id),
+
+    -- FKs
+    CONSTRAINT fk_cartitems_cart    FOREIGN KEY (cart_id)
+        REFERENCES carts(id)            ON DELETE CASCADE,
+    CONSTRAINT fk_cartitems_product FOREIGN KEY (product_id)
+        REFERENCES products(id)         ON DELETE RESTRICT,
+    -- agora a FK é composta: vincula (product_id,color_id) em cart_items
+    -- à PK composta de product_colors
+    CONSTRAINT fk_cartitems_color   FOREIGN KEY (product_id, color_id)
+        REFERENCES product_colors(product_id, color_id) ON DELETE SET NULL
 );
-CREATE INDEX ix_cartitems_cart    ON cart_items(cart_id);
+
+-- Índices para consultas que filtram isoladamente
 CREATE INDEX ix_cartitems_product ON cart_items(product_id);
 CREATE INDEX ix_cartitems_color   ON cart_items(color_id);
 
@@ -460,3 +476,19 @@ INSERT INTO product_colors (
     NOW(),
     NOW()
 );
+
+
+select * from products;
+
+SELECT 
+    c.id         AS color_id,
+    c.name       AS color_name,
+    c.value      AS color_value,
+    pc.created_at,
+    pc.updated_at
+FROM product_colors pc
+JOIN colors c ON pc.color_id = c.id
+WHERE pc.product_id = 'a8ce040e-5b21-4010-86b2-6360434b8ca5';
+
+
+drop table product_colors;

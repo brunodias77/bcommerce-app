@@ -4,6 +4,8 @@ public sealed record ProductColorDataModel(
     Guid Id,
     Guid ProductId,
     Guid ColorId,
+    string ColorName,
+    string ColorValue,
     DateTime CreatedAt,
     DateTime UpdatedAt
 );
