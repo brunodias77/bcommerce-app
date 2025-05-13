@@ -11,7 +11,7 @@ type FavoriteIconProps = {
 const FavoriteIcon: React.FC<FavoriteIconProps> = ({
     isFavorite,
     width = 20,
-    height = 18,
+    height = 20,
     color = "#2d2926",
     strokeColor = "#777777",
 }) => {

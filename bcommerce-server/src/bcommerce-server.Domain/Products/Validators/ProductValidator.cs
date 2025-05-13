@@ -1,15 +1,17 @@
+using System;
+using System.Linq;
 using System.Text.RegularExpressions;
-using bcommerce_server.Domain.Products;
+using bcommerce_server.Domain.Products.Entities;
 using bcommerce_server.Domain.Validations;
 
 namespace bcommerce_server.Domain.Products.Validators;
-
-public class ProductValidator : Validator
+public sealed class ProductValidator : Validator
 {
-    private const int NAME_MIN_LENGTH = 3;
-    private const int NAME_MAX_LENGTH = 150;
-    private const int DESC_MIN_LENGTH = 10;
-    private const int DESC_MAX_LENGTH = 1000;
+    private const int NAME_MIN = 3;
+    private const int NAME_MAX = 150;
+    private const int DESC_MIN = 10;
+    private const int DESC_MAX = 1000;
+    private const int URL_MAX = 2048;
 
     private readonly Product _product;
 
@@ -24,10 +26,14 @@ public class ProductValidator : Validator
         ValidateName();
         ValidateDescription();
         ValidatePrice();
-        ValidateStock();
-        ValidateColors();
+        ValidateOldPrice();
+        ValidateStockAndSold();
+        ValidateCategory();
         ValidateImages();
+        ValidateColors();
         ValidateReviews();
+        ValidateTimestamps();
+        ValidatePromotionFlags();
         ValidateSoftDelete();
     }
 
@@ -39,10 +45,10 @@ public class ProductValidator : Validator
             return;
         }
 
-        int length = _product.Name.Trim().Length;
-        if (length < NAME_MIN_LENGTH || length > NAME_MAX_LENGTH)
+        var length = _product.Name.Trim().Length;
+        if (length < NAME_MIN || length > NAME_MAX)
         {
-            AddError($"'name' deve ter entre {NAME_MIN_LENGTH} e {NAME_MAX_LENGTH} caracteres.");
+            AddError($"'name' deve ter entre {NAME_MIN} e {NAME_MAX} caracteres.");
         }
     }
 
@@ -54,10 +60,10 @@ public class ProductValidator : Validator
             return;
         }
 
-        int length = _product.Description.Trim().Length;
-        if (length < DESC_MIN_LENGTH || length > DESC_MAX_LENGTH)
+        var length = _product.Description.Trim().Length;
+        if (length < DESC_MIN || length > DESC_MAX)
         {
-            AddError($"'description' deve ter entre {DESC_MIN_LENGTH} e {DESC_MAX_LENGTH} caracteres.");
+            AddError($"'description' deve ter entre {DESC_MIN} e {DESC_MAX} caracteres.");
         }
     }
 
@@ -65,79 +71,101 @@ public class ProductValidator : Validator
     {
         if (_product.Price <= 0)
         {
-            AddError("'price' deve ser maior que 0.");
+            AddError("'price' deve ser maior que zero.");
         }
+    }
 
-        if (_product.OldPrice.HasValue && _product.OldPrice.Value < 0)
+    private void ValidateOldPrice()
+    {
+        if (_product.OldPrice.HasValue && _product.OldPrice < 0)
         {
             AddError("'oldPrice' não pode ser negativo.");
         }
     }
 
-    private void ValidateStock()
+    private void ValidateStockAndSold()
     {
         if (_product.StockQuantity < 0)
-        {
             AddError("'stockQuantity' não pode ser negativo.");
-        }
 
         if (_product.Sold < 0)
-        {
             AddError("'sold' não pode ser negativo.");
-        }
     }
 
-    private void ValidateColors()
+    private void ValidateCategory()
     {
-        int index = 0;
-        foreach (var color in _product.Colors)
+        if (_product.CategoryId == null || _product.CategoryId.Value == Guid.Empty)
         {
-            if (color is null)
-            {
-                AddError($"'colors[{index}]' não pode ser nulo.");
-                index++;
-                continue;
-            }
+            AddError("'categoryId' não pode ser vazio.");
+        }
 
-            var value = color.Color.Value;
-
-            if (string.IsNullOrWhiteSpace(value))
-                AddError($"'colors[{index}].value' não pode estar em branco.");
-
-            if (value.Length > 20)
-                AddError($"'colors[{index}].value' excede o limite de 20 caracteres.");
-
-            // Regex opcional para validar formatos (#FFF, #FFFFFF, nomes)
-            var colorRegex = new Regex(@"^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$|^[a-zA-Z]+$");
-            if (!colorRegex.IsMatch(value))
-            {
-                AddError($"'colors[{index}].value' deve ser um código hex ou nome de cor.");
-            }
-
-            index++;
+        if (_product.Category is not null && string.IsNullOrWhiteSpace(_product.Category.Name))
+        {
+            AddError("'category.name' não pode estar em branco.");
         }
     }
 
     private void ValidateImages()
     {
+        if (_product.Images == null) return;
+
         int index = 0;
-        foreach (var image in _product.Images)
+        foreach (var img in _product.Images)
         {
-            if (image is null)
+            if (img == null)
             {
                 AddError($"'images[{index}]' não pode ser nula.");
                 index++;
                 continue;
             }
 
-            if (string.IsNullOrWhiteSpace(image.Url))
-            {
+            if (string.IsNullOrWhiteSpace(img.Url))
                 AddError($"'images[{index}].url' não pode estar em branco.");
+
+            if (img.Url.Length > URL_MAX)
+                AddError($"'images[{index}].url' excede {URL_MAX} caracteres.");
+
+            index++;
+        }
+    }
+
+    private void ValidateColors()
+    {
+        var colors = _product.Colors;
+
+        if (colors == null || !colors.Any())
+        {
+            AddError("O produto deve conter pelo menos uma cor.");
+            return;
+        }
+
+        int index = 0;
+        foreach (var color in colors)
+        {
+            if (color is null)
+            {
+                AddError($"'colors[{index}]' não pode ser nula.");
+                index++;
+                continue;
             }
 
-            if (image.Url.Length > 2048)
+            if (color.ProductId == Guid.Empty)
+                AddError($"'colors[{index}].productId' não pode ser vazio.");
+
+            var value = color.Color?.Value;
+            if (string.IsNullOrWhiteSpace(value))
             {
-                AddError($"'images[{index}].url' excede o limite de 2048 caracteres.");
+                AddError($"'colors[{index}].value' não pode estar em branco.");
+            }
+            else
+            {
+                var isHex = Regex.IsMatch(value, @"^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$");
+                var isNamed = Regex.IsMatch(value, @"^[A-Za-z]+$");
+
+                if (!isHex && !isNamed)
+                {
+                    AddError($"'colors[{index}].value' deve ser HEX ou nome válido.");
+                }
             }
 
             index++;
@@ -146,36 +174,54 @@ public class ProductValidator : Validator
 
     private void ValidateReviews()
     {
+        if (_product.Reviews == null) return;
+
         int index = 0;
         foreach (var review in _product.Reviews)
         {
             if (review is null)
             {
-                AddError($"'reviews[{index}]' não pode ser nulo.");
+                AddError($"'reviews[{index}]' não pode ser nula.");
                 index++;
                 continue;
             }
 
             if (review.Rating < 1 || review.Rating > 5)
-            {
                 AddError($"'reviews[{index}].rating' deve estar entre 1 e 5.");
-            }
 
-            if (review.Comment?.Length > 1000)
-            {
-                AddError($"'reviews[{index}].comment' excede o limite de 1000 caracteres.");
-            }
+            if (!string.IsNullOrWhiteSpace(review.Comment) && review.Comment.Length > 1000)
+                AddError($"'reviews[{index}].comment' excede 1000 caracteres.");
 
             index++;
         }
     }
 
+    private void ValidateTimestamps()
+    {
+        if (_product.UpdatedAt < _product.CreatedAt)
+            AddError("'updatedAt' não pode ser anterior a 'createdAt'.");
+
+        if (_product.UpdatedAt > DateTime.UtcNow.AddDays(1))
+            AddError("'updatedAt' não pode estar no futuro.");
+    }
+
+    private void ValidatePromotionFlags()
+    {
+        if (_product.OldPrice.HasValue && _product.OldPrice.Value <= _product.Price)
+        {
+            AddError("'oldPrice' deve ser maior que 'price' para indicar promoção.");
+        }
+
+        if (_product.CreatedAt < DateTime.UtcNow.AddDays(-30))
+        {
+            AddError("Produto com mais de 30 dias não deve ser considerado novo.");
+        }
+    }
+
     private void ValidateSoftDelete()
     {
-        if (!_product.IsActive && _product.DeletedAt is null)
-        {
-            AddError("'deletedAt' deve estar definido quando o produto está inativo.");
-        }
+        if (!_product.IsActive && !_product.DeletedAt.HasValue)
+            AddError("'deletedAt' deve ser preenchido quando o produto está inativo.");
     }
 
     private void AddError(string message)
@@ -183,6 +229,208 @@ public class ProductValidator : Validator
         ValidationHandler.Append(new Error(message));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// using System.Text.RegularExpressions;
+// using bcommerce_server.Domain.Products;
+// using bcommerce_server.Domain.Validations;
+//
+// namespace bcommerce_server.Domain.Products.Validators;
+//
+// public class ProductValidator : Validator
+// {
+//     private const int NAME_MIN_LENGTH = 3;
+//     private const int NAME_MAX_LENGTH = 150;
+//     private const int DESC_MIN_LENGTH = 10;
+//     private const int DESC_MAX_LENGTH = 1000;
+//
+//     private readonly Product _product;
+//
+//     public ProductValidator(Product product, IValidationHandler handler)
+//         : base(handler)
+//     {
+//         _product = product ?? throw new ArgumentNullException(nameof(product));
+//     }
+//
+//     public override void Validate()
+//     {
+//         ValidateName();
+//         ValidateDescription();
+//         ValidatePrice();
+//         ValidateStock();
+//         ValidateColors();
+//         ValidateImages();
+//         ValidateReviews();
+//         ValidateSoftDelete();
+//     }
+//
+//     private void ValidateName()
+//     {
+//         if (string.IsNullOrWhiteSpace(_product.Name))
+//         {
+//             AddError("'name' não pode estar em branco.");
+//             return;
+//         }
+//
+//         int length = _product.Name.Trim().Length;
+//         if (length < NAME_MIN_LENGTH || length > NAME_MAX_LENGTH)
+//         {
+//             AddError($"'name' deve ter entre {NAME_MIN_LENGTH} e {NAME_MAX_LENGTH} caracteres.");
+//         }
+//     }
+//
+//     private void ValidateDescription()
+//     {
+//         if (string.IsNullOrWhiteSpace(_product.Description))
+//         {
+//             AddError("'description' não pode estar em branco.");
+//             return;
+//         }
+//
+//         int length = _product.Description.Trim().Length;
+//         if (length < DESC_MIN_LENGTH || length > DESC_MAX_LENGTH)
+//         {
+//             AddError($"'description' deve ter entre {DESC_MIN_LENGTH} e {DESC_MAX_LENGTH} caracteres.");
+//         }
+//     }
+//
+//     private void ValidatePrice()
+//     {
+//         if (_product.Price <= 0)
+//         {
+//             AddError("'price' deve ser maior que 0.");
+//         }
+//
+//         if (_product.OldPrice.HasValue && _product.OldPrice.Value < 0)
+//         {
+//             AddError("'oldPrice' não pode ser negativo.");
+//         }
+//     }
+//
+//     private void ValidateStock()
+//     {
+//         if (_product.StockQuantity < 0)
+//         {
+//             AddError("'stockQuantity' não pode ser negativo.");
+//         }
+//
+//         if (_product.Sold < 0)
+//         {
+//             AddError("'sold' não pode ser negativo.");
+//         }
+//     }
+//
+//     private void ValidateColors()
+//     {
+//         int index = 0;
+//         foreach (var color in _product.Colors)
+//         {
+//             if (color is null)
+//             {
+//                 AddError($"'colors[{index}]' não pode ser nulo.");
+//                 index++;
+//                 continue;
+//             }
+//
+//             var value = color.Color.Value;
+//
+//             if (string.IsNullOrWhiteSpace(value))
+//                 AddError($"'colors[{index}].value' não pode estar em branco.");
+//
+//             if (value.Length > 20)
+//                 AddError($"'colors[{index}].value' excede o limite de 20 caracteres.");
+//
+//             // Regex opcional para validar formatos (#FFF, #FFFFFF, nomes)
+//             var colorRegex = new Regex(@"^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$|^[a-zA-Z]+$");
+//             if (!colorRegex.IsMatch(value))
+//             {
+//                 AddError($"'colors[{index}].value' deve ser um código hex ou nome de cor.");
+//             }
+//
+//             index++;
+//         }
+//     }
+//
+//     private void ValidateImages()
+//     {
+//         int index = 0;
+//         foreach (var image in _product.Images)
+//         {
+//             if (image is null)
+//             {
+//                 AddError($"'images[{index}]' não pode ser nula.");
+//                 index++;
+//                 continue;
+//             }
+//
+//             if (string.IsNullOrWhiteSpace(image.Url))
+//             {
+//                 AddError($"'images[{index}].url' não pode estar em branco.");
+//             }
+//
+//             if (image.Url.Length > 2048)
+//             {
+//                 AddError($"'images[{index}].url' excede o limite de 2048 caracteres.");
+//             }
+//
+//             index++;
+//         }
+//     }
+//
+//     private void ValidateReviews()
+//     {
+//         int index = 0;
+//         foreach (var review in _product.Reviews)
+//         {
+//             if (review is null)
+//             {
+//                 AddError($"'reviews[{index}]' não pode ser nulo.");
+//                 index++;
+//                 continue;
+//             }
+//
+//             if (review.Rating < 1 || review.Rating > 5)
+//             {
+//                 AddError($"'reviews[{index}].rating' deve estar entre 1 e 5.");
+//             }
+//
+//             if (review.Comment?.Length > 1000)
+//             {
+//                 AddError($"'reviews[{index}].comment' excede o limite de 1000 caracteres.");
+//             }
+//
+//             index++;
+//         }
+//     }
+//
+//     private void ValidateSoftDelete()
+//     {
+//         if (!_product.IsActive && _product.DeletedAt is null)
+//         {
+//             AddError("'deletedAt' deve estar definido quando o produto está inativo.");
+//         }
+//     }
+//
+//     private void AddError(string message)
+//     {
+//         ValidationHandler.Append(new Error(message));
+//     }
+// }
 
 
 // using System.Text.RegularExpressions;

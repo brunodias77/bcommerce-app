@@ -1,0 +1,61 @@
+Na modelagem de software com UML (Unified Modeling Language), os diagramas mais comuns e amplamente utilizados são:
+
+Diagrama de Casos de Uso (Use Case Diagram)
+
+O que mostra: Funcionalidades do sistema sob a perspectiva dos usuários (atores).
+
+Quando usar: Para capturar requisitos, delimitar o escopo e comunicar o que o sistema deve fazer sem entrar em detalhes de implementação.
+
+Diagrama de Classes (Class Diagram)
+
+O que mostra: As classes (ou entidades), seus atributos, métodos e os relacionamentos estáticos entre elas (herança, associação, agregação, composição).
+
+Quando usar: Para modelar a estrutura de dados e servir de base para a implementação em linguagens orientadas a objetos.
+
+Diagrama de Sequência (Sequence Diagram)
+
+O que mostra: A interação dinâmica entre objetos ao longo do tempo, representando chamadas de métodos na ordem em que ocorrem.
+
+Quando usar: Para detalhar cenários de execução de funcionalidades, fluxos de mensagens e colaboração entre componentes.
+
+Diagrama de Atividades (Activity Diagram)
+
+O que mostra: Fluxos de trabalho ou processos de negócio, destacando atividades, decisões e paralelismos.
+
+Quando usar: Para descrever fluxos de trabalho complexos, processos de negócios ou algoritmos. Swimlanes podem ser usadas para separar responsabilidades.
+
+Diagrama de Estado (State Machine Diagram)
+
+O que mostra: Os estados pelos quais um objeto passa e os eventos que causam transições entre esses estados.
+
+Quando usar: Para modelar o comportamento de objetos que têm ciclos de vida bem definidos (ex.: pedidos, sessões, aparelhos).
+
+Diagrama de Componentes (Component Diagram)
+
+O que mostra: Como o sistema é dividido em módulos ou componentes de alto nível e as dependências entre eles.
+
+Quando usar: Para planejar a arquitetura física ou lógica, especialmente em sistemas distribuídos ou com múltiplos subsistemas.
+
+Diagrama de Implantação (Deployment Diagram)
+
+O que mostra: Disposição dos componentes de software em nós de hardware (servidores, dispositivos), incluindo artefatos e conexões de rede.
+
+Quando usar: Para planejar a infraestrutura de execução, ambientes de produção e comunicação entre máquinas.
+
+Diagrama de Pacotes (Package Diagram)
+
+O que mostra: Agrupamentos de classes ou componentes em pacotes/libraries, com dependências entre eles.
+
+Quando usar: Para organizar e estruturar grandes sistemas, definindo fronteiras de subsistemas.
+
+Esses diagramas, combinados, oferecem uma visão completa do sistema:
+
+Requisitos (Casos de Uso) →
+
+Estrutura Estática (Classes, Pacotes, Componentes) →
+
+Comportamento Dinâmico (Sequência, Atividades, Estados) →
+
+Arquitetura de Implantação (Deployment)
+
+A escolha de quais usar depende do nível de detalhe necessário, do público-alvo e da fase do projeto.

@@ -147,10 +147,29 @@ public class DapperProductRepository : IProductRepository
 
     private async Task<List<ProductColor>> GetColors(Guid productId)
     {
-        const string sql = "SELECT * FROM product_colors WHERE product_id = @ProductId;";
-        var models = await _unitOfWork.Connection.QueryAsync<ProductColorDataModel>(sql, new { ProductId = productId }, _unitOfWork.Transaction);
+        const string sql = @"
+        SELECT 
+            pc.id AS Id,
+            pc.product_id AS ProductId,
+            pc.color_id AS ColorId,
+            c.name AS ColorName,
+            c.value AS ColorValue,
+            pc.created_at AS CreatedAt,
+            pc.updated_at AS UpdatedAt
+        FROM product_colors pc
+        INNER JOIN colors c ON pc.color_id = c.id
+        WHERE pc.product_id = @ProductId;
+    ";
+
+        var models = await _unitOfWork.Connection.QueryAsync<ProductColorDataModel>(
+            sql,
+            new { ProductId = productId },
+            _unitOfWork.Transaction
+        );
+
         return models.Select(ProductColorMapper.ToDomain).ToList();
     }
+
 
     private async Task<List<ProductReview>> GetReviews(Guid productId)
     {

@@ -23,9 +23,17 @@ public class DapperUnitOfWork : IUnitOfWork, IAsyncDisposable
 
     public IDbTransaction Transaction =>
         _transaction ?? throw new InvalidOperationException("Transação não foi iniciada. Chame Begin().");
+    
+    // ✅ [NOVA PROPRIEDADE]
+    // Informa se há uma transação ativa
+    public bool HasActiveTransaction => _transaction != null; // ← Adicionado
 
     public async Task Begin()
     {
+        // ✅ [MELHORIA]
+        // Evita iniciar uma nova transação se já houver uma ativa
+        if (_transaction != null) return;
+        
         if (_connection.State != ConnectionState.Open)
             await _connection.OpenAsync();
 

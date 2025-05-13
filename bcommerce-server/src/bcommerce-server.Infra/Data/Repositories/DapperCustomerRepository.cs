@@ -63,6 +63,7 @@ public class DapperCustomerRepository : ICustomerRepository
         await _unitOfWork.Connection.ExecuteAsync(sql, new { Id = aggregate.Id.Value }, _unitOfWork.Transaction);
     }
 
+
     public async Task<Customer?> GetByEmail(string email, CancellationToken cancellationToken)
     {
         const string sql = "SELECT * FROM customers WHERE email = @Email;";
@@ -77,4 +78,6 @@ public class DapperCustomerRepository : ICustomerRepository
     {
         throw new NotImplementedException();
     }
+
+
 }

@@ -1,4 +1,5 @@
 using bcommerce_server.Application.Customers.Create;
+using bcommerce_server.Domain.Carts.Repositories;
 using bcommerce_server.Domain.Customers;
 using bcommerce_server.Domain.Customers.Repositories;
 using bcommerce_server.Domain.Customers.ValueObjects;
@@ -20,6 +21,9 @@ public abstract class CustomerUseCaseBaseFixture : BaseFixture
     public Mock<ICustomerRepository> CustomerRepositoryMock { get; }    // Mock do repositório de clientes
     public Mock<IUnitOfWork> UnitOfWorkMock { get; }                    // Mock do unit of work
     public Mock<IPasswordEncripter> PasswordEncripterMock { get; }      // Mock de encriptador de senha
+    
+    public Mock<ICartRepository> CartRepositoryMock { get; }      // Mock de encriptador de senha
+
 
     protected CustomerUseCaseBaseFixture()
     {
@@ -35,7 +39,8 @@ public abstract class CustomerUseCaseBaseFixture : BaseFixture
         return new CreateCustomerUseCase(
             CustomerRepositoryMock.Object,
             UnitOfWorkMock.Object,
-            PasswordEncripterMock.Object
+            PasswordEncripterMock.Object, 
+            CartRepositoryMock.Object
         );
     }
 

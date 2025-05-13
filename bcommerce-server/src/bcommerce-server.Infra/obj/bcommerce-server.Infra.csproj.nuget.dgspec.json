@@ -1,29 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {}
+    "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
+    "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bcommerce-server.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
+        "projectUniqueName": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bcommerce-server.Domain.csproj",
         "projectName": "bcommerce-server.Domain",
-        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
-        "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\obj\\",
+        "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bcommerce-server.Domain.csproj",
+        "packagesPath": "/home/brunodias/.nuget/packages/",
+        "outputPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/brunodias/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -36,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -62,38 +53,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.115/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
+    "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
+        "projectUniqueName": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj",
         "projectName": "bcommerce-server.Infra",
-        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
-        "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\obj\\",
+        "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/bcommerce-server.Infra.csproj",
+        "packagesPath": "/home/brunodias/.nuget/packages/",
+        "outputPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Infra/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/brunodias/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
-                "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
+              "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bcommerce-server.Domain.csproj": {
+                "projectPath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bcommerce-server.Domain.csproj"
               }
             }
           }
@@ -102,11 +89,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -158,7 +140,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.115/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

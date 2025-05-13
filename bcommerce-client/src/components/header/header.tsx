@@ -82,8 +82,7 @@ const Header = () => {
                         />
                     )}
 
-                    <span>olá, {userName}</span>
-
+                    {userName && <span className="text-black-primary text-sm">olá, {userName}</span>}
                     {/* PROFILE */}
                     <button
                         onClick={handleProfileClick}
