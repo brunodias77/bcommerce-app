@@ -11,6 +11,8 @@ const PopularProductsSection: React.FC = () => {
     const [PopularProducts, setPopularProducts] = React.useState<Product[]>([]);
     const { products, loading, error } = useProductsContext();
 
+    console.log("PopularProductsSection", products);
+
     useEffect(() => {
         if (!products) return;
         const data = products.slice(0, 10);
@@ -40,7 +42,7 @@ const PopularProductsSection: React.FC = () => {
                 ) : (
                     <div className="grid grid-cols-1 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
                         {PopularProducts.map((product) => (
-                            <ProductCard {...product} key={product.id} />
+                            <ProductCard {...product} key={product.name} />
                         ))}
                     </div>
                 )}

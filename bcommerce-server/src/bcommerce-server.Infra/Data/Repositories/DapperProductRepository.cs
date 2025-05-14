@@ -149,13 +149,12 @@ public class DapperProductRepository : IProductRepository
     {
         const string sql = @"
         SELECT 
-            pc.id AS Id,
-            pc.product_id AS ProductId,
-            pc.color_id AS ColorId,
-            c.name AS ColorName,
-            c.value AS ColorValue,
-            pc.created_at AS CreatedAt,
-            pc.updated_at AS UpdatedAt
+            pc.product_id     AS ProductId,
+            pc.color_id       AS ColorId,
+            c.name            AS ColorName,
+            c.value           AS ColorValue,
+            pc.created_at     AS CreatedAt,
+            pc.updated_at     AS UpdatedAt
         FROM product_colors pc
         INNER JOIN colors c ON pc.color_id = c.id
         WHERE pc.product_id = @ProductId;
@@ -169,6 +168,7 @@ public class DapperProductRepository : IProductRepository
 
         return models.Select(ProductColorMapper.ToDomain).ToList();
     }
+
 
 
     private async Task<List<ProductReview>> GetReviews(Guid productId)
