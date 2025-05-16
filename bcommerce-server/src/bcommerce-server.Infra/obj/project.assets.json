@@ -740,11 +740,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
+      "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
       "projectName": "bcommerce-server.Infra",
-      "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
+      "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
       "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\obj\\",
+      "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -763,8 +763,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
-              "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
+            "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
+              "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
             }
           }
         }

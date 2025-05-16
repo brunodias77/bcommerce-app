@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj": {}
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj": {}
   },
   "projects": {
-    "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj": {
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj",
+        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj",
         "projectName": "bcommerce-server.Application",
-        "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj",
+        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj",
         "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\obj\\",
+        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -30,11 +30,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
-                "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
+              "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
+                "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
               },
-              "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
-                "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj"
+              "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
+                "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj"
               }
             }
           }
@@ -79,14 +79,14 @@
         }
       }
     },
-    "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
         "projectName": "bcommerce-server.Domain",
-        "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
+        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
         "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\obj\\",
+        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -141,14 +141,14 @@
         }
       }
     },
-    "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
+        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
         "projectName": "bcommerce-server.Infra",
-        "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
+        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj",
         "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\obj\\",
+        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -167,8 +167,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
-                "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
+              "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj": {
+                "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj"
               }
             }
           }
@@ -237,14 +237,14 @@
         }
       }
     },
-    "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj": {
+    "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj",
+        "projectUniqueName": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj",
         "projectName": "bcommercer-server.Api",
-        "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj",
+        "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\bcommercer-server.Api.csproj",
         "packagesPath": "C:\\Users\\bruno.dias\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\obj\\",
+        "outputPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommercer-server.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bruno.dias\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -263,11 +263,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj": {
-                "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj"
+              "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj": {
+                "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Application\\bcommerce-server.Application.csproj"
               },
-              "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
-                "projectPath": "c:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj"
+              "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj": {
+                "projectPath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Infra\\bcommerce-server.Infra.csproj"
               }
             }
           }
