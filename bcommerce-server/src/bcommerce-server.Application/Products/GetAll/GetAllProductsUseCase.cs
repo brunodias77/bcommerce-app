@@ -42,6 +42,7 @@ namespace bcommerce_server.Application.Products.GetAll
 
             var items = products
                 .Select(p => new GetAllProductItemOutput(
+                    ProductId: p.Id.Value,
                     Name: p.Name,
                     Description: p.Description,
                     Price: p.Price,
@@ -52,6 +53,7 @@ namespace bcommerce_server.Application.Products.GetAll
                     Sold: p.Sold,
                     IsActive: p.IsActive,
                     Popular: p.Popular,
+                    CreatedAt: p.CreatedAt,
                     Images: p.Images.Select(i => i.Url).ToList(),
                     Colors: p.Colors.Select(c => new ColorItemOutput(
                         Name: c.Color.Name,

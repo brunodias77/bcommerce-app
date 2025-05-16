@@ -24,78 +24,64 @@ public class GetProductByIdUseCase : IGetProductByIdUseCase
     private readonly IUnitOfWork _unitOfWork;
     public async Task<Result<GetProductByIdOutput, Notification>> Execute(GetProductByIdInput input)
     {
-        return null;
-        // var notification = Notification.Create();
-        //
-        // try
-        // {
-        //     await BeginTransaction();
-        //
-        //     if (!Guid.TryParse(input.productId, out Guid productId))
-        //     {
-        //         return Fail("ID de produto inválido.");
-        //     }
-        //
-        //     var product = await GetProductById(productId);
-        //     if (product == null)
-        //     {
-        //         return Fail("Produto não encontrado.");
-        //     }
-        //
-        //     product.Validate(notification);
-        //
-        //     if (notification.HasError())
-        //     {
-        //         return Result<GetProductByIdOutput, Notification>.Fail(notification);
-        //     }
-        //
-        //     await _unitOfWork.Commit(); // commit only on success
-        //
-        //     return Success(product);
-        // }
-        // catch (Exception ex)
-        // {
-        //     await _unitOfWork.Rollback(); // garante rollback da transação em caso de exceção
-        //     return Fail("Erro interno ao buscar produto: " + ex.Message);
-        // }
+        var notification = Notification.Create();
+        try
+        {
+            // iniciar a transacao
+            await _unitOfWork.Begin();
+            //muda o id para guid
+            if (!Guid.TryParse(input.productId, out Guid productId))
+            {
+                return Fail("ID de produto inválido.");
+            }
+            // pegar o pronduct pelo repository
+            var product = await _productRepository.Get(productId, CancellationToken.None);
+            // validar
+            product.Validate(notification);
+            // retornar erro
+            if (notification.HasError())
+            {
+                return Result<GetProductByIdOutput, Notification>.Fail(notification);
+            }
+            // retorno
+            var productOutput = new GetProductByIdOutput(
+                ProductId: product.Id.Value,
+                    Name: product.Name,
+                    Description: product.Description,
+                    Price: product.Price,
+                    OldPrice: product.OldPrice,
+                    CategoryId: product.CategoryId.Value,
+                    CategoryName: product.Category?.Name,
+                    StockQuantity: product.StockQuantity,
+                    Sold: product.Sold,
+                    IsActive: product.IsActive,
+                    Popular: product.Popular,
+                    CreatedAt: product.CreatedAt,
+                    Images: product.Images.Select(i => i.Url).ToList(),
+                    Colors: product.Colors.Select(c => new ColorItemOutput(
+                        Name: c.Color.Name,
+                        Value: c.Color.Value
+                    )).ToList(),
+                    Reviews: product.Reviews.Select(r => new ReviewItemOutput(
+                        Rating: r.Rating,
+                        Comment: r.Comment,
+                        CreatedAt: r.CreatedAt
+                    )).ToList()
+            );
+
+            await _unitOfWork.Commit();
+
+            // idem aqui: Ok<TSuccess=IList<...>,TError=Notification>
+            return Result<GetProductByIdOutput, Notification>.Ok(productOutput);
+        }
+        catch (Exception ex)
+        {
+            await _unitOfWork.Rollback(); // garante rollback da transação em caso de exceção
+            return Fail("Erro interno ao buscar produto: " + ex.Message);
+        }
     }
-    //
-    // private async Task BeginTransaction()
-    // {
-    //     await _unitOfWork.Begin();
-    // }
-    //
-    // private async Task<Product> GetProductById(Guid id)
-    // {
-    //     return await _productRepository.Get(id, CancellationToken.None);
-    // }
-    //
-    // private Result<GetProductByIdOutput, Notification> Success(Product product)
-    // {
-    //     return Result<GetProductByIdOutput, Notification>.Ok(new GetProductByIdOutput(
-    //         product.Name,
-    //         product.Description,
-    //         product.Price,
-    //         product.OldPrice,
-    //         product.Category?.Name, // null-safe
-    //         product.StockQuantity,
-    //         product.Sold,
-    //         product.IsActive,
-    //         product.Popular,
-    //         product.CreatedAt,
-    //         product.UpdatedAt,
-    //         product.Images.Select(i => i.Url).ToList(), // ✅ usa i.Url
-    //         product.Colors.Select(c => c.Color.Value).ToList(), // ✅ usa c.Color.Value
-    //         product.Reviews.Select(r => new ReviewItemOutput(
-    //             r.Rating,
-    //             r.Comment,
-    //             r.CreatedAt
-    //         )).ToList()
-    //     ));
-    // }
-    //
-    // private Result<GetProductByIdOutput, Notification> Fail(string message)
-    // {
-    //     return Result<GetProductByIdOutput, Notification>.Fail(Notification.Create(new Error(message)));
-    // }
+    private Result<GetProductByIdOutput, Notification> Fail(string message)
+    {
+        return Result<GetProductByIdOutput, Notification>.Fail(Notification.Create(new Error(message)));
+    }
 }

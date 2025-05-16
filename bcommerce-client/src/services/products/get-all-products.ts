@@ -14,7 +14,7 @@ async function handleApiResponse<T>(
 > {
   if (response.ok) {
     const data: T = await response.json();
-    console.log("Dados da API:", data);
+    console.log("Dados da API no get all products:", data);
 
     return { success: true, data };
   } else {

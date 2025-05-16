@@ -11,6 +11,7 @@ type Params = {
 
 export default async function ProductPage({ params }: Params) {
     const { id } = params;
+    console.log("product id no productPage", id);
     const result = await getProductById(id);
 
     if (!result.success) {

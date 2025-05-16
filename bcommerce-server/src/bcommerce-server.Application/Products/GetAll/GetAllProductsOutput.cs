@@ -9,6 +9,7 @@ namespace bcommerce_server.Application.Products.GetAll
     );
 
     public sealed record GetAllProductItemOutput(
+        Guid ProductId,
         string Name,
         string Description,
         decimal Price,
@@ -19,6 +20,7 @@ namespace bcommerce_server.Application.Products.GetAll
         int Sold,
         bool IsActive,
         bool Popular,
+        DateTime CreatedAt,
         List<string> Images,
         List<ColorItemOutput> Colors,    // ← mudou de string para ColorItemOutput
         List<ReviewItemOutput> Reviews
