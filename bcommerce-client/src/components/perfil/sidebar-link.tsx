@@ -46,7 +46,7 @@ const links: SidebarLink[] = [
         icon: <TelemarketingIcon color="#fec857" height={25} width={25} />,
     },
     {
-        href: "/perfil/favoritos",
+        href: "/favoritos",
         label: "Favoritos",
         icon: <HeartIcon color="#fec857" height={25} width={25} />,
     },

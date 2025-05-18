@@ -1,3 +1,5 @@
+using System;
+
 public sealed class Result<TSuccess, TError>
 {
     public bool IsSuccess { get; }

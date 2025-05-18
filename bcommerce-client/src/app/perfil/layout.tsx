@@ -8,7 +8,7 @@ export default function PerfilLayout({
     return (
         <div className="w-full flex flex-col md:flex-row bg-[#F2F3F4] flex-1">
             <SidebarNavigation />
-            <div className='flex-1 w-full '>
+            <div className='flex-1 w-full px-8 py-4 '>
                 {children}
             </div>
         </div>

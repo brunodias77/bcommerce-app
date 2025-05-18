@@ -15,8 +15,7 @@
           "Microsoft.IdentityModel.Tokens": "8.8.0",
           "Npgsql": "9.0.3",
           "System.IdentityModel.Tokens.Jwt": "8.8.0",
-          "bcommerce-server.Domain": "1.0.0",
-          "Bogus": "35.6.3.0"
+          "bcommerce-server.Domain": "1.0.0"
         },
         "runtime": {
           "bcommerce-server.Infra.dll": {}
@@ -178,14 +177,6 @@
         "runtime": {
           "bcommerce-server.Domain.dll": {}
         }
-      },
-      "Bogus/35.6.3.0": {
-        "runtime": {
-          "Bogus.dll": {
-            "assemblyVersion": "35.6.3.0",
-            "fileVersion": "35.6.3.0"
-          }
-        }
       }
     }
   },
@@ -302,11 +293,6 @@
     },
     "bcommerce-server.Domain/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Bogus/35.6.3.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }
