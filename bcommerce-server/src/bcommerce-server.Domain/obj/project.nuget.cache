@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lYJXGhEkSRs=",
+  "dgSpecHash": "AR4UChLteYU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\bruno.dias\\Documents\\bruno\\bcommerce-app\\bcommerce-server\\src\\bcommerce-server.Domain\\bcommerce-server.Domain.csproj",
+  "projectFilePath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Domain/bcommerce-server.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

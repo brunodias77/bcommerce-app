@@ -26,7 +26,7 @@ const Button = ({
 
     const variants = {
         primary: "bg-[#2d2926] text-white hover:brightness-50",
-        secondary: "bg-[#fec857] text-black hover:brightness-90",
+        secondary: "bg-[#fec857] text-white hover:brightness-90",
     };
 
     const sizes = {

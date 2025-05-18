@@ -92,7 +92,7 @@ const Header = () => {
                     </button>
 
                     {/* FAVORITOS */}
-                    <Link href="/favorites" className="group relative cursor-pointer flex">
+                    <Link href="/favoritos" className="group relative cursor-pointer flex">
                         <HeartIcon color="#2d2926" />
                     </Link>
 

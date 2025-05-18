@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = bcommerce_server.IntegrationTest
-build_property.ProjectDir = C:\Users\bruno.dias\Documents\bruno\bcommerce-app\bcommerce-server\tests\bcommerce-server.IntegrationTest\
+build_property.ProjectDir = /home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.IntegrationTest/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

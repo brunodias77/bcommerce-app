@@ -30,7 +30,7 @@ const ProductCard: React.FC<Product> = ({ productId, images, name, price, catego
 
     return (
         <Link href={`/product/${productId}`}>
-            <div className="relative max-w-[280px] flex flex-col items-center group w-full  h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
+            <div className="relative max-w-[300px]  flex flex-col items-center group w-full  h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
                 {isOnSale && <div className="absolute top-2 left-2 z-30 text-xs text-white font-bold bg-yellow-primary rounded-lg p-[4px]">OFERTA</div>}
                 <button onClick={(e) => {
                     e.stopPropagation();
@@ -49,7 +49,7 @@ const ProductCard: React.FC<Product> = ({ productId, images, name, price, catego
                         className="object-cover transition-transform duration-300 group-hover:scale-115"
                     />
                 </div>
-                <div className="p-3 w-full flex flex-col">
+                <div className="p-4 w-full flex flex-col">
                     <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{categoryName}</h4>
                     <h2 className="text-[16px] font-bold text-blue-primary line-clamp-1 ">{name}</h2>
                     <div className="flex items-center space-x-1">
@@ -57,12 +57,18 @@ const ProductCard: React.FC<Product> = ({ productId, images, name, price, catego
                         <span className="text-[8px] md:text-[11px] text-gray-500 text-center">4.5</span>
                         <span className="text-[8px] md:text-[11px] text-gray-500 text-center">(4)</span>
                     </div>
-                    <div className="flex items-center justify-between gap-x-2 mt-4">
+                    <div className="flex items-center justify-center gap-x-2 mt-2">
                         <div className="flex items-center justify-center gap-x-2">
-                            <h5 className="text-[14px] md:text-[15px] font-bold text-blue-primary">${price}.00</h5>
+                            <h5 className="text-[14px] md:text-[16px] font-bold text-blue-primary">  {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                            }).format(price)}</h5>
                             {isOnSale && (
                                 <>
-                                    <span className="text-sm md:text-md text-gray-400 line-through">${oldPrice}.00</span>
+                                    <span className="text-xs  text-gray-400 line-through"> {new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    }).format(oldPrice)}</span>
                                     <span className="text-sm text-yellow-primary font-bold">30% OFF</span>
                                 </>
                             )}

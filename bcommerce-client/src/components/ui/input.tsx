@@ -2,15 +2,16 @@ import React from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     id: string;
-    label: string;
+    label?: string;
 }
 
 const Input: React.FC<InputProps> = ({ id, label, ...props }) => {
     return (
         <div>
-            <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
+            {label && (<label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
                 {label}
-            </label>
+            </label>)}
+
             <input
                 id={id}
                 {...props} // 👈 Repassa tudo (name, type, placeholder, required, etc)
