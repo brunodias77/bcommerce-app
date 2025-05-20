@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Color, Product } from "@/types/product";
+import { Product } from "@/types/product";
 import StarRating from "../star-rating/star-rating";
 import FireIcon from "@/icons/fire-icon";
 import FavoriteIcon from "@/icons/favorite-icon";
@@ -17,21 +17,20 @@ const Badge = ({ text, bgColor, top }: { text: string; bgColor: string; top: str
     </div>
 );
 
-const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isNew, oldPrice, colors }) => {
+const ProductCard: React.FC<Product> = ({ productId, images, name, price, categoryName, oldPrice, colors }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const { addToCart } = useCartContext(); // 👈 hook do carrinho
 
-    const isOnSale = oldPrice?.amount != null && oldPrice.amount > price.amount;
+    const isOnSale = oldPrice != null && oldPrice > price;
     const discount = isOnSale
-        ? Math.round(((oldPrice!.amount - price.amount) / oldPrice!.amount) * 100)
+        ? Math.round(((oldPrice - price) / oldPrice) * 100)
         : null;
     const productImage = images[0];
-
     const color = colors[0].value;
 
     return (
-        <Link href={`/product/${id}`}>
-            <div className="relative max-w-[280px] flex flex-col items-center group w-full  h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
+        <Link href={`/product/${productId}`}>
+            <div className="relative max-w-[300px]  flex flex-col items-center group w-full  h-full border border-gray-200 hover:border-yellow-primary rounded-lg shadow-sm overflow-hidden cursor-pointer">
                 {isOnSale && <div className="absolute top-2 left-2 z-30 text-xs text-white font-bold bg-yellow-primary rounded-lg p-[4px]">OFERTA</div>}
                 <button onClick={(e) => {
                     e.stopPropagation();
@@ -44,26 +43,32 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
                 </button>
                 <div className="relative w-full h-[220px] overflow-hidden rounded-md">
                     <Image
-                        src={productImage.url}
+                        src={productImage}
                         alt={name}
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-115"
                     />
                 </div>
-                <div className="p-3 w-full flex flex-col">
-                    <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{category.name}</h4>
+                <div className="p-4 w-full flex flex-col">
+                    <h4 className="text-[12px] md:text-[13px] mb-1 text-gray-tertiary">{categoryName}</h4>
                     <h2 className="text-[16px] font-bold text-blue-primary line-clamp-1 ">{name}</h2>
                     <div className="flex items-center space-x-1">
                         <StarRating size="text-[10px] md:text-[15px]" />
                         <span className="text-[8px] md:text-[11px] text-gray-500 text-center">4.5</span>
                         <span className="text-[8px] md:text-[11px] text-gray-500 text-center">(4)</span>
                     </div>
-                    <div className="flex items-center justify-between gap-x-2 mt-4">
+                    <div className="flex items-center justify-center gap-x-2 mt-2">
                         <div className="flex items-center justify-center gap-x-2">
-                            <h5 className="text-[14px] md:text-[15px] font-bold text-blue-primary">${price.amount}.00</h5>
+                            <h5 className="text-[14px] md:text-[16px] font-bold text-blue-primary">  {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                            }).format(price)}</h5>
                             {isOnSale && (
                                 <>
-                                    <span className="text-sm md:text-md text-gray-400 line-through">${oldPrice.amount}.00</span>
+                                    <span className="text-xs  text-gray-400 line-through"> {new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    }).format(oldPrice)}</span>
                                     <span className="text-sm text-yellow-primary font-bold">30% OFF</span>
                                 </>
                             )}
@@ -72,7 +77,7 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, category, isN
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                addToCart(id, color);
+                                addToCart(productId, color);
                             }}
                             className="bg-yellow-primary hover:bg-yellow-secondary rounded p-2 cursor-pointer  transition transform active:scale-95 text-xs flex items-center justify-center " >
                             <CartIcon color="#2d2926" height={20} width={20} />

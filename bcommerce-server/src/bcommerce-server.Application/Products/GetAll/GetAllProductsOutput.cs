@@ -4,13 +4,12 @@ using System.Collections.Generic;
 namespace bcommerce_server.Application.Products.GetAll
 {
     public sealed record ColorItemOutput(
-        Guid Id,
         string Name,
         string Value
     );
 
     public sealed record GetAllProductItemOutput(
-        Guid Id,
+        Guid ProductId,
         string Name,
         string Description,
         decimal Price,
@@ -22,7 +21,6 @@ namespace bcommerce_server.Application.Products.GetAll
         bool IsActive,
         bool Popular,
         DateTime CreatedAt,
-        DateTime UpdatedAt,
         List<string> Images,
         List<ColorItemOutput> Colors,    // ← mudou de string para ColorItemOutput
         List<ReviewItemOutput> Reviews

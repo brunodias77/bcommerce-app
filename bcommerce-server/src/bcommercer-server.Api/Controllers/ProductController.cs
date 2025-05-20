@@ -23,22 +23,19 @@ namespace bcommercer_server.Api.Controllers
         private readonly IGetProductByIdUseCase _getProductByIdUseCase;
         private readonly IUnitOfWork _unitOfWork;
 
-  
+
 
         [HttpGet]
         [ProducesResponseType(typeof(List<GetAllProductItemOutput>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllProducts([FromServices] IProductRepository productRepository, CancellationToken cancellationToken)
         {
-            await _unitOfWork.Begin();
-            var response = await productRepository.GetAll(CancellationToken.None);
-            return Ok(response);
-            // var result = await _getAllProuctsUseCase.Execute(Unit.Value);
-            //
-            // if (result.IsSuccess)
-            //     return Ok(result.Value);
-            //
-            // return BadRequest(result.Error);
+            var result = await _getAllProuctsUseCase.Execute(Unit.Value);
+
+            if (result.IsSuccess)
+                return Ok(result.Value);
+
+            return BadRequest(result.Error);
         }
 
         [HttpGet("{id:guid}")]
@@ -46,15 +43,12 @@ namespace bcommercer_server.Api.Controllers
         [ProducesResponseType(typeof(Notification), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetProductById([FromRoute] string id, [FromServices] IProductRepository productRepository, CancellationToken cancellationToken)
         {
-            await _unitOfWork.Begin();
-            var response = await productRepository.Get(Guid.Parse(id), CancellationToken.None);
-            return Ok(response);
-            // var result = await _getProductByIdUseCase.Execute(new GetProductByIdInput(id));
-            //
-            // if (result.IsSuccess)
-            //     return Ok(result.Value);
-            //
-            // return BadRequest(result.Error);
+            var result = await _getProductByIdUseCase.Execute(new GetProductByIdInput(id));
+
+            if (result.IsSuccess)
+                return Ok(result.Value);
+
+            return BadRequest(result.Error);
         }
     }
 }

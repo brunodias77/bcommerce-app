@@ -7,6 +7,6 @@ using bcommerce_server.Domain.Validations.Handlers;
 
 namespace bcommerce_server.Application.Products.GetAll;
 
-public interface IGetAllProuctsUseCase : IUseCase<Unit, GetAllProductItemOutput, Notification>
+public interface IGetAllProuctsUseCase : IUseCase<Unit, IList<GetAllProductItemOutput>, Notification>
 {
 }

@@ -16,7 +16,6 @@ public static class ProductColorMapper
         );
 
         return ProductColor.With(
-            ProductColorID.From(model.Id),
             model.ProductId,
             color,
             model.CreatedAt,
@@ -24,16 +23,55 @@ public static class ProductColorMapper
         );
     }
 
-    public static ProductColorDataModel ToDataModel(ProductColor entity)
+    public static ProductColorDataModel ToDataModel(ProductColor valueObject)
     {
         return new ProductColorDataModel(
-            Id: entity.Id.Value,
-            ProductId: entity.ProductId,
-            ColorId: entity.Color.Id.Value,
-            ColorName: entity.Color.Name,
-            ColorValue: entity.Color.Value,
-            CreatedAt: entity.CreatedAt,
-            UpdatedAt: entity.UpdatedAt
+            ProductId: valueObject.ProductId,
+            ColorId: valueObject.Color.Id.Value,
+            ColorName: valueObject.Color.Name,
+            ColorValue: valueObject.Color.Value,
+            CreatedAt: valueObject.CreatedAt,
+            UpdatedAt: valueObject.UpdatedAt
         );
     }
 }
+
+// using bcommerce_server.Domain.Products.Entities;
+// using bcommerce_server.Domain.Products.Identifiers;
+//
+// namespace bcommerce_server.Infra.Data.Models.Products;
+//
+// public static class ProductColorMapper
+// {
+//     public static ProductColor ToDomain(ProductColorDataModel model)
+//     {
+//         var color = Color.With(
+//             ColorID.From(model.ColorId),
+//             model.ColorName,
+//             model.ColorValue,
+//             model.CreatedAt,
+//             model.UpdatedAt
+//         );
+//
+//         return ProductColor.With(
+//             ProductColorID.From(model.Id),
+//             model.ProductId,
+//             color,
+//             model.CreatedAt,
+//             model.UpdatedAt
+//         );
+//     }
+//
+//     public static ProductColorDataModel ToDataModel(ProductColor entity)
+//     {
+//         return new ProductColorDataModel(
+//             Id: entity.Id.Value,
+//             ProductId: entity.ProductId,
+//             ColorId: entity.Color.Id.Value,
+//             ColorName: entity.Color.Name,
+//             ColorValue: entity.Color.Value,
+//             CreatedAt: entity.CreatedAt,
+//             UpdatedAt: entity.UpdatedAt
+//         );
+//     }
+// }

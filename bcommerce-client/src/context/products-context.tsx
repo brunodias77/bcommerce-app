@@ -42,6 +42,7 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
  */
 export function useProductsContext() {
     const context = useContext(ProductsContext);
+    
     if (!context) {
         throw new Error("useProductsContext deve ser usado dentro de ProductsProvider.");
     }

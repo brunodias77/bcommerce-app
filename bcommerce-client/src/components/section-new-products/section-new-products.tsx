@@ -73,7 +73,7 @@ const NewProducstSection: React.FC = () => {
                         >
                             {PopularProducts.map((product) => (
                                 <div
-                                    key={product.id}
+                                    key={product.name}
                                     className="snap-start shrink-0 w-[200px] md:w-[250px] xl:w-[280px]"
                                 >
                                     <ProductCard {...product} />
@@ -84,31 +84,6 @@ const NewProducstSection: React.FC = () => {
                 )}
             </div>
         </Section>
-        // <Section>
-        //     <div className='container'>
-        //         <Title
-        //             title='Novos'
-        //             subtitle=' Produtos'
-        //             content='Explore os lançamentos mais recentes, selecionados para transformar sua rotina com inovação e estilo.'
-        //             titleStyles='pb-1'
-        //             contentStyles='block'
-        //             styles='block pb-10'
-        //         />
-        //         <div
-        //             ref={carouselRef}
-        //             className="flex overflow-x-auto snap-x snap-mandatory space-x-4 scroll-smooth hide-horizontal-scrollbar "
-        //         >
-        //             {PopularProducts.map((product) => (
-        //                 <div
-        //                     key={product.id}
-        //                     className="snap-start shrink-0 w-[200px] md:w-[250] xl:w-[280px]"
-        //                 >
-        //                     <ProductCard {...product} />
-        //                 </div>
-        //             ))}
-        //         </div>
-        //     </div>
-        // </Section>
 
     );
 

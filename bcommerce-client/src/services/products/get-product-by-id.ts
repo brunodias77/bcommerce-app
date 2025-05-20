@@ -1,5 +1,5 @@
 import { ErrorResponse } from "@/types/api";
-import { ProductItem } from "@/types/product";
+import { Product } from "@/types/product";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:5111";
 
@@ -30,8 +30,7 @@ async function handleApiResponse<T>(
 export async function getProductById(
   id: string
 ): Promise<
-  | { success: true; data: ProductItem }
-  | { success: false; errors: ErrorResponse[] }
+  { success: true; data: Product } | { success: false; errors: ErrorResponse[] }
 > {
   try {
     const response = await fetch(`${API_BASE_URL}/api/products/${id}`, {
@@ -41,7 +40,7 @@ export async function getProductById(
       },
     });
 
-    return await handleApiResponse<ProductItem>(response);
+    return await handleApiResponse<Product>(response);
   } catch (error) {
     console.error("Erro ao buscar produto por ID:", error);
     return {

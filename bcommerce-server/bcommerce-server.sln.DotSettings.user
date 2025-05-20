@@ -6,17 +6,17 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AMonitor_002ECoreCLR_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F8056cd3f452fefb9834f05cdb275b762dd41f27b7766cd71174e78592dc495b_003FMonitor_002ECoreCLR_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASecurityTokenException_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F540ed77e8d57353864a6378539015f7e333f75d6c090947b92b3cebaab3fe_003FSecurityTokenException_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AServiceProvider_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F658ad1fa108317d78bcae889b6e4f9dd5327babb6582972f2dbeabf36dafa5_003FServiceProvider_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=37d4691c_002D4c2d_002D40d9_002Db783_002Dfc380c47b932/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UnitTest1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Domain.Customers.CustomerUnitTest&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Domain.Customers.ValueObjects.CpfTest&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Domain.Addresses.AddressTest&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTests.Application.Customers.Create.CreateCustomerUseCaseTest&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.DeveCriarClienteComSucesso&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.NaoDeveCriarClienteComEmailDuplicado&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.NaoDeveCriarClienteComDadosInvalidos&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.DeveFazerRollbackSeErroAoSalvarCliente&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.NaoDeveCriarClienteComSenhaFraca&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=37d4691c_002D4c2d_002D40d9_002Db783_002Dfc380c47b932/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UnitTest1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Domain.Customers.CustomerUnitTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Domain.Customers.ValueObjects.CpfTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Domain.Addresses.AddressTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTests.Application.Customers.Create.CreateCustomerUseCaseTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.DeveCriarClienteComSucesso&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.NaoDeveCriarClienteComEmailDuplicado&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.NaoDeveCriarClienteComDadosInvalidos&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.DeveFazerRollbackSeErroAoSalvarCliente&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests.NaoDeveCriarClienteComSenhaFraca&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::84ACE68C-71B4-4868-BF96-DA0C2A88DDCE::net8.0::bcommerce_server.UnitTest.Application.Customers.Create.CreateCustomerUseCaseTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
