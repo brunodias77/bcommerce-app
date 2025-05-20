@@ -1,4 +1,5 @@
 "use client";
+import ProductCardMyOrder from "@/components/perfil/product-card-my-order";
 import Divider from "@/components/ui/divider";
 import Input from "@/components/ui/input";
 import Select from "@/components/ui/select";
@@ -35,6 +36,8 @@ const MyOrder: React.FC = () => {
                         { label: 'Todos', value: '0' }
                     ]} />
             </div>
+
+            <ProductCardMyOrder />
         </div>
     )
 }
