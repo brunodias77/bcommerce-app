@@ -97,7 +97,7 @@ const Header = () => {
                     </Link>
 
                     {/* CARRINHO */}
-                    <Link href="/cart" className="flex relative">
+                    <Link href="/carrinho" className="flex relative">
                         <CartIcon color="#2d2926" />
                         <span className="bg-yellow-primary text-black-primary text-[12px] font-semibold absolute -top-3.5 -right-2 flex items-center justify-center w-4 h-4 rounded-full shadow-md">
                             {getCartCount}

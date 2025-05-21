@@ -41,7 +41,7 @@ const Divider: React.FC<DividerProps> = ({
                 {/* <div className="absolute top-0 left-[5%] right-[5%] h-[1px]"> */}
                 <div className=" top-0 left-[5%] right-[5%] h-[1px]">
                     <div
-                        className={`w-full h-full border-t ${dashedLine ? 'border-dashed' : 'border-solid'} border-gray-300`}
+                        className={`w-full h-full border-t ${dashedLine ? 'border-dashed' : 'border-solid'} border-gray-200`}
                         style={lineStyles}
                     />
                 </div>

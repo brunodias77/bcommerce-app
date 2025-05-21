@@ -26,7 +26,6 @@ const ProductCardMyOrder: React.FC = () => {
                     <span className='font-bold text-blue-primary'>Galaxy X 2025</span>
                     <span className='text-gray-tertiary text-xs'>quantidade: 1</span>
                 </div>
-
             </div>
         </div>
     );
