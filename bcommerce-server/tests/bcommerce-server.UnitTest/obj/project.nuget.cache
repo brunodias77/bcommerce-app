@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "aivuETmfuHO96LvA4SMBTQRra51sZ/LsvT2do1Dsu3gisy33M8AVPBqa7b4K4BPuq+JKPtA56ctsW40Y+0MsHA==",
+  "dgSpecHash": "LGQVI10lTVA=",
   "success": true,
   "projectFilePath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/tests/bcommerce-server.UnitTest/bcommerce-server.UnitTest.csproj",
   "expectedPackageFiles": [

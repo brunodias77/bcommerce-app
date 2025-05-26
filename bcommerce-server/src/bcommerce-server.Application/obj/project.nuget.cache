@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5nacgwJO6jj2af0RdGjbGuOnyjYucTM9HlwUjgJjm3RfU6D1WE2qv3ij0mnx+/z+BaKzLtuMCqqLggnKMSbAww==",
+  "dgSpecHash": "f8lE74/Lb4A=",
   "success": true,
   "projectFilePath": "/home/brunodias/Documentos/Codigos/Projetos/bcommerce-app/bcommerce-server/src/bcommerce-server.Application/bcommerce-server.Application.csproj",
   "expectedPackageFiles": [

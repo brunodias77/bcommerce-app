@@ -36,7 +36,6 @@ export default async function FavoritesPage() {
                                     Continuar Comprando
                                 </Button>
                             </Link>
-
                         </div>
                     </div>
                 </div>
