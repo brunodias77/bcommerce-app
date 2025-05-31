@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
     const products = null;
-
     return (
         <div className="w-full flex flex-col md:flex-row bg-[#F2F3F4] flex-1 py-4">
             <div className="container">

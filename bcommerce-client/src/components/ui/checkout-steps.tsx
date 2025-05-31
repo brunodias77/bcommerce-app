@@ -8,9 +8,11 @@ import ShippingIcon from "@/icons/shipping-icon";
 
 const CheckoutSteps = () => {
     const pageName = usePageName();
+    console.log('Current page name:', pageName);
     const isActive = (step: string) => {
         const currentStep = pageName.toLowerCase();
         const stepsOrder = ['carrinho', 'endereco', 'envio', 'pagamento', 'confimacao'];
+        const retorno = stepsOrder.indexOf(currentStep) >= stepsOrder.indexOf(step);
         return stepsOrder.indexOf(currentStep) >= stepsOrder.indexOf(step);
     };
 
